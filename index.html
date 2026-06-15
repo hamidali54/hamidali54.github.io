@@ -260,6 +260,64 @@
         .link-label.svelte-7hpc9t{color:#dfe3e8cc;font-size:calc(.75rem + 2px);font-weight:500;text-transform:uppercase;letter-spacing:.5px}
         .link-value.svelte-7hpc9t{color:#dfe3e8;font-weight:600;font-size:calc(1rem + 2px)}
 
+        /* ABOUT SECTION — NEW LAYOUT */
+        .about-layout { display: flex; gap: 32px; align-items: center; }
+        .about-cards-col { display: flex; flex-direction: column; gap: 24px; flex: 1; min-width: 0; }
+        .about-photo-col { display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
+        .profile-circle-wrap {
+            position: relative;
+            width: 240px;
+            height: 240px;
+        }
+        .profile-circle-wrap::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background: conic-gradient(var(--accent-warm) 0deg, transparent 120deg, var(--accent-warm) 240deg, transparent 360deg);
+            animation: spin-border 6s linear infinite;
+            z-index: 0;
+        }
+        @keyframes spin-border { to { transform: rotate(360deg); } }
+        .profile-circle {
+            position: relative;
+            z-index: 1;
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid var(--background-nav);
+            background: var(--background-ternary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 40px rgba(var(--accent-warm-rgb, 200,150,80), 0.25);
+        }
+        .profile-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+        }
+        .profile-placeholder-icon { opacity: 0.3; }
+        .profile-name-tag {
+            margin-top: 16px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--font-primary);
+        }
+        .profile-title-tag {
+            font-size: 0.9rem;
+            color: var(--font-secondary);
+            text-align: center;
+            margin-top: 4px;
+        }
+        @media (max-width: 900px) {
+            .about-layout { flex-direction: column-reverse; align-items: center; }
+            .profile-circle-wrap, .profile-circle { width: 180px; height: 180px; }
+        }
+
         /* FOOTER */
         footer.svelte-jz8lnl{border-top:var(--border-soft);padding:40px 20px;margin-top:60px;text-align:center;}
 
@@ -272,7 +330,6 @@
         @media(min-width:768px){
             section.svelte-7hpc9t{padding:60px 40px}
             .about-grid.svelte-7hpc9t{grid-template-columns:repeat(2,1fr)}
-            .intro-card.svelte-7hpc9t,.working-card.svelte-7hpc9t{grid-column:1 / -1}
             .link-grid.svelte-7hpc9t{grid-template-columns:repeat(5,1fr)}
         }
         @media(min-width:768px)and (max-width:1024px){
@@ -313,8 +370,8 @@
         
         <!-- Menu Links -->
         <ul class="menu svelte-1h32yp1">
-            <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="#about">About</a></li>
-            <!-- You can add more menu items here -->
+            <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="index.html#about">About</a></li>
+            <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="projects.html">Projects</a></li>
         </ul>
         
         <!-- Theme Toggle Button -->
@@ -376,101 +433,61 @@
           ===============================================================
         -->
         <section id="about" class="svelte-7hpc9t">
-            <div class="about-grid svelte-7hpc9t">
-                
-                <!-- Your Bio Box -->
-                <div class="card intro-card svelte-7hpc9t">
-                    <p class="svelte-7hpc9t">
-                        I'm a third-year Computer Science student at Sukkur IBA University. I breathe Linux, self‑host my own services, and have strong opinions about terminal color schemes. 
-                        Currently building <strong>NextStepGermany</strong> – an AI platform to help Pakistani students navigate studying in Germany.
-                        <br><br>
-                        🎬 Outside of tech, I love cinema. A good movie teaches storytelling, patience, and timing — all things coding needs too.
-                        <br><br>
-                        <em>"The best way to learn is to teach someone."</em> — That's my philosophy. I break things, fix them, and share what I learn.
-                    </p>
-                </div>
-                
-                <!-- "What I'm Working On" Box -->
-                <div class="card working-card svelte-7hpc9t">
-                    <div class="card-header svelte-7hpc9t">
-                        <span class="card-icon svelte-7hpc9t" aria-hidden="true">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                                <path d="M2 17l10 5 10-5"></path>
-                                <path d="M2 12l10 5 10-5"></path>
-                            </svg>
-                        </span>
-                        <h3 class="svelte-7hpc9t">What I'm working on now</h3>
-                        <div class="ai-badge svelte-7hpc9t" aria-hidden="true">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 3l1.912 5.813a2 2 0 0 0 1.275 1.275L21 12l-5.813 1.912a2 2 0 0 0-1.275 1.275L12 21l-1.912-5.813a2 2 0 0 0-1.275-1.275L3 12l5.813-1.912a2 2 0 0 0 1.275-1.275L12 3z"></path>
-                            </svg>
-                            <span>NextStepGermany AI</span>
+            <div class="about-layout">
+
+                <!-- LEFT COLUMN: Text Cards -->
+                <div class="about-cards-col">
+
+                    <!-- Your Bio Box -->
+                    <div class="card intro-card svelte-7hpc9t">
+                        <p class="svelte-7hpc9t">
+                            I'm a third-year Computer Science student at Sukkur IBA University. I breathe Linux, self‑host my own services, and have strong opinions about terminal color schemes.
+                            Currently building <strong>NextStepGermany</strong> – an AI platform to help Pakistani students navigate studying in Germany.
+                            <br><br>
+                            🎬 Outside of tech, I love cinema. A good movie teaches storytelling, patience, and timing — all things coding needs too.
+                            <br><br>
+                            <em>"The best way to learn is to teach someone."</em> — That's my philosophy. I break things, fix them, and share what I learn.
+                        </p>
+                    </div>
+
+                    <!-- "What I'm Working On" Box -->
+                    <div class="card working-card svelte-7hpc9t">
+                        <div class="card-header svelte-7hpc9t">
+                            <span class="card-icon svelte-7hpc9t" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                    <path d="M2 17l10 5 10-5"></path>
+                                    <path d="M2 12l10 5 10-5"></path>
+                                </svg>
+                            </span>
+                            <h3 class="svelte-7hpc9t">What I'm working on now</h3>
+                            <div class="ai-badge svelte-7hpc9t" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 3l1.912 5.813a2 2 0 0 0 1.275 1.275L21 12l-5.813 1.912a2 2 0 0 0-1.275 1.275L12 21l-1.912-5.813a2 2 0 0 0-1.275-1.275L3 12l5.813-1.912a2 2 0 0 0 1.275-1.275L12 3z"></path>
+                                </svg>
+                                <span>NextStepGermany AI</span>
+                            </div>
+                        </div>
+                        <p class="svelte-7hpc9t">
+                            Building an AI‑powered platform to help Pakistani students find universities, analyze admission requirements, and get scholarship information.
+                            Also deep‑diving into React, Django, and advanced Linux self‑hosting.
+                        </p>
+                    </div>
+
+                </div><!-- end .about-cards-col -->
+
+                <!-- RIGHT COLUMN: Profile Photo -->
+                <div class="about-photo-col">
+                    <div class="profile-circle-wrap">
+                        <div class="profile-circle">
+                            <img src="img/hamid-portfolio.png" alt="Hamid Ali Khoso" />
                         </div>
                     </div>
-                    <p class="svelte-7hpc9t">
-                        Building an AI‑powered platform to help Pakistani students find universities, analyze admission requirements, and get scholarship information. 
-                        Also deep‑diving into React, Django, and advanced Linux self‑hosting.
-                    </p>
-                </div>
+                    <div class="profile-name-tag">Hamid Ali Khoso</div>
+                    <div class="profile-title-tag">CS Student · Developer</div>
+                </div><!-- end .about-photo-col -->
 
-                <!-- 
-                  PROJECT CARDS GRID
-                  You can change the image paths, text, and link for each card.
-                -->
-                <div class="link-grid svelte-7hpc9t">
-                    <!-- Project Card 1 -->
-                    <a href="#" class="link-card svelte-7hpc9t">
-                        <picture class="svelte-7hpc9t">
-                            <img src="img/cards/personal-blog.jpg" alt="NextStepGermany AI" class="link-card-image svelte-7hpc9t" loading="lazy" />
-                        </picture>
-                        <div class="link-card-overlay svelte-7hpc9t">
-                            <span class="link-value svelte-7hpc9t">NextStepGermany</span>
-                        </div>
-                    </a>
-                    
-                    <!-- Project Card 2 -->
-                    <a href="#" class="link-card svelte-7hpc9t">
-                        <picture class="svelte-7hpc9t">
-                            <img src="img/vibe.jpg" alt="Chess Game" class="link-card-image svelte-7hpc9t" loading="lazy" />
-                        </picture>
-                        <div class="link-card-overlay svelte-7hpc9t">
-                            <span class="link-value svelte-7hpc9t">Chess Game (Java)</span>
-                        </div>
-                    </a>
-                    
-                    <!-- Project Card 3 -->
-                    <a href="#" class="link-card svelte-7hpc9t">
-                        <!-- Example showing how you can use external image links too -->
-                        <img src="https://lastfm.freetls.fastly.net/i/u/300x300/27c394e05d6222cc23bd4cd1806e79a3.jpg" alt="Plagiarism Checker" class="link-card-image svelte-7hpc9t" loading="lazy" />
-                        <div class="link-card-overlay svelte-7hpc9t">
-                            <span class="link-label svelte-7hpc9t">Python Tool</span>
-                            <span class="link-value svelte-7hpc9t">Plagiarism Checker</span>
-                        </div>
-                    </a>
-                    
-                    <!-- Project Card 4 -->
-                    <a href="#" class="link-card svelte-7hpc9t">
-                        <picture class="svelte-7hpc9t">
-                            <img src="img/cards/rupin-pass.jpg" alt="Bank Management System" class="link-card-image svelte-7hpc9t" loading="lazy" />
-                        </picture>
-                        <div class="link-card-overlay svelte-7hpc9t">
-                            <span class="link-label svelte-7hpc9t">SQL + GUI</span>
-                            <span class="link-value svelte-7hpc9t">Bank System</span>
-                        </div>
-                    </a>
-                    
-                    <!-- Project Card 5 -->
-                    <a href="#" class="link-card svelte-7hpc9t">
-                        <picture class="svelte-7hpc9t">
-                            <img src="img/photography-preview.jpg" alt="Library Management" class="link-card-image svelte-7hpc9t" loading="lazy" />
-                        </picture>
-                        <div class="link-card-overlay svelte-7hpc9t">
-                            <span class="link-value svelte-7hpc9t">Library Mgmt (C++)</span>
-                        </div>
-                    </a>
-                </div>
-            </div>
+            </div><!-- end .about-layout -->
         </section>
     </main>
 
