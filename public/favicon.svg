@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Hanzla Tauqeer">
-  <rect width="120" height="120" fill="#050505"/>
-  <rect x="10" y="10" width="100" height="100" fill="none" stroke="#FF3D00" stroke-width="6"/>
-  <path d="M30 28h14v25h32V28h14v64H76V65H44v27H30V28Z" fill="#f7f7f7"/>
-  <path d="M24 100h72" stroke="#FF3D00" stroke-width="6" stroke-linecap="square"/>
-</svg>

@@ -1,5 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="Meganos Software">
-  <rect width="80" height="80" fill="#111111"/>
-  <rect x="8" y="8" width="64" height="64" fill="none" stroke="#FF3D00" stroke-width="2"/>
-  <path d="M58 24c-4-2-8-3-13-3-12 0-22 8-22 19s10 19 22 19c5 0 10-1 13-3v-9c-3 3-7 4-12 4-8 0-14-5-14-11s6-11 14-11c5 0 9 1 12 4z" fill="#F0F0F0"/>
-</svg>
