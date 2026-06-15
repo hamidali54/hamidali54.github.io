@@ -1,0 +1,255 @@
+/* --------------------------------------------------------
+Style Sheet for vishwas.tech
+
+version: 2
+license: MIT
+author: Vishwasa Navada K
+email: hi@vishwas.tech
+website: https://vishwas.tech
+----------------------------------------------------------*/
+
+/*------------ Font Imports   ------------*/
+/* Fonts loaded via <link> in app.html for better performance */
+
+/*------------ Variables ------------*/
+:root {
+  --font-primary: #dfe3e8;
+  --font-secondary: #8a9198;
+  --font-link: #a8c8e0;
+  --background: #15181a;
+  --background-nav: #1c2023;
+  --background-ternary: rgba(148, 158, 168, 0.12);
+  --accent-warm: #8a9eb5;
+  --card-hover-glow: 0 4px 20px rgba(138, 158, 181, 0.12);
+  --border-soft: 1px solid rgba(148, 158, 168, 0.18);
+  --base-font: 15px;
+}
+
+/* Light theme */
+html.light {
+  --font-primary: #2e3338;
+  --font-secondary: #6b7580;
+  --font-link: #3d6b7a;
+  --background: #f0f2f5;
+  --background-nav: #e6e9ed;
+  --background-ternary: rgba(46, 51, 56, 0.07);
+  --accent-warm: #5a7085;
+  --card-hover-glow: 0 4px 20px rgba(90, 112, 133, 0.1);
+  --border-soft: 1px solid rgba(46, 51, 56, 0.12);
+}
+/*------------ Override Defaults ------------*/
+html {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: var(--base-font);
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0 auto;
+  vertical-align: middle;
+  color: var(--font-primary);
+  background: var(--background);
+  font-family: 'Exo 2', 'Exo 2 Fallback', sans-serif;
+  padding-top: 60px;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+footer {
+  font-size: 1rem;
+  text-align: center;
+}
+section {
+  padding: 10px 20px;
+}
+h1 {
+  font-size: 2.6rem;
+  letter-spacing: 0.15rem;
+  font-family: 'Exo 2', 'Exo 2 Fallback', sans-serif;
+  font-weight: 600;
+  margin: 4px 0 8px 0;
+}
+h2 {
+  font-size: 1.6rem;
+  margin: 15px auto;
+  font-family: 'Exo 2', 'Exo 2 Fallback', sans-serif;
+}
+h3 {
+  font-size: 1.6rem;
+  font-family: 'Exo 2', 'Exo 2 Fallback', sans-serif;
+}
+h4 {
+  font-size: 1.2rem;
+}
+p {
+  font-size: 1.2rem;
+  color: var(--font-primary);
+  margin-bottom: 15px;
+  line-height: 1.8;
+}
+
+a {
+  text-decoration: none;
+  color: var(--font-link);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+a:hover {
+  color: var(--font-primary);
+  text-decoration: none;
+}
+p a,
+li a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.btn:focus-visible {
+  outline: 2px solid var(--accent-warm);
+  outline-offset: 2px;
+}
+.row {
+  margin: 15px auto !important;
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon {
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  margin: 2px 5px;
+}
+
+.landing-section {
+  background-image: url('img/bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+html.webp .landing-section {
+  background-image: url('img/bg.webp');
+}
+
+/* Subtle overlay to add depth while letting background image show through */
+.landing-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(21, 24, 26, 0.2);
+  z-index: 1;
+}
+html.light .landing-section::before {
+  background: rgba(240, 242, 245, 0.15);
+}
+.landing-section::after {
+  display: none;
+}
+
+.section-404 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Glassmorphism overlay */
+.landing-overlay {
+  max-width: 680px;
+  width: 90vw;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(21, 24, 26, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(223, 227, 232, 0.12);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 2;
+}
+
+/* Light theme adjustments */
+html.light .landing-overlay {
+  background: rgba(240, 242, 245, 0.4);
+  border: 1px solid rgba(46, 51, 56, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+
+
+hr.separator {
+  width: 90%;
+  border: 0;
+  height: 1px;
+  margin: 15px auto 20px auto;
+  background-color: var(--background-ternary);
+}
+
+.btn {
+  margin: 6px;
+  padding: 10px;
+  border-radius: 6px;
+  color: var(--font-secondary);
+  background-color: var(--background);
+  border: 1px solid var(--font-secondary);
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+.btn:hover {
+  cursor: pointer;
+  color: var(--background);
+  background-color: var(--font-secondary);
+  border: 1px solid var(--background);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+@media (max-width: 700px) {
+  .landing-section {
+    background-image: url('img/bg-mobile.jpg');
+    background-attachment: scroll; /* Fixed attachment can be janky on mobile */
+  }
+  html.webp .landing-section {
+    background-image: url('img/bg-mobile.webp');
+  }
+  .landing-overlay {
+    padding: 24px 18px;
+    border-radius: 12px;
+  }
+}
+
+/* Respect reduced motion - disable parallax-like effects */
+@media (prefers-reduced-motion: reduce) {
+  .landing-section {
+    background-attachment: scroll;
+  }
+}

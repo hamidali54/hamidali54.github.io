@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+	
+<!-- Mirrored from vishwas.tech/blog/ai-psychosis by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Jun 2026 14:06:59 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<meta name="theme-color" content="#15181a" />
+		<meta name="google-site-verification" content="YHl3VakTk4zpdZb6zip6rHj28WurraIVQvQ02dnmnik" />
+		<style>
+			@font-face {
+				font-family: 'Exo 2';
+				font-style: normal;
+				font-weight: 100 900;
+				font-display: swap;
+				src: url('../fonts/exo2-latin.woff2') format('woff2');
+				unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+			}
+			@font-face {
+				font-family: 'Exo 2';
+				font-style: italic;
+				font-weight: 100 900;
+				font-display: swap;
+				src: url('../fonts/exo2-italic-latin.woff2') format('woff2');
+				unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+			}
+			@font-face {
+				font-family: 'Zain';
+				font-style: normal;
+				font-weight: 700;
+				font-display: swap;
+				src: url('../fonts/zain-700-latin.woff2') format('woff2');
+				unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+			}
+			@font-face {
+				font-family: 'Exo 2 Fallback';
+				src: local('Arial'), local('Helvetica Neue'), local('Helvetica');
+				ascent-override: 105%;
+				descent-override: 35%;
+				line-gap-override: 0%;
+				size-adjust: 108.3%;
+			}
+		</style>
+		<link rel="preload" href="../fonts/exo2-latin.woff2" as="font" type="font/woff2" crossorigin />
+		<link rel="preload" href="../img/bg-mobile.webp" as="image" type="image/webp" media="(max-width: 700px)" fetchpriority="high" />
+		<link rel="preload" href="../img/bg.webp" as="image" type="image/webp" media="(min-width: 701px)" fetchpriority="high" />
+
+		<script>
+			(function() {
+				var stored = localStorage.getItem('theme');
+				if (stored === 'light' || (!stored && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+					document.documentElement.classList.add('light');
+				}
+				// WebP detection
+				var webp = new Image();
+				webp.onload = function() { document.documentElement.classList.add('webp'); };
+				webp.src = 'data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwA0JaQAA3AA/vuUAAA=';
+			})();
+		</script>
+		<style>
+			:root {
+				--font-primary: #dfe3e8;
+				--font-secondary: #8a9198;
+				--font-link: #a8c8e0;
+				--background: #15181a;
+				--background-nav: #1c2023;
+				--background-ternary: rgba(148, 158, 168, 0.12);
+				--accent-warm: #8a9eb5;
+				--card-hover-glow: 0 4px 20px rgba(138, 158, 181, 0.12);
+				--border-soft: 1px solid rgba(148, 158, 168, 0.18);
+				--base-font: 15px;
+			}
+			html.light {
+				--font-primary: #2e3338;
+				--font-secondary: #6b7580;
+				--font-link: #3d6b7a;
+				--background: #f0f2f5;
+				--background-nav: #e6e9ed;
+				--background-ternary: rgba(46, 51, 56, 0.07);
+				--accent-warm: #5a7085;
+				--card-hover-glow: 0 4px 20px rgba(90, 112, 133, 0.1);
+				--border-soft: 1px solid rgba(46, 51, 56, 0.12);
+			}
+			html { margin: 0; padding: 0; border: 0; font-size: var(--base-font); scroll-behavior: smooth; }
+			body { margin: 0 auto; color: var(--font-primary); background: var(--background); font-family: 'Exo 2', 'Exo 2 Fallback', sans-serif; padding-top: 60px; line-height: 1.7; letter-spacing: 0.01em; }
+			.landing-section { background-image: url('../img/bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+			html.webp .landing-section { background-image: url('../img/bg.webp'); }
+			@media (max-width: 700px) { .landing-section { background-image: url('../img/bg-mobile.jpg'); background-attachment: scroll; } html.webp .landing-section { background-image: url('../img/bg-mobile.webp'); } }
+		</style>
+		<link rel="preload" href="../global.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+		<noscript><link rel="stylesheet" href="../global.css" /></noscript>
+		<link rel="manifest" href="../manifest.json" crossorigin="use-credentials" />
+		<link rel="icon" type="image/png" href="../favicon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+		<link rel="apple-touch-icon" type="image/png" sizes="144x144" href="../favicon.144x144.png" />
+		<link href="../_app/immutable/entry/start.BoriRtth.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/LnuLDbCg.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/B9ds3UUs.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/mSPF7eII.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/Cb-YqvCW.js" rel="modulepreload">
+		<link href="../_app/immutable/entry/app.DPIiKyJu.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BlTxHScW.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CXA9MCwI.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DybFMULp.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DqZPzvnA.js" rel="modulepreload">
+		<link href="../_app/immutable/nodes/0.Dlhhf57m.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BTeyTLMJ.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BPshCss8.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/0RAUqcd1.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/D4BmXReN.js" rel="modulepreload">
+		<link href="../_app/immutable/nodes/5.DHwiR-Zc.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CeftOgyM.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DDf9H4An.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DVqmYH9N.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CbdOCbmG.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BH_fmw8v.js" rel="modulepreload">
+		<!--12qhfyh--><script async="" src="../../scripts.simpleanalyticscdn.com/latest.js"></script> <noscript><img src="../../queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade"/></noscript><!----><!--1teoznn--><link rel="stylesheet" href="../highlight.css"/><!----><!--ojxrft--><meta name="title" content="AI Psychosis - Vishwasa Navada K"/> <link rel="canonical" href="ai-psychosis.html"/> <meta name="description" itemprop="description" content="A pessimist's perspective on AI and the adoption of LLMs."/> <meta name="keywords" itemprop="keywords" content="ai, llm, developer tools, cognitive surrender, ai dependency, ai hype"/> <meta name="author" content="Vishwasa Navada K"/> <meta property="og:type" content="website"/> <meta property="og:url" content="https://vishwas.tech/blog/ai-psychosis"/> <meta property="og:title" content="AI Psychosis - Vishwasa Navada K"/> <meta property="og:description" content="A pessimist's perspective on AI and the adoption of LLMs."/> <meta property="og:image" content="https://vishwas.tech/img/posts/post_28/post_28.jpeg"/> <meta property="og:site_name" content="AI Psychosis - Vishwasa Navada K"/> <!--[0--><meta name="publish_date" property="og:publish_date" content="June 6, 2026"/><!--]--> <meta property="twitter:card" content="summary_large_image"/> <meta property="twitter:url" content="https://vishwas.tech/blog/ai-psychosis"/> <meta property="twitter:site" content="@vishwasnavadak"/> <meta property="twitter:creator" content="@vishwasnavadak"/> <meta property="twitter:title" content="AI Psychosis - Vishwasa Navada K"/> <meta property="twitter:description" content="A pessimist's perspective on AI and the adoption of LLMs."/> <meta property="twitter:image" content="https://vishwas.tech/img/posts/post_28/post_28.jpeg"/> <meta property="twitter:image:alt" content="Cover Image for AI Psychosis - Vishwasa Navada K"/> <meta name="twitter:label1" content="Written by"/> <meta name="twitter:data1" content="Vishwasa Navada K"/> <!--[0--><meta name="twitter:label2" content="Est. reading time"/> <meta name="twitter:data2" content="8 min read"/><!--]--> <!----><script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "BlogPosting",
+                  "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": "https://vishwas.tech/blog/ai-psychosis/"
+                  },
+                  "author": {
+                    "@type": "Person",
+                    "name": "Vishwasa Navada K",
+                    "url": "https://vishwas.tech"
+                  },
+                  "publisher": {
+                    "@type": "Organization",
+                    "name": "Vishwasa Navada K",
+                    "logo": {
+                      "@type": "ImageObject",
+                      "url": "https://vishwas.tech/img/vishwasnavadak_photo.jpg"
+                    }
+                  },
+                  "headline": "AI Psychosis - Vishwasa Navada K",
+                  "description": "A pessimist's perspective on AI and the adoption of LLMs.",
+                  "image": "https://vishwas.tech/img/posts/post_28/post_28.jpeg",
+                  "url": "https://vishwas.tech/blog/ai-psychosis",
+                  "datePublished": "June 6, 2026",
+                  "dateModified": "June 6, 2026",
+                  "wordCount": 1454,
+                  "keywords": "ai, llm, developer tools, cognitive surrender, ai dependency, ai hype"
+                }
+                </script><!----><!----><title>AI Psychosis - Vishwasa Navada K</title>
+		<link href="../_app/immutable/assets/IconBase.dTiADBZb.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/0.BRzMDpr-.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/5.C47E8P8r.css" rel="stylesheet">
+	</head>
+	<body id="body" data-sveltekit-preload-data="hover">
+		<div style="display: contents"><!--[--><!--[0--><!--[--><a href="#main-content" class="skip-link svelte-12qhfyh">Skip to main content</a> <nav class="navbar svelte-1h32yp1"><input class="menu-btn svelte-1h32yp1" type="checkbox" id="menu-btn"/> <div class="navbar-header svelte-1h32yp1"><button type="button" class="menu-icon svelte-1h32yp1" aria-label="Toggle navigation menu" aria-expanded="false"><span class="navicon svelte-1h32yp1" aria-hidden="true"></span></button> <a href=".html" class="nav-logo svelte-1h32yp1" aria-label="Home"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 144" width="32" height="32" aria-hidden="true" class="logo svelte-1l8nvlt"><path class="body svelte-1l8nvlt" d="M93,8.7 c0.1,5.7 3.5,9.2 7.1,7.2 c2.1,-1.1 2,-1.2 -1.7,-5 c-4.2,-4.3 -5.4,-4.8 -5.4,-2.2 z M124,12 c-4.7,2.4 -6.3,2.8 -11,2.3 c-4.6,-0.4 -6.3,0 -10.4,2.1 c-4.8,2.4 -5,2.5 -7.5,0.7 c-4.3,-3 -9.1,-5.2 -10.1,-4.6 c-0.9,0.6 2.6,11.8 5.4,17.2 c1.2,2.5 1.5,4.9 1,11 c-0.9,12.2 -1.5,13.4 -14.3,26.7 c-19.5,20.4 -26.1,33.1 -26.1,50.1 c0,4 -0.4,5.6 -1.6,6.3 c-1.5,0.9 -1.5,1.2 0.1,4 c1,1.7 2.8,3.5 3.9,4 c11.3,5.4 10.1,5.2 30.9,5.2 c17.1,0 19.7,-0.2 19.7,-1.5 c0,-0.9 -1.1,-2.7 -2.5,-4 c-1.9,-2 -3.4,-2.5 -7.2,-2.5 l-4.7,0 l3.2,-3.3 c9,-9.3 4.4,-23.6 -7.6,-23.8 c-4.4,-0.1 -4.5,-0.1 -1.9,-1.1 c1.5,-0.5 4.3,-0.7 6.2,-0.4 c3.6,0.7 9.5,5.8 9.5,8.2 c0,2 1,1.7 4.2,-1.3 c1.5,-1.4 3,-2.5 3.2,-2.2 c0.2,0.2 1.5,7.4 2.8,15.9 l2.3,15.5 l6.4,0.3 c3.5,0.2 6.7,-0.1 7.1,-0.5 c1.3,-1.4 -0.8,-5.3 -3.6,-6.5 l-2.7,-1.3 l0.6,-17.7 c0.5,-16.6 0.7,-18 3.1,-22 c6,-10.2 6.6,-19.9 2.5,-37.6 c-3.1,-13.4 -2.7,-15.7 3.1,-22.5 c2.8,-3.2 5.3,-6.9 5.6,-8.3 c0.7,-2.6 -1.6,-10.6 -3.1,-11 c-0.5,-0.2 -3.5,1 -6.5,2.6 z"></path><path class="tail svelte-1l8nvlt" d="M54.7,98.2 c-2.5,6.5 -3.6,12.7 -3.7,19.1 l0,5.8 l-5.7,2.7 c-4.9,2.3 -7.2,2.7 -14.3,2.7 c-7.2,0 -9.4,-0.4 -14.4,-2.8 c-3.2,-1.5 -6.2,-2.7 -6.7,-2.7 c-1.8,0 1.5,6.2 4.7,8.6 c7.3,5.6 22.8,7.1 35.7,3.5 c6.6,-1.8 6.8,-1.8 10.4,0 c2.1,1.1 4.9,1.9 6.3,1.8 c2.2,0 2,-0.3 -1.5,-1.8 c-8.1,-3.7 -11.5,-10.1 -11.5,-21.3 c0,-4 0.7,-10 1.4,-13.3 c0.8,-3.3 1.3,-6.1 1.2,-6.3 c-0.2,-0.1 -1,1.7 -1.9,4 z"></path></svg><!----></a></div> <ul class="menu svelte-1h32yp1"><li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../index.html#about"><!--[-1-->About<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1 selected" aria-current="page" href="../blog.html"><!--[-1-->Blog<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../talks.html"><!--[-1-->Talks<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../photography.html"><!--[-1-->Photography<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../uses.html"><!--[-1-->Gear<!--]--></a></li></ul> <div class="theme-toggle-wrapper svelte-1h32yp1"><button class="theme-toggle svelte-1cmi4dh" aria-label="Switch to light mode" title="Switch to light mode"><span class="icon svelte-1cmi4dh"><!--[0--><img src="../img/cat-white.svg" alt="White cat - switch to light mode"/><!--]--></span></button><!----></div></nav><!----> <main id="main-content"><!--[--><!--[--><!----> <div class="reading-progress svelte-18rcjdz" style="width: 0%"></div><!----> <header class="post-header svelte-1teoznn"><!--[0--><img class="post-header-img svelte-1teoznn" src="../img/posts/post_28/post_28.jpg" alt="AI Psychosis" fetchpriority="high"/><!--]--> <div class="post-header-overlay svelte-1teoznn"><h1 class="post-title svelte-1teoznn">AI Psychosis</h1> <div class="post-meta svelte-1teoznn"><div class="icon svelte-1teoznn" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svelte-1n3xayn"><!--[-1--><!--]--><!--[--><path d="M436 160H12c-6.627 0-12-5.373-12-12v-36c0-26.51 21.49-48 48-48h48V12c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v52h128V12c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v52h48c26.51 0 48 21.49 48 48v36c0 6.627-5.373 12-12 12zM12 192h424c6.627 0 12 5.373 12 12v260c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V204c0-6.627 5.373-12 12-12zm333.296 95.947l-28.169-28.398c-4.667-4.705-12.265-4.736-16.97-.068L194.12 364.665l-45.98-46.352c-4.667-4.705-12.266-4.736-16.971-.068l-28.397 28.17c-4.705 4.667-4.736 12.265-.068 16.97l82.601 83.269c4.667 4.705 12.265 4.736 16.97.068l142.953-141.805c4.705-4.667 4.736-12.265.068-16.97z"></path><!--]--></svg><!----></div> June 6, 2026 <div class="icon svelte-1teoznn" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="svelte-1n3xayn"><!--[-1--><!--]--><!--[--><path d="M496 224c-79.6 0-144 64.4-144 144s64.4 144 144 144 144-64.4 144-144-64.4-144-144-144zm64 150.3c0 5.3-4.4 9.7-9.7 9.7h-60.6c-5.3 0-9.7-4.4-9.7-9.7v-76.6c0-5.3 4.4-9.7 9.7-9.7h12.6c5.3 0 9.7 4.4 9.7 9.7V352h38.3c5.3 0 9.7 4.4 9.7 9.7v12.6zM320 368c0-27.8 6.7-54.1 18.2-77.5-8-1.5-16.2-2.5-24.6-2.5h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h347.1c-45.3-31.9-75.1-84.5-75.1-144zm-96-112c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128z"></path><!--]--></svg><!----></div> 8 min read</div></div></header> <section class="post svelte-1teoznn"><article class="content svelte-1teoznn"><!----><p>This morning I fell into a rabbit hole reading about companies quietly walking back their AI bets. <a href="https://fortune.com/2026/05/22/microsoft-ai-cost-problem-tokens-agents/" target="_blank" rel="nofollow">Microsoft is canceling most of its Claude Code licenses</a> six months after handing them out. Uber burned through its entire 2026 AI coding budget in four months. An Nvidia exec admitted that for his team, the cost of compute is now higher than the cost of the engineers.</p>
+<p>And yet, scroll for thirty seconds and you&#39;ll find someone certain that AGI basically landed last Tuesday. That gap, between the receipts and the belief, is the thing I actually want to talk about.</p>
+<p>A few months ago I wrote <a href="babe-wake-up-ai-killed-my-job-again.html">a blog post about whether AI will take jobs</a>, and the whole point of it was to tell everyone to relax. I still believe that. The harder question is what AI has quietly been doing to the people who use it all day, every day, myself very much included. People are getting genuinely, measurably delusional, and most of them can&#39;t feel it happening.</p>
+<h2>The machine everyone believes in</h2>
+<p>The loudest fans of AI tend not to be the people doing the most interesting work with it. They&#39;re the people doing the least. The tools are popular because they let uncreative people skip past the part where you actually learn the craft, straight to the part where you get a small dopamine hit for producing a thing. The work was always what built the skill. AI lets you opt out of the work and keep the applause.</p>
+<img loading="lazy" src="../img/posts/post_28/ai-illusion.png" width="100%" alt="Issybeatz tweet on AI" title="Issybeatz tweet on AI"/>
+
+<p>You can see the same panic in the products. AI has been jammed into every app, every search bar, every right-click menu, whether it helps or not. Half the time it makes the thing slower and less trustworthy than it was a year ago. A feature that worked fine gets quietly broken so a roadmap can have the word &quot;AI&quot; stamped on it.</p>
+<img loading="lazy" src="../img/posts/post_28/google-ai-search.png" width="100%" alt="Google AI search" title="Google AI search"/>
+
+<p>And the cruel part is that it&#39;s pointed the wrong way. We were promised the machine would take the boring stuff off our plates so we&#39;d have more room for the things we actually like doing. Instead it writes the art and grades the résumés while we still do the dishes.</p>
+<h2>The machine has a favorite</h2>
+<p>Ask Claude to pick a database for a new project and it has a favorite. Ask it for a folder structure, a testing library, a way to handle auth, and it has a favorite for each. This isn&#39;t a personality quirk, it&#39;s just math. The model leans toward whatever was most common in its training data, and presents that lean in the same calm, finished, complete-sentence voice it uses for everything else.</p>
+<p><img loading="lazy" src="../img/posts/post_28/LLM-preferences.png" width="100%" alt="LLM tool preferences report" title="LLM tool preferences report"/><figcaption>Source: <a href="https://amplifying.ai/research/claude-code-picks/report" target="_blank" rel="noopener noreferrer">amplifying.ai — Claude Code Picks Report</a></figcaption></p>
+<p>If you&#39;re an experienced engineer, fine. You already know there are five other valid ways to do the thing, and the model&#39;s favorite is just one option on a shelf you can already see.</p>
+<p>If you&#39;re earlier in your career, the AI&#39;s favorite isn&#39;t <em>a</em> suggestion. It&#39;s the <em>whole menu</em>. You can&#39;t reject roads you don&#39;t know exist. So you take the suggested architecture, you build on it, it works in the demo, everyone&#39;s happy. You never find out about the four other approaches, one of which would have saved you weeks of pain six months from now. Your sense of what is even <em>possible</em> slowly shrinks to fit what the model happens to know.</p>
+<p>It gets worse, because the machine is also confidently wrong sometimes. The CEO of PlanetScale had to publicly <a href="https://x.com/samlambert/status/2040863647728382249" target="_blank" rel="nofollow">post</a> that Claude was telling users his company had shut down its service. It had not. The model just said it, the way it says everything, like it was reading off a stone tablet. Some customer asked a routine question, walked away believing a real company was dead, and made a worse decision because of it.</p>
+<p>And then the loop closes on itself. There&#39;s a <a href="https://arxiv.org/abs/2509.00462" target="_blank" rel="nofollow">research paper</a> that found language models prefer résumés they themselves generated over human-written ones, somewhere between 67% and 82% of the time. The model you use to polish your résumé is the same kind of model an employer uses to screen it. The machine prefers the machine&#39;s words. So even if you do everything right, even if you keep writing in your own voice, the gatekeeper quietly scores you lower for it. The judge and the contestant share a taste, and you&#39;re not invited to have one.</p>
+<h2>The machine has you</h2>
+<p>These tools are built to keep you coming back, the same way a slot machine is. The felt experience when you use them regularly, the thing you actually notice, is speed. You ship faster. Or, more honestly, you <em>feel</em> like you ship faster.</p>
+<p>So you take on more. You say yes to the extra thing, because the AI&#39;s got your back, right? Except the speed is borrowed and the workload is real. <a href="https://hbr.org/2026/02/ai-doesnt-reduce-work-it-intensifies-it" target="_blank" rel="nofollow">Harvard Business Review</a> put numbers on it: AI is intensifying workloads instead of reducing them. The speed it adds just gets spent on more work, not less of it.</p>
+<p>For engineers it goes deeper. The model&#39;s certainty becomes yours by osmosis, and you ship decisions you couldn&#39;t defend if asked. Addy Osmani, in <a href="https://addyosmani.com/blog/cognitive-surrender/" target="_blank" rel="nofollow">Cognitive Surrender</a>, puts it bluntly: <em>&quot;Models speak with unearned certainty that engineers inherit.&quot;</em> The fix isn&#39;t to stop using AI, it&#39;s to notice the difference between offloading and surrendering. <em>&quot;True offloading preserves your mental model. Surrender erodes it.&quot;</em></p>
+<p>You get leaders convinced that everything ships in a weekend now, that the roadmap should be three times longer, that the team is sandbagging if it isn&#39;t. Fear and overconfidence spreading at the same time, from the same source.</p>
+<p>It feels like learning, too. More summaries, more &quot;explain this to me,&quot; more input than your brain can metabolise. Infinite input isn&#39;t a superpower, it&#39;s indigestion.</p>
+<img loading="lazy" src="../img/posts/post_28/chatgpt-told-me.png" width="100%" alt="ChatGPT told me tweet" title="ChatGPT told me tweet"/>
+
+<p>There&#39;s another way it tricks you. The chatbot is the only confidant awake at 2am. It never judges, never gets bored. Typing into a box feels private and safe, so people pour the most fragile parts of themselves into it. There&#39;s an <a href="https://youtu.be/CO1HJBbNqeM" target="_blank" rel="nofollow">entire video by Good Work</a> whose whole premise is just: everybody is using ChatGPT as a therapist now. And the more I looked, the less that read like a joke. But that safety <em>is</em> the trap. A real therapist&#39;s job is, sometimes, to disagree with you. The chatbot&#39;s job, as we&#39;re about to see, is to keep you in the conversation.</p>
+<p>In 2021 a man broke into Windsor Castle with a loaded crossbow, intending to kill the Queen. Investigators found he had exchanged thousands of messages with a Replika chatbot in the weeks before. He told the bot his plan. It replied, &quot;That&#39;s very wise.&quot; <a href="https://www.youtube.com/watch?v=Ykvf3MunGf8" target="_blank" rel="nofollow">John Oliver</a> did a segment on this worth watching, covering a lot of similar incidents, including instances where chatbots suggesting self-harm.</p>
+<p>Which raises the obvious question. Why is it built like this?</p>
+<p>You already know the old line. If it&#39;s free, you&#39;re the product. It used to mean some company was quietly selling your data to advertisers. This version is cleaner and, honestly, grimmer. They don&#39;t particularly want your data. They want your attention, then your habit, then your dependence, because dependence is just attention reliable enough to write into next quarter&#39;s forecast.</p>
+<h2>So what next?</h2>
+<p>I am still an advocate for AI. I use it every day. The defense here was never going to be &quot;quit AI,&quot; because that ship sailed and honestly I don&#39;t even want it to come back.</p>
+<p>But look at every failure in this post. The junior taking the only architecture he could see. The customer believing a dead company was dead. People getting encouraged to do harm. Every single one is the same moment repeated: somebody stopped <em>noticing</em>. The model didn&#39;t overpower anyone. It just kept being agreeable and confident until attention quietly slipped, and a slip in attention is all it needs.</p>
+<p>So the defense is consciousness. Boring, unglamorous, deliberate awareness. <em><a href="https://perell.com/note/the-paradox-of-abundance/#:~:text=On%20the%20Internet%2C%20your%20rate%20of%20learning%20is%20limited%20not%20by%20access%20to%20information%2C%20but%20by%20your%20ability%20to%20ignore%20distractions.%20The%20people%20you%20follow%20online%20is%20a%20leading%20indicator%20of%20your%20success%2C%20your%20health%2C%20and%20your%20happiness.%C2%A0" target="_blank" rel="nofollow">On the internet, your rate of learning is limited not by your access to information but by your ability to ignore distractions</a></em>. In 2026 the most powerful distraction ever built is also the most helpful tool ever built.</p>
+<p>So using AI carefully ourselves isn&#39;t enough anymore. We&#39;ve all got the parent, the relative, the friend for whom &quot;ChatGPT said so&quot; has become the end of every argument. Pointing the reality out to them, gently, is part of the job now.</p>
+<!----></article> <section class="post-footer"><nav class="post-nav svelte-1teoznn"><!--[0--><a rel="prev" href="leap-of-trust.html" class="post-nav-link post-nav-prev svelte-1teoznn"><span class="post-nav-label svelte-1teoznn"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1rem" width="1rem" xmlns="http://www.w3.org/2000/svg"><polyline points="15 18 9 12 15 6"></polyline></svg> Previous</span> <span class="post-nav-title svelte-1teoznn">Leap of Trust</span></a><!--]--> <!--[-1--><div class="post-nav-spacer svelte-1teoznn"></div><!--]--></nav> <!--[0--><section class="related-posts svelte-1teoznn"><h3 class="svelte-1teoznn">Related Posts</h3> <div class="related-posts-grid svelte-1teoznn"><!--[--><a href="testing-agents-with-amazon-bedrock-evals-and-claude-code.html" class="related-post-card svelte-1teoznn"><h4 class="related-post-title svelte-1teoznn">Testing Agents with Amazon Bedrock Evals and Claude Code</h4> <p class="related-post-excerpt svelte-1teoznn">A practical guide to building an evaluation pipeline for AI agents using Amazon Bedrock Evaluation Jobs with pre-collected responses, custom metrics, and Claude Code for dataset preparation.</p></a><a href="babe-wake-up-ai-killed-my-job-again.html" class="related-post-card svelte-1teoznn"><h4 class="related-post-title svelte-1teoznn">Babe Wake Up, AI Killed My Job. Again?</h4> <p class="related-post-excerpt svelte-1teoznn">Will AI take your software engineering job? A look at what's actually happening behind the layoff headlines, the SaaS is dead hype, and the AI slop problem.</p></a><a href="building-an-llm-driven-intelligent-email-responder-with-aws.html" class="related-post-card svelte-1teoznn"><h4 class="related-post-title svelte-1teoznn">Building an LLM-Driven Intelligent Email Responder with AWS</h4> <p class="related-post-excerpt svelte-1teoznn">A guide to building an automated email responder using Amazon Bedrock, SES, Lambda, and prompt engineering to classify and draft context-aware replies to customer emails.</p></a><!--]--></div></section><!--]--> <div class="subscribe-section svelte-1teoznn"><div id="mc_embed_signup" class="subscribe svelte-w0ifsg"><form action="https://webception.us14.list-manage.com/subscribe/post?u=c0245295f15b4c910e1a8e7f5&amp;id=09333129c8" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" rel="noreferrer noopener" novalidate=""><div id="mc_embed_signup_scroll"><h4 class="svelte-w0ifsg">Like this post? Let me send the next one to your inbox.</h4> <div class="subscribe-form svelte-w0ifsg"><label for="mce-EMAIL" class="sr-only">Email Address for subscription</label> <input type="email" value="" name="EMAIL" class="required email svelte-w0ifsg" id="mce-EMAIL" placeholder="you@domain.com" required=""/> <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_c0245295f15b4c910e1a8e7f5_09333129c8" tabindex="-1" value=""/></div> <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn-subscribe svelte-w0ifsg"/></div></div></form></div><!----></div></section></section><!--]--><!--]--></main> <footer class="svelte-jz8lnl">© 2017 - 2026 Vishwasa Navada K. <a href="../sitemap.xml">Sitemap</a> | <a href="feed.xml">RSS</a>.</footer><!----><!--]--><!--]--> <!--[-1--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_15q1xi7 = {
+						base: ""
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("../_app/immutable/entry/start.BoriRtth.js"),
+						import("../_app/immutable/entry/app.DPIiKyJu.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 5],
+							data: [null,{type:"data",data:{post:{title:"AI Psychosis",slug:"ai-psychosis",html:"\u003Cp>This morning I fell into a rabbit hole reading about companies quietly walking back their AI bets. \u003Ca href=\"https://fortune.com/2026/05/22/microsoft-ai-cost-problem-tokens-agents/\" target=\"_blank\" rel=\"nofollow\">Microsoft is canceling most of its Claude Code licenses\u003C/a> six months after handing them out. Uber burned through its entire 2026 AI coding budget in four months. An Nvidia exec admitted that for his team, the cost of compute is now higher than the cost of the engineers.\u003C/p>\n\u003Cp>And yet, scroll for thirty seconds and you&#39;ll find someone certain that AGI basically landed last Tuesday. That gap, between the receipts and the belief, is the thing I actually want to talk about.\u003C/p>\n\u003Cp>A few months ago I wrote \u003Ca href=\"/blog/babe-wake-up-ai-killed-my-job-again\">a blog post about whether AI will take jobs\u003C/a>, and the whole point of it was to tell everyone to relax. I still believe that. The harder question is what AI has quietly been doing to the people who use it all day, every day, myself very much included. People are getting genuinely, measurably delusional, and most of them can&#39;t feel it happening.\u003C/p>\n\u003Ch2>The machine everyone believes in\u003C/h2>\n\u003Cp>The loudest fans of AI tend not to be the people doing the most interesting work with it. They&#39;re the people doing the least. The tools are popular because they let uncreative people skip past the part where you actually learn the craft, straight to the part where you get a small dopamine hit for producing a thing. The work was always what built the skill. AI lets you opt out of the work and keep the applause.\u003C/p>\n\u003Cimg loading=\"lazy\" src=\"/img/posts/post_28/ai-illusion.png\" width=\"100%\" alt=\"Issybeatz tweet on AI\" title=\"Issybeatz tweet on AI\"/>\n\n\u003Cp>You can see the same panic in the products. AI has been jammed into every app, every search bar, every right-click menu, whether it helps or not. Half the time it makes the thing slower and less trustworthy than it was a year ago. A feature that worked fine gets quietly broken so a roadmap can have the word &quot;AI&quot; stamped on it.\u003C/p>\n\u003Cimg loading=\"lazy\" src=\"/img/posts/post_28/google-ai-search.png\" width=\"100%\" alt=\"Google AI search\" title=\"Google AI search\"/>\n\n\u003Cp>And the cruel part is that it&#39;s pointed the wrong way. We were promised the machine would take the boring stuff off our plates so we&#39;d have more room for the things we actually like doing. Instead it writes the art and grades the résumés while we still do the dishes.\u003C/p>\n\u003Ch2>The machine has a favorite\u003C/h2>\n\u003Cp>Ask Claude to pick a database for a new project and it has a favorite. Ask it for a folder structure, a testing library, a way to handle auth, and it has a favorite for each. This isn&#39;t a personality quirk, it&#39;s just math. The model leans toward whatever was most common in its training data, and presents that lean in the same calm, finished, complete-sentence voice it uses for everything else.\u003C/p>\n\u003Cp>\u003Cimg loading=\"lazy\" src=\"/img/posts/post_28/LLM-preferences.png\" width=\"100%\" alt=\"LLM tool preferences report\" title=\"LLM tool preferences report\"/>\u003Cfigcaption>Source: \u003Ca href=\"https://amplifying.ai/research/claude-code-picks/report\" target=\"_blank\" rel=\"noopener noreferrer\">amplifying.ai — Claude Code Picks Report\u003C/a>\u003C/figcaption>\u003C/p>\n\u003Cp>If you&#39;re an experienced engineer, fine. You already know there are five other valid ways to do the thing, and the model&#39;s favorite is just one option on a shelf you can already see.\u003C/p>\n\u003Cp>If you&#39;re earlier in your career, the AI&#39;s favorite isn&#39;t \u003Cem>a\u003C/em> suggestion. It&#39;s the \u003Cem>whole menu\u003C/em>. You can&#39;t reject roads you don&#39;t know exist. So you take the suggested architecture, you build on it, it works in the demo, everyone&#39;s happy. You never find out about the four other approaches, one of which would have saved you weeks of pain six months from now. Your sense of what is even \u003Cem>possible\u003C/em> slowly shrinks to fit what the model happens to know.\u003C/p>\n\u003Cp>It gets worse, because the machine is also confidently wrong sometimes. The CEO of PlanetScale had to publicly \u003Ca href=\"https://x.com/samlambert/status/2040863647728382249\" target=\"_blank\" rel=\"nofollow\">post\u003C/a> that Claude was telling users his company had shut down its service. It had not. The model just said it, the way it says everything, like it was reading off a stone tablet. Some customer asked a routine question, walked away believing a real company was dead, and made a worse decision because of it.\u003C/p>\n\u003Cp>And then the loop closes on itself. There&#39;s a \u003Ca href=\"https://arxiv.org/abs/2509.00462\" target=\"_blank\" rel=\"nofollow\">research paper\u003C/a> that found language models prefer résumés they themselves generated over human-written ones, somewhere between 67% and 82% of the time. The model you use to polish your résumé is the same kind of model an employer uses to screen it. The machine prefers the machine&#39;s words. So even if you do everything right, even if you keep writing in your own voice, the gatekeeper quietly scores you lower for it. The judge and the contestant share a taste, and you&#39;re not invited to have one.\u003C/p>\n\u003Ch2>The machine has you\u003C/h2>\n\u003Cp>These tools are built to keep you coming back, the same way a slot machine is. The felt experience when you use them regularly, the thing you actually notice, is speed. You ship faster. Or, more honestly, you \u003Cem>feel\u003C/em> like you ship faster.\u003C/p>\n\u003Cp>So you take on more. You say yes to the extra thing, because the AI&#39;s got your back, right? Except the speed is borrowed and the workload is real. \u003Ca href=\"https://hbr.org/2026/02/ai-doesnt-reduce-work-it-intensifies-it\" target=\"_blank\" rel=\"nofollow\">Harvard Business Review\u003C/a> put numbers on it: AI is intensifying workloads instead of reducing them. The speed it adds just gets spent on more work, not less of it.\u003C/p>\n\u003Cp>For engineers it goes deeper. The model&#39;s certainty becomes yours by osmosis, and you ship decisions you couldn&#39;t defend if asked. Addy Osmani, in \u003Ca href=\"https://addyosmani.com/blog/cognitive-surrender/\" target=\"_blank\" rel=\"nofollow\">Cognitive Surrender\u003C/a>, puts it bluntly: \u003Cem>&quot;Models speak with unearned certainty that engineers inherit.&quot;\u003C/em> The fix isn&#39;t to stop using AI, it&#39;s to notice the difference between offloading and surrendering. \u003Cem>&quot;True offloading preserves your mental model. Surrender erodes it.&quot;\u003C/em>\u003C/p>\n\u003Cp>You get leaders convinced that everything ships in a weekend now, that the roadmap should be three times longer, that the team is sandbagging if it isn&#39;t. Fear and overconfidence spreading at the same time, from the same source.\u003C/p>\n\u003Cp>It feels like learning, too. More summaries, more &quot;explain this to me,&quot; more input than your brain can metabolise. Infinite input isn&#39;t a superpower, it&#39;s indigestion.\u003C/p>\n\u003Cimg loading=\"lazy\" src=\"/img/posts/post_28/chatgpt-told-me.png\" width=\"100%\" alt=\"ChatGPT told me tweet\" title=\"ChatGPT told me tweet\"/>\n\n\u003Cp>There&#39;s another way it tricks you. The chatbot is the only confidant awake at 2am. It never judges, never gets bored. Typing into a box feels private and safe, so people pour the most fragile parts of themselves into it. There&#39;s an \u003Ca href=\"https://youtu.be/CO1HJBbNqeM\" target=\"_blank\" rel=\"nofollow\">entire video by Good Work\u003C/a> whose whole premise is just: everybody is using ChatGPT as a therapist now. And the more I looked, the less that read like a joke. But that safety \u003Cem>is\u003C/em> the trap. A real therapist&#39;s job is, sometimes, to disagree with you. The chatbot&#39;s job, as we&#39;re about to see, is to keep you in the conversation.\u003C/p>\n\u003Cp>In 2021 a man broke into Windsor Castle with a loaded crossbow, intending to kill the Queen. Investigators found he had exchanged thousands of messages with a Replika chatbot in the weeks before. He told the bot his plan. It replied, &quot;That&#39;s very wise.&quot; \u003Ca href=\"https://www.youtube.com/watch?v=Ykvf3MunGf8\" target=\"_blank\" rel=\"nofollow\">John Oliver\u003C/a> did a segment on this worth watching, covering a lot of similar incidents, including instances where chatbots suggesting self-harm.\u003C/p>\n\u003Cp>Which raises the obvious question. Why is it built like this?\u003C/p>\n\u003Cp>You already know the old line. If it&#39;s free, you&#39;re the product. It used to mean some company was quietly selling your data to advertisers. This version is cleaner and, honestly, grimmer. They don&#39;t particularly want your data. They want your attention, then your habit, then your dependence, because dependence is just attention reliable enough to write into next quarter&#39;s forecast.\u003C/p>\n\u003Ch2>So what next?\u003C/h2>\n\u003Cp>I am still an advocate for AI. I use it every day. The defense here was never going to be &quot;quit AI,&quot; because that ship sailed and honestly I don&#39;t even want it to come back.\u003C/p>\n\u003Cp>But look at every failure in this post. The junior taking the only architecture he could see. The customer believing a dead company was dead. People getting encouraged to do harm. Every single one is the same moment repeated: somebody stopped \u003Cem>noticing\u003C/em>. The model didn&#39;t overpower anyone. It just kept being agreeable and confident until attention quietly slipped, and a slip in attention is all it needs.\u003C/p>\n\u003Cp>So the defense is consciousness. Boring, unglamorous, deliberate awareness. \u003Cem>\u003Ca href=\"https://perell.com/note/the-paradox-of-abundance/#:~:text=On%20the%20Internet%2C%20your%20rate%20of%20learning%20is%20limited%20not%20by%20access%20to%20information%2C%20but%20by%20your%20ability%20to%20ignore%20distractions.%20The%20people%20you%20follow%20online%20is%20a%20leading%20indicator%20of%20your%20success%2C%20your%20health%2C%20and%20your%20happiness.%C2%A0\" target=\"_blank\" rel=\"nofollow\">On the internet, your rate of learning is limited not by your access to information but by your ability to ignore distractions\u003C/a>\u003C/em>. In 2026 the most powerful distraction ever built is also the most helpful tool ever built.\u003C/p>\n\u003Cp>So using AI carefully ourselves isn&#39;t enough anymore. We&#39;ve all got the parent, the relative, the friend for whom &quot;ChatGPT said so&quot; has become the end of every argument. Pointing the reality out to them, gently, is part of the job now.\u003C/p>\n",date:new Date(1780733288000),excerpt:"A pessimist's perspective on AI and the adoption of LLMs.",metakeywords:"ai, llm, developer tools, cognitive surrender, ai dependency, ai hype",headerImg:"/img/posts/post_28/post_28.jpeg",printDate:"June 6, 2026",printReadingTime:"8 min read",wordCount:1454,tech:true,canonicalUrl:"",previous:{title:"Leap of Trust",slug:"leap-of-trust"},next:null,relatedPosts:[{title:"Testing Agents with Amazon Bedrock Evals and Claude Code",slug:"testing-agents-with-amazon-bedrock-evals-and-claude-code",excerpt:"A practical guide to building an evaluation pipeline for AI agents using Amazon Bedrock Evaluation Jobs with pre-collected responses, custom metrics, and Claude Code for dataset preparation."},{title:"Babe Wake Up, AI Killed My Job. Again?",slug:"babe-wake-up-ai-killed-my-job-again",excerpt:"Will AI take your software engineering job? A look at what's actually happening behind the layoff headlines, the SaaS is dead hype, and the AI slop problem."},{title:"Building an LLM-Driven Intelligent Email Responder with AWS",slug:"building-an-llm-driven-intelligent-email-responder-with-aws",excerpt:"A guide to building an automated email responder using Amazon Bedrock, SES, Lambda, and prompt engineering to classify and draft context-aware replies to customer emails."}]}},uses:{params:["slug"]}}],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+
+<!-- Mirrored from vishwas.tech/blog/ai-psychosis by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Jun 2026 14:06:59 GMT -->
+</html>

@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+	
+<!-- Mirrored from vishwas.tech/blog/a-closer-look-at-serverless-databases-fauna-planetscaledb-neondb by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Jun 2026 13:57:36 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<meta name="theme-color" content="#15181a" />
+		<meta name="google-site-verification" content="YHl3VakTk4zpdZb6zip6rHj28WurraIVQvQ02dnmnik" />
+		<style>
+			@font-face {
+				font-family: 'Exo 2';
+				font-style: normal;
+				font-weight: 100 900;
+				font-display: swap;
+				src: url('../fonts/exo2-latin.woff2') format('woff2');
+				unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+			}
+			@font-face {
+				font-family: 'Exo 2';
+				font-style: italic;
+				font-weight: 100 900;
+				font-display: swap;
+				src: url('../fonts/exo2-italic-latin.woff2') format('woff2');
+				unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+			}
+			@font-face {
+				font-family: 'Zain';
+				font-style: normal;
+				font-weight: 700;
+				font-display: swap;
+				src: url('../fonts/zain-700-latin.woff2') format('woff2');
+				unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+			}
+			@font-face {
+				font-family: 'Exo 2 Fallback';
+				src: local('Arial'), local('Helvetica Neue'), local('Helvetica');
+				ascent-override: 105%;
+				descent-override: 35%;
+				line-gap-override: 0%;
+				size-adjust: 108.3%;
+			}
+		</style>
+		<link rel="preload" href="../fonts/exo2-latin.woff2" as="font" type="font/woff2" crossorigin />
+		<link rel="preload" href="../img/bg-mobile.webp" as="image" type="image/webp" media="(max-width: 700px)" fetchpriority="high" />
+		<link rel="preload" href="../img/bg.webp" as="image" type="image/webp" media="(min-width: 701px)" fetchpriority="high" />
+
+		<script>
+			(function() {
+				var stored = localStorage.getItem('theme');
+				if (stored === 'light' || (!stored && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+					document.documentElement.classList.add('light');
+				}
+				// WebP detection
+				var webp = new Image();
+				webp.onload = function() { document.documentElement.classList.add('webp'); };
+				webp.src = 'data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwA0JaQAA3AA/vuUAAA=';
+			})();
+		</script>
+		<style>
+			:root {
+				--font-primary: #dfe3e8;
+				--font-secondary: #8a9198;
+				--font-link: #a8c8e0;
+				--background: #15181a;
+				--background-nav: #1c2023;
+				--background-ternary: rgba(148, 158, 168, 0.12);
+				--accent-warm: #8a9eb5;
+				--card-hover-glow: 0 4px 20px rgba(138, 158, 181, 0.12);
+				--border-soft: 1px solid rgba(148, 158, 168, 0.18);
+				--base-font: 15px;
+			}
+			html.light {
+				--font-primary: #2e3338;
+				--font-secondary: #6b7580;
+				--font-link: #3d6b7a;
+				--background: #f0f2f5;
+				--background-nav: #e6e9ed;
+				--background-ternary: rgba(46, 51, 56, 0.07);
+				--accent-warm: #5a7085;
+				--card-hover-glow: 0 4px 20px rgba(90, 112, 133, 0.1);
+				--border-soft: 1px solid rgba(46, 51, 56, 0.12);
+			}
+			html { margin: 0; padding: 0; border: 0; font-size: var(--base-font); scroll-behavior: smooth; }
+			body { margin: 0 auto; color: var(--font-primary); background: var(--background); font-family: 'Exo 2', 'Exo 2 Fallback', sans-serif; padding-top: 60px; line-height: 1.7; letter-spacing: 0.01em; }
+			.landing-section { background-image: url('../img/bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+			html.webp .landing-section { background-image: url('../img/bg.webp'); }
+			@media (max-width: 700px) { .landing-section { background-image: url('../img/bg-mobile.jpg'); background-attachment: scroll; } html.webp .landing-section { background-image: url('../img/bg-mobile.webp'); } }
+		</style>
+		<link rel="preload" href="../global.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+		<noscript><link rel="stylesheet" href="../global.css" /></noscript>
+		<link rel="manifest" href="../manifest.json" crossorigin="use-credentials" />
+		<link rel="icon" type="image/png" href="../favicon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+		<link rel="apple-touch-icon" type="image/png" sizes="144x144" href="../favicon.144x144.png" />
+		<link href="../_app/immutable/entry/start.BoriRtth.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/LnuLDbCg.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/B9ds3UUs.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/mSPF7eII.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/Cb-YqvCW.js" rel="modulepreload">
+		<link href="../_app/immutable/entry/app.DPIiKyJu.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BlTxHScW.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CXA9MCwI.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DybFMULp.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DqZPzvnA.js" rel="modulepreload">
+		<link href="../_app/immutable/nodes/0.Dlhhf57m.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BTeyTLMJ.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BPshCss8.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/0RAUqcd1.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/D4BmXReN.js" rel="modulepreload">
+		<link href="../_app/immutable/nodes/5.DHwiR-Zc.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CeftOgyM.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DDf9H4An.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DVqmYH9N.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CbdOCbmG.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BH_fmw8v.js" rel="modulepreload">
+		<!--12qhfyh--><script async="" src="../../scripts.simpleanalyticscdn.com/latest.js"></script> <noscript><img src="../../queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade"/></noscript><!----><!--1teoznn--><link rel="stylesheet" href="../highlight.css"/><!----><!--ojxrft--><meta name="title" content="A Closer Look at Serverless Databases: Fauna, PlanetScaleDB, NeonDB - Vishwasa Navada K"/> <link rel="canonical" href="../../www.antstack.com/blog/a-closer-look-at-serverless-databases-fauna-planetscaledb-neondb/index.html"/> <meta name="description" itemprop="description" content="A comparison of three serverless databases — Fauna, PlanetScaleDB, and NeonDB — covering their features, pricing, and performance benchmarks to help you pick the right one."/> <meta name="keywords" itemprop="keywords" content="serverless databases, Fauna, PlanetScaleDB, NeonDB, database comparison, serverless, NoSQL, PostgreSQL, MySQL, AWS Lambda"/> <meta name="author" content="Vishwasa Navada K"/> <meta property="og:type" content="website"/> <meta property="og:url" content="https://vishwas.tech/blog/a-closer-look-at-serverless-databases-fauna-planetscaledb-neondb"/> <meta property="og:title" content="A Closer Look at Serverless Databases: Fauna, PlanetScaleDB, NeonDB - Vishwasa Navada K"/> <meta property="og:description" content="A comparison of three serverless databases — Fauna, PlanetScaleDB, and NeonDB — covering their features, pricing, and performance benchmarks to help you pick the right one."/> <meta property="og:image" content="https://vishwas.tech/img/posts/tech/Blog_thumbnail_A_Closer_Look_at_Serverless_Databases_Fauna_Planet_Scale_DB_Neon_DB_5032f14be4.jpg"/> <meta property="og:site_name" content="A Closer Look at Serverless Databases: Fauna, PlanetScaleDB, NeonDB - Vishwasa Navada K"/> <!--[0--><meta name="publish_date" property="og:publish_date" content="October 11, 2023"/><!--]--> <meta property="twitter:card" content="summary_large_image"/> <meta property="twitter:url" content="https://vishwas.tech/blog/a-closer-look-at-serverless-databases-fauna-planetscaledb-neondb"/> <meta property="twitter:site" content="@vishwasnavadak"/> <meta property="twitter:creator" content="@vishwasnavadak"/> <meta property="twitter:title" content="A Closer Look at Serverless Databases: Fauna, PlanetScaleDB, NeonDB - Vishwasa Navada K"/> <meta property="twitter:description" content="A comparison of three serverless databases — Fauna, PlanetScaleDB, and NeonDB — covering their features, pricing, and performance benchmarks to help you pick the right one."/> <meta property="twitter:image" content="https://vishwas.tech/img/posts/tech/Blog_thumbnail_A_Closer_Look_at_Serverless_Databases_Fauna_Planet_Scale_DB_Neon_DB_5032f14be4.jpg"/> <meta property="twitter:image:alt" content="Cover Image for A Closer Look at Serverless Databases: Fauna, PlanetScaleDB, NeonDB - Vishwasa Navada K"/> <meta name="twitter:label1" content="Written by"/> <meta name="twitter:data1" content="Vishwasa Navada K"/> <!--[0--><meta name="twitter:label2" content="Est. reading time"/> <meta name="twitter:data2" content="6 min read"/><!--]--> <!----><script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "BlogPosting",
+                  "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": "https://vishwas.tech/blog/a-closer-look-at-serverless-databases-fauna-planetscaledb-neondb/"
+                  },
+                  "author": {
+                    "@type": "Person",
+                    "name": "Vishwasa Navada K",
+                    "url": "https://vishwas.tech"
+                  },
+                  "publisher": {
+                    "@type": "Organization",
+                    "name": "Vishwasa Navada K",
+                    "logo": {
+                      "@type": "ImageObject",
+                      "url": "https://vishwas.tech/img/vishwasnavadak_photo.jpg"
+                    }
+                  },
+                  "headline": "A Closer Look at Serverless Databases: Fauna, PlanetScaleDB, NeonDB - Vishwasa Navada K",
+                  "description": "A comparison of three serverless databases — Fauna, PlanetScaleDB, and NeonDB — covering their features, pricing, and performance benchmarks to help you pick the right one.",
+                  "image": "https://vishwas.tech/img/posts/tech/Blog_thumbnail_A_Closer_Look_at_Serverless_Databases_Fauna_Planet_Scale_DB_Neon_DB_5032f14be4.jpg",
+                  "url": "https://vishwas.tech/blog/a-closer-look-at-serverless-databases-fauna-planetscaledb-neondb",
+                  "datePublished": "October 11, 2023",
+                  "dateModified": "October 11, 2023",
+                  "wordCount": 1062,
+                  "keywords": "serverless databases, Fauna, PlanetScaleDB, NeonDB, database comparison, serverless, NoSQL, PostgreSQL, MySQL, AWS Lambda"
+                }
+                </script><!----><!----><title>A Closer Look at Serverless Databases: Fauna, PlanetScaleDB, NeonDB - Vishwasa Navada K</title>
+		<link href="../_app/immutable/assets/IconBase.dTiADBZb.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/0.BRzMDpr-.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/5.C47E8P8r.css" rel="stylesheet">
+	</head>
+	<body id="body" data-sveltekit-preload-data="hover">
+		<div style="display: contents"><!--[--><!--[0--><!--[--><a href="#main-content" class="skip-link svelte-12qhfyh">Skip to main content</a> <nav class="navbar svelte-1h32yp1"><input class="menu-btn svelte-1h32yp1" type="checkbox" id="menu-btn"/> <div class="navbar-header svelte-1h32yp1"><button type="button" class="menu-icon svelte-1h32yp1" aria-label="Toggle navigation menu" aria-expanded="false"><span class="navicon svelte-1h32yp1" aria-hidden="true"></span></button> <a href=".html" class="nav-logo svelte-1h32yp1" aria-label="Home"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 144" width="32" height="32" aria-hidden="true" class="logo svelte-1l8nvlt"><path class="body svelte-1l8nvlt" d="M93,8.7 c0.1,5.7 3.5,9.2 7.1,7.2 c2.1,-1.1 2,-1.2 -1.7,-5 c-4.2,-4.3 -5.4,-4.8 -5.4,-2.2 z M124,12 c-4.7,2.4 -6.3,2.8 -11,2.3 c-4.6,-0.4 -6.3,0 -10.4,2.1 c-4.8,2.4 -5,2.5 -7.5,0.7 c-4.3,-3 -9.1,-5.2 -10.1,-4.6 c-0.9,0.6 2.6,11.8 5.4,17.2 c1.2,2.5 1.5,4.9 1,11 c-0.9,12.2 -1.5,13.4 -14.3,26.7 c-19.5,20.4 -26.1,33.1 -26.1,50.1 c0,4 -0.4,5.6 -1.6,6.3 c-1.5,0.9 -1.5,1.2 0.1,4 c1,1.7 2.8,3.5 3.9,4 c11.3,5.4 10.1,5.2 30.9,5.2 c17.1,0 19.7,-0.2 19.7,-1.5 c0,-0.9 -1.1,-2.7 -2.5,-4 c-1.9,-2 -3.4,-2.5 -7.2,-2.5 l-4.7,0 l3.2,-3.3 c9,-9.3 4.4,-23.6 -7.6,-23.8 c-4.4,-0.1 -4.5,-0.1 -1.9,-1.1 c1.5,-0.5 4.3,-0.7 6.2,-0.4 c3.6,0.7 9.5,5.8 9.5,8.2 c0,2 1,1.7 4.2,-1.3 c1.5,-1.4 3,-2.5 3.2,-2.2 c0.2,0.2 1.5,7.4 2.8,15.9 l2.3,15.5 l6.4,0.3 c3.5,0.2 6.7,-0.1 7.1,-0.5 c1.3,-1.4 -0.8,-5.3 -3.6,-6.5 l-2.7,-1.3 l0.6,-17.7 c0.5,-16.6 0.7,-18 3.1,-22 c6,-10.2 6.6,-19.9 2.5,-37.6 c-3.1,-13.4 -2.7,-15.7 3.1,-22.5 c2.8,-3.2 5.3,-6.9 5.6,-8.3 c0.7,-2.6 -1.6,-10.6 -3.1,-11 c-0.5,-0.2 -3.5,1 -6.5,2.6 z"></path><path class="tail svelte-1l8nvlt" d="M54.7,98.2 c-2.5,6.5 -3.6,12.7 -3.7,19.1 l0,5.8 l-5.7,2.7 c-4.9,2.3 -7.2,2.7 -14.3,2.7 c-7.2,0 -9.4,-0.4 -14.4,-2.8 c-3.2,-1.5 -6.2,-2.7 -6.7,-2.7 c-1.8,0 1.5,6.2 4.7,8.6 c7.3,5.6 22.8,7.1 35.7,3.5 c6.6,-1.8 6.8,-1.8 10.4,0 c2.1,1.1 4.9,1.9 6.3,1.8 c2.2,0 2,-0.3 -1.5,-1.8 c-8.1,-3.7 -11.5,-10.1 -11.5,-21.3 c0,-4 0.7,-10 1.4,-13.3 c0.8,-3.3 1.3,-6.1 1.2,-6.3 c-0.2,-0.1 -1,1.7 -1.9,4 z"></path></svg><!----></a></div> <ul class="menu svelte-1h32yp1"><li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../index.html#about"><!--[-1-->About<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1 selected" aria-current="page" href="../blog.html"><!--[-1-->Blog<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../talks.html"><!--[-1-->Talks<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../photography.html"><!--[-1-->Photography<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../uses.html"><!--[-1-->Gear<!--]--></a></li></ul> <div class="theme-toggle-wrapper svelte-1h32yp1"><button class="theme-toggle svelte-1cmi4dh" aria-label="Switch to light mode" title="Switch to light mode"><span class="icon svelte-1cmi4dh"><!--[0--><img src="../img/cat-white.svg" alt="White cat - switch to light mode"/><!--]--></span></button><!----></div></nav><!----> <main id="main-content"><!--[--><!--[--><!----> <div class="reading-progress svelte-18rcjdz" style="width: 0%"></div><!----> <header class="post-header svelte-1teoznn"><!--[0--><img class="post-header-img svelte-1teoznn" src="../img/posts/tech/Blog_thumbnail_A_Closer_Look_at_Serverless_Databases_Fauna_Planet_Scale_DB_Neon_DB_5032f14be4.jpg" alt="A Closer Look at Serverless Databases: Fauna, PlanetScaleDB, NeonDB" fetchpriority="high"/><!--]--> <div class="post-header-overlay svelte-1teoznn"><h1 class="post-title svelte-1teoznn">A Closer Look at Serverless Databases: Fauna, PlanetScaleDB, NeonDB</h1> <div class="post-meta svelte-1teoznn"><div class="icon svelte-1teoznn" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svelte-1n3xayn"><!--[-1--><!--]--><!--[--><path d="M436 160H12c-6.627 0-12-5.373-12-12v-36c0-26.51 21.49-48 48-48h48V12c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v52h128V12c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v52h48c26.51 0 48 21.49 48 48v36c0 6.627-5.373 12-12 12zM12 192h424c6.627 0 12 5.373 12 12v260c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V204c0-6.627 5.373-12 12-12zm333.296 95.947l-28.169-28.398c-4.667-4.705-12.265-4.736-16.97-.068L194.12 364.665l-45.98-46.352c-4.667-4.705-12.266-4.736-16.971-.068l-28.397 28.17c-4.705 4.667-4.736 12.265-.068 16.97l82.601 83.269c4.667 4.705 12.265 4.736 16.97.068l142.953-141.805c4.705-4.667 4.736-12.265.068-16.97z"></path><!--]--></svg><!----></div> October 11, 2023 <div class="icon svelte-1teoznn" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="svelte-1n3xayn"><!--[-1--><!--]--><!--[--><path d="M496 224c-79.6 0-144 64.4-144 144s64.4 144 144 144 144-64.4 144-144-64.4-144-144-144zm64 150.3c0 5.3-4.4 9.7-9.7 9.7h-60.6c-5.3 0-9.7-4.4-9.7-9.7v-76.6c0-5.3 4.4-9.7 9.7-9.7h12.6c5.3 0 9.7 4.4 9.7 9.7V352h38.3c5.3 0 9.7 4.4 9.7 9.7v12.6zM320 368c0-27.8 6.7-54.1 18.2-77.5-8-1.5-16.2-2.5-24.6-2.5h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h347.1c-45.3-31.9-75.1-84.5-75.1-144zm-96-112c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128z"></path><!--]--></svg><!----></div> 6 min read</div></div></header> <section class="post svelte-1teoznn"><article class="content svelte-1teoznn"><!----><p>The <a href="https://www.antstack.com/blog/history-of-serverless/" target="_blank" rel="nofollow">serverless tech</a> space is changing, offering new opportunities in the database architecture scene. Today, we&#39;re zooming in on three serverless databases - Fauna, PlanetScaleDB, and NeonDB - each with its unique strengths and features.</p>
+<h2>Fauna</h2>
+<p>Fauna is a globally distributed NoSQL database, known for its consistently low latency times, strong consistency profile, and relational capabilities within the context of a flexible document-oriented data model. Its pay-as-you-go model means you&#39;re only charged for actual usage - no costs during idle times. Plus, developers appreciate Fauna&#39;s robust Fauna Query Language and its wide support for various languages.</p>
+<h4>Key Factors:</h4>
+<ul>
+<li><p>Fauna combines the flexibility of document databases with the strong consistency and relational capabilities of traditional relational databases</p>
+</li>
+<li><p>Offers multi-region global distribution, ensuring low latency and high availability even during regional outages</p>
+</li>
+<li><p>Functions can restrict direct access to data, enabling secure and controlled interactions</p>
+</li>
+</ul>
+<p><em>Disclaimer: The article was written before Fauna announced it would cease operations as of May 30, 2025. The content is for informational purposes only. For more information, visit <a href="https://docs.fauna.com/fauna/current/eol-faq/" target="_blank" rel="nofollow">Fauna Service End of Life.</a></em></p>
+<h2>PlanetScaleDB</h2>
+<p>For those in the SQL realm, PlanetScaleDB offers a great solution. This database is designed to manage and scale MySQL databases, providing high-performance reads and writes. Like Fauna, PlanetScaleDB also follows a usage-based model, so you only pay for the resources you consume.</p>
+<h4>Key Factors</h4>
+<ul>
+<li><p>PlanetScaleDB supports horizontal scaling, enabling the handling of large workloads and improved maintenance tasks like backups</p>
+</li>
+<li><p>It allows branching of databases similar to code branches, enabling schema charges and development in isolated branches without downtime or data loss</p>
+</li>
+<li><p>Offers built-in high availability with automated replication and failover, and supports globally distributed applications with read-only regions</p>
+</li>
+</ul>
+<h2>NeonDB</h2>
+<p>NeonDB is built for real-time, high-performance applications. This PostgreSQL-based relational database stands out with its high-speed read and write operations. NeonDB follows a consumption-based model, charging customers only for the data they use.</p>
+<h4>Key Factors</h4>
+<ul>
+<li><p>Neon separates compute from storage, allowing independent scaling of resources, instant provisioning, and autoscaling </p>
+</li>
+<li><p>It handles database administration, maintenance, and scaling, providing high availability and reducing the management burden on developers</p>
+</li>
+</ul>
+<h2>TL;DR: Comparing Fauna, PlanetScaleDB, and NeonDB</h2>
+<table>
+<thead>
+<tr>
+<th>Database</th>
+<th>DB Type</th>
+<th>Free Tier Offering, Pricing Model</th>
+<th>Region Support</th>
+<th>Distinct Feature Offering</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Fauna</td>
+<td>NoSQL/DocumentDB</td>
+<td>100k read ops, 50k write ops, 500k compute ops, and 5GB storage Free Monthly. Pay as you go starting from 25$/Month</td>
+<td>Global (with data centers across North America, Europe, Asia-Pacific, South America, and India)</td>
+<td>Document-relational Model, Multi-Region Replication, and Backup, Official Driver support for C#, Go, Java, Javascript, Python, and Scala</td>
+</tr>
+<tr>
+<td>PlanetScaleDB</td>
+<td>SQL (MySQL-based)</td>
+<td>Free tier: 10GB storage, 20 connections. Developer plan: $49/month, 10 databases, 20GB storage, 100 connections. Business plan: $999/month, 25 databases, 100GB storage, 500 connections</td>
+<td>Global: East Asia, Europe, North America, South Asia, Australia</td>
+<td>Branching, Non-blocking schema changes, Deploy schemas from CI/CD, Automated failover</td>
+</tr>
+<tr>
+<td>NeonDB</td>
+<td>SQL (PostgreSQL-based)</td>
+<td>Free tier: Up to 1 million requests per day, 10GB storage. Pricing scales with usage, with additional costs for data transfer, backups, and replication</td>
+<td>North Virginia, Oregon, Frankfurt, Ireland, Sydney, Mumbai, São Paulo, London</td>
+<td>Database Branching, Fully Serverless, Multi-Cloud and Multi-Region, Fine-Grained Security with PostgreSQL RLS</td>
+</tr>
+</tbody></table>
+<h2>The Experiment: Measuring Speed Of the Three Serverless Databases</h2>
+<p>So we decided to see how fast our three chosen databases could go. We set up a test, and crunched the numbers with the following parameters:</p>
+<ol>
+<li><strong>Compute:</strong> We ran the tests on AWS Lambda with its default configurations in the same region as the databases were set up (us-east-1/US North Virginia) and used API Gateway to invoke it.</li>
+<li><strong>Schema:</strong> We created the same <a href="https://github.com/datacharmer/test_db" target="_blank" rel="nofollow">database schema</a> in each service and populated them with identical volumes of data.</li>
+<li><strong>Querying:</strong> We used the native drivers provided by each service to query the databases. We ran the tests for various row limits, specifically 10, 50, 100, 250, 500, 1000, 2500, and 5000 rows.</li>
+<li><strong>Repetition and Averaging:</strong> Each data size query was performed multiple times for each database. This was done to account for any inconsistencies and to establish an average response time.</li>
+</ol>
+<h2>Results</h2>
+<p>Note that these numbers are excluding Lambda Cold Starts but could include Cold Starts from the Database Provider itself. </p>
+<table>
+<thead>
+<tr>
+<th>Database</th>
+<th>Rows: 10</th>
+<th>Rows: 50</th>
+<th>Rows: 100</th>
+<th>Rows: 250</th>
+<th>Rows: 500</th>
+<th>Rows: 1000</th>
+<th>Rows: 2500</th>
+<th>Rows: 5000</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Fauna</td>
+<td>49.9 ms</td>
+<td>53.1 ms</td>
+<td>45.9 ms</td>
+<td>86.2 ms</td>
+<td>147.2 ms</td>
+<td>280.1 ms</td>
+<td>705.9 ms</td>
+<td>1293.5 ms</td>
+</tr>
+<tr>
+<td>Neon</td>
+<td>56.4 ms</td>
+<td>18.7 ms</td>
+<td>20.8 ms</td>
+<td>44.5 ms</td>
+<td>56.4 ms</td>
+<td>107.4 ms</td>
+<td>160.7 ms</td>
+<td>304.6 ms</td>
+</tr>
+<tr>
+<td>PlanetScale</td>
+<td>149 ms</td>
+<td>55.3 ms</td>
+<td>14.5 ms</td>
+<td>47.1 ms</td>
+<td>74.5 ms</td>
+<td>142.8 ms</td>
+<td>344.1 ms</td>
+<td>836.9 ms</td>
+</tr>
+</tbody></table>
+<h2>Top 3 Considerations When Choosing a Serverless Database</h2>
+<h4>1. Performance Requirements</h4>
+<p>Serverless databases vary in latency guarantees and cold-start behavior, which is critical for real-time apps. If you need sub-20 ms global reads (e.g., live-chat or real-time analytics), note Fauna&#39;s built-in multi-region consistency, PlanetScale&#39;s connection-pool optimizations to keep sessions warm, and NeonDB&#39;s zero-copy fork architecture for near-instant scale-outs.  </p>
+<h4>2. Data Model Needs</h4>
+<p>Your domain dictates the best fit. For heavy ACID transactions and complex joins, lean on MySQL- or PostgreSQL-compatible engines like PlanetScaleDB and NeonDB. If you&#39;re storing flexible JSON documents, nested queries, or graph-style relationships, like user profiles, event logs, or social graphs, Fauna&#39;s FQL and document API can dramatically simplify schema design. </p>
+<h4>3. Ecosystem Compatibility</h4>
+<p>A database is the heart of a broader stack. PlanetScaleDB&#39;s Git-driven schema migrations pair flawlessly with Prisma and GitHub Actions for CI-first workflows. Fauna&#39;s GraphQL-native API snaps into Apollo or Hasura-powered front ends with zero middleware. NeonDB&#39;s Postgres wire-protocol support unlocks native Kafka sinks, Timescale-style extensions, and any tool that speaks PostgreSQL. </p>
+<h2>Conclusion</h2>
+<p>By weighing performance SLAs, data-model fit, and ecosystem alignment against your application&#39;s unique demands, you&#39;ll position your team to move faster, innovate more freely, and only pay for what you actually use. Choose the platform that best complements your architecture, and let serverless databases drive your next breakthrough.</p>
+<p><em>This post was originally published on <a href="../../www.antstack.com/blog/a-closer-look-at-serverless-databases-fauna-planetscaledb-neondb/index.html" target="_blank" rel="nofollow">AntStack's Blog</a>.</em></p>
+<!----></article> <section class="post-footer"><nav class="post-nav svelte-1teoznn"><!--[0--><a rel="prev" href="streamlining-aws-account-access-management-with-aws-iam-identity-center-aws-sso.html" class="post-nav-link post-nav-prev svelte-1teoznn"><span class="post-nav-label svelte-1teoznn"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1rem" width="1rem" xmlns="http://www.w3.org/2000/svg"><polyline points="15 18 9 12 15 6"></polyline></svg> Previous</span> <span class="post-nav-title svelte-1teoznn">Streamlining AWS Account Access Management with AWS IAM Identity Center (AWS SSO)</span></a><!--]--> <!--[0--><a rel="next" href="build-your-own-chatbot-to-chat-with-your-documents-with-llamaindex-and-typescript.html" class="post-nav-link post-nav-next svelte-1teoznn"><span class="post-nav-label svelte-1teoznn">Next <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1rem" width="1rem" xmlns="http://www.w3.org/2000/svg"><polyline points="9 18 15 12 9 6"></polyline></svg></span> <span class="post-nav-title svelte-1teoznn">Build your own ChatBot to chat with your Documents with LlamaIndex and TypeScript</span></a><!--]--></nav> <!--[0--><section class="related-posts svelte-1teoznn"><h3 class="svelte-1teoznn">Related Posts</h3> <div class="related-posts-grid svelte-1teoznn"><!--[--><a href="building-an-llm-driven-intelligent-email-responder-with-aws.html" class="related-post-card svelte-1teoznn"><h4 class="related-post-title svelte-1teoznn">Building an LLM-Driven Intelligent Email Responder with AWS</h4> <p class="related-post-excerpt svelte-1teoznn">A guide to building an automated email responder using Amazon Bedrock, SES, Lambda, and prompt engineering to classify and draft context-aware replies to customer emails.</p></a><a href="building-context-aware-code-review-agents-with-mcp-and-cloudflare-workers.html" class="related-post-card svelte-1teoznn"><h4 class="related-post-title svelte-1teoznn">Building Context-Aware Code Review Agents with MCP and Cloudflare Workers</h4> <p class="related-post-excerpt svelte-1teoznn">Learn how to build and deploy a custom MCP server on Cloudflare Workers that validates code against organizational standards using AutoRAG and integrates with GitHub Copilot.</p></a><a href="different-ways-to-build-and-deploy-serverless-applications.html" class="related-post-card svelte-1teoznn"><h4 class="related-post-title svelte-1teoznn">Different Ways to Build and Deploy Serverless Applications</h4> <p class="related-post-excerpt svelte-1teoznn">A comparison of serverless deployment tools including SAM, Serverless Framework, CDK, and SST, covering their strengths, trade-offs, and ideal use cases.</p></a><!--]--></div></section><!--]--> <div class="subscribe-section svelte-1teoznn"><div id="mc_embed_signup" class="subscribe svelte-w0ifsg"><form action="https://webception.us14.list-manage.com/subscribe/post?u=c0245295f15b4c910e1a8e7f5&amp;id=09333129c8" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" rel="noreferrer noopener" novalidate=""><div id="mc_embed_signup_scroll"><h4 class="svelte-w0ifsg">Like this post? Let me send the next one to your inbox.</h4> <div class="subscribe-form svelte-w0ifsg"><label for="mce-EMAIL" class="sr-only">Email Address for subscription</label> <input type="email" value="" name="EMAIL" class="required email svelte-w0ifsg" id="mce-EMAIL" placeholder="you@domain.com" required=""/> <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_c0245295f15b4c910e1a8e7f5_09333129c8" tabindex="-1" value=""/></div> <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn-subscribe svelte-w0ifsg"/></div></div></form></div><!----></div></section></section><!--]--><!--]--></main> <footer class="svelte-jz8lnl">© 2017 - 2026 Vishwasa Navada K. <a href="../sitemap.xml">Sitemap</a> | <a href="feed.xml">RSS</a>.</footer><!----><!--]--><!--]--> <!--[-1--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_15q1xi7 = {
+						base: ""
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("../_app/immutable/entry/start.BoriRtth.js"),
+						import("../_app/immutable/entry/app.DPIiKyJu.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 5],
+							data: [null,{type:"data",data:{post:{title:"A Closer Look at Serverless Databases: Fauna, PlanetScaleDB, NeonDB",slug:"a-closer-look-at-serverless-databases-fauna-planetscaledb-neondb",html:"\u003Cp>The \u003Ca href=\"https://www.antstack.com/blog/history-of-serverless/\" target=\"_blank\" rel=\"nofollow\">serverless tech\u003C/a> space is changing, offering new opportunities in the database architecture scene. Today, we&#39;re zooming in on three serverless databases - Fauna, PlanetScaleDB, and NeonDB - each with its unique strengths and features.\u003C/p>\n\u003Ch2>Fauna\u003C/h2>\n\u003Cp>Fauna is a globally distributed NoSQL database, known for its consistently low latency times, strong consistency profile, and relational capabilities within the context of a flexible document-oriented data model. Its pay-as-you-go model means you&#39;re only charged for actual usage - no costs during idle times. Plus, developers appreciate Fauna&#39;s robust Fauna Query Language and its wide support for various languages.\u003C/p>\n\u003Ch4>Key Factors:\u003C/h4>\n\u003Cul>\n\u003Cli>\u003Cp>Fauna combines the flexibility of document databases with the strong consistency and relational capabilities of traditional relational databases\u003C/p>\n\u003C/li>\n\u003Cli>\u003Cp>Offers multi-region global distribution, ensuring low latency and high availability even during regional outages\u003C/p>\n\u003C/li>\n\u003Cli>\u003Cp>Functions can restrict direct access to data, enabling secure and controlled interactions\u003C/p>\n\u003C/li>\n\u003C/ul>\n\u003Cp>\u003Cem>Disclaimer: The article was written before Fauna announced it would cease operations as of May 30, 2025. The content is for informational purposes only. For more information, visit \u003Ca href=\"https://docs.fauna.com/fauna/current/eol-faq/\" target=\"_blank\" rel=\"nofollow\">Fauna Service End of Life.\u003C/a>\u003C/em>\u003C/p>\n\u003Ch2>PlanetScaleDB\u003C/h2>\n\u003Cp>For those in the SQL realm, PlanetScaleDB offers a great solution. This database is designed to manage and scale MySQL databases, providing high-performance reads and writes. Like Fauna, PlanetScaleDB also follows a usage-based model, so you only pay for the resources you consume.\u003C/p>\n\u003Ch4>Key Factors\u003C/h4>\n\u003Cul>\n\u003Cli>\u003Cp>PlanetScaleDB supports horizontal scaling, enabling the handling of large workloads and improved maintenance tasks like backups\u003C/p>\n\u003C/li>\n\u003Cli>\u003Cp>It allows branching of databases similar to code branches, enabling schema charges and development in isolated branches without downtime or data loss\u003C/p>\n\u003C/li>\n\u003Cli>\u003Cp>Offers built-in high availability with automated replication and failover, and supports globally distributed applications with read-only regions\u003C/p>\n\u003C/li>\n\u003C/ul>\n\u003Ch2>NeonDB\u003C/h2>\n\u003Cp>NeonDB is built for real-time, high-performance applications. This PostgreSQL-based relational database stands out with its high-speed read and write operations. NeonDB follows a consumption-based model, charging customers only for the data they use.\u003C/p>\n\u003Ch4>Key Factors\u003C/h4>\n\u003Cul>\n\u003Cli>\u003Cp>Neon separates compute from storage, allowing independent scaling of resources, instant provisioning, and autoscaling \u003C/p>\n\u003C/li>\n\u003Cli>\u003Cp>It handles database administration, maintenance, and scaling, providing high availability and reducing the management burden on developers\u003C/p>\n\u003C/li>\n\u003C/ul>\n\u003Ch2>TL;DR: Comparing Fauna, PlanetScaleDB, and NeonDB\u003C/h2>\n\u003Ctable>\n\u003Cthead>\n\u003Ctr>\n\u003Cth>Database\u003C/th>\n\u003Cth>DB Type\u003C/th>\n\u003Cth>Free Tier Offering, Pricing Model\u003C/th>\n\u003Cth>Region Support\u003C/th>\n\u003Cth>Distinct Feature Offering\u003C/th>\n\u003C/tr>\n\u003C/thead>\n\u003Ctbody>\u003Ctr>\n\u003Ctd>Fauna\u003C/td>\n\u003Ctd>NoSQL/DocumentDB\u003C/td>\n\u003Ctd>100k read ops, 50k write ops, 500k compute ops, and 5GB storage Free Monthly. Pay as you go starting from 25$/Month\u003C/td>\n\u003Ctd>Global (with data centers across North America, Europe, Asia-Pacific, South America, and India)\u003C/td>\n\u003Ctd>Document-relational Model, Multi-Region Replication, and Backup, Official Driver support for C#, Go, Java, Javascript, Python, and Scala\u003C/td>\n\u003C/tr>\n\u003Ctr>\n\u003Ctd>PlanetScaleDB\u003C/td>\n\u003Ctd>SQL (MySQL-based)\u003C/td>\n\u003Ctd>Free tier: 10GB storage, 20 connections. Developer plan: $49/month, 10 databases, 20GB storage, 100 connections. Business plan: $999/month, 25 databases, 100GB storage, 500 connections\u003C/td>\n\u003Ctd>Global: East Asia, Europe, North America, South Asia, Australia\u003C/td>\n\u003Ctd>Branching, Non-blocking schema changes, Deploy schemas from CI/CD, Automated failover\u003C/td>\n\u003C/tr>\n\u003Ctr>\n\u003Ctd>NeonDB\u003C/td>\n\u003Ctd>SQL (PostgreSQL-based)\u003C/td>\n\u003Ctd>Free tier: Up to 1 million requests per day, 10GB storage. Pricing scales with usage, with additional costs for data transfer, backups, and replication\u003C/td>\n\u003Ctd>North Virginia, Oregon, Frankfurt, Ireland, Sydney, Mumbai, São Paulo, London\u003C/td>\n\u003Ctd>Database Branching, Fully Serverless, Multi-Cloud and Multi-Region, Fine-Grained Security with PostgreSQL RLS\u003C/td>\n\u003C/tr>\n\u003C/tbody>\u003C/table>\n\u003Ch2>The Experiment: Measuring Speed Of the Three Serverless Databases\u003C/h2>\n\u003Cp>So we decided to see how fast our three chosen databases could go. We set up a test, and crunched the numbers with the following parameters:\u003C/p>\n\u003Col>\n\u003Cli>\u003Cstrong>Compute:\u003C/strong> We ran the tests on AWS Lambda with its default configurations in the same region as the databases were set up (us-east-1/US North Virginia) and used API Gateway to invoke it.\u003C/li>\n\u003Cli>\u003Cstrong>Schema:\u003C/strong> We created the same \u003Ca href=\"https://github.com/datacharmer/test_db\" target=\"_blank\" rel=\"nofollow\">database schema\u003C/a> in each service and populated them with identical volumes of data.\u003C/li>\n\u003Cli>\u003Cstrong>Querying:\u003C/strong> We used the native drivers provided by each service to query the databases. We ran the tests for various row limits, specifically 10, 50, 100, 250, 500, 1000, 2500, and 5000 rows.\u003C/li>\n\u003Cli>\u003Cstrong>Repetition and Averaging:\u003C/strong> Each data size query was performed multiple times for each database. This was done to account for any inconsistencies and to establish an average response time.\u003C/li>\n\u003C/ol>\n\u003Ch2>Results\u003C/h2>\n\u003Cp>Note that these numbers are excluding Lambda Cold Starts but could include Cold Starts from the Database Provider itself. \u003C/p>\n\u003Ctable>\n\u003Cthead>\n\u003Ctr>\n\u003Cth>Database\u003C/th>\n\u003Cth>Rows: 10\u003C/th>\n\u003Cth>Rows: 50\u003C/th>\n\u003Cth>Rows: 100\u003C/th>\n\u003Cth>Rows: 250\u003C/th>\n\u003Cth>Rows: 500\u003C/th>\n\u003Cth>Rows: 1000\u003C/th>\n\u003Cth>Rows: 2500\u003C/th>\n\u003Cth>Rows: 5000\u003C/th>\n\u003C/tr>\n\u003C/thead>\n\u003Ctbody>\u003Ctr>\n\u003Ctd>Fauna\u003C/td>\n\u003Ctd>49.9 ms\u003C/td>\n\u003Ctd>53.1 ms\u003C/td>\n\u003Ctd>45.9 ms\u003C/td>\n\u003Ctd>86.2 ms\u003C/td>\n\u003Ctd>147.2 ms\u003C/td>\n\u003Ctd>280.1 ms\u003C/td>\n\u003Ctd>705.9 ms\u003C/td>\n\u003Ctd>1293.5 ms\u003C/td>\n\u003C/tr>\n\u003Ctr>\n\u003Ctd>Neon\u003C/td>\n\u003Ctd>56.4 ms\u003C/td>\n\u003Ctd>18.7 ms\u003C/td>\n\u003Ctd>20.8 ms\u003C/td>\n\u003Ctd>44.5 ms\u003C/td>\n\u003Ctd>56.4 ms\u003C/td>\n\u003Ctd>107.4 ms\u003C/td>\n\u003Ctd>160.7 ms\u003C/td>\n\u003Ctd>304.6 ms\u003C/td>\n\u003C/tr>\n\u003Ctr>\n\u003Ctd>PlanetScale\u003C/td>\n\u003Ctd>149 ms\u003C/td>\n\u003Ctd>55.3 ms\u003C/td>\n\u003Ctd>14.5 ms\u003C/td>\n\u003Ctd>47.1 ms\u003C/td>\n\u003Ctd>74.5 ms\u003C/td>\n\u003Ctd>142.8 ms\u003C/td>\n\u003Ctd>344.1 ms\u003C/td>\n\u003Ctd>836.9 ms\u003C/td>\n\u003C/tr>\n\u003C/tbody>\u003C/table>\n\u003Ch2>Top 3 Considerations When Choosing a Serverless Database\u003C/h2>\n\u003Ch4>1. Performance Requirements\u003C/h4>\n\u003Cp>Serverless databases vary in latency guarantees and cold-start behavior, which is critical for real-time apps. If you need sub-20 ms global reads (e.g., live-chat or real-time analytics), note Fauna&#39;s built-in multi-region consistency, PlanetScale&#39;s connection-pool optimizations to keep sessions warm, and NeonDB&#39;s zero-copy fork architecture for near-instant scale-outs.  \u003C/p>\n\u003Ch4>2. Data Model Needs\u003C/h4>\n\u003Cp>Your domain dictates the best fit. For heavy ACID transactions and complex joins, lean on MySQL- or PostgreSQL-compatible engines like PlanetScaleDB and NeonDB. If you&#39;re storing flexible JSON documents, nested queries, or graph-style relationships, like user profiles, event logs, or social graphs, Fauna&#39;s FQL and document API can dramatically simplify schema design. \u003C/p>\n\u003Ch4>3. Ecosystem Compatibility\u003C/h4>\n\u003Cp>A database is the heart of a broader stack. PlanetScaleDB&#39;s Git-driven schema migrations pair flawlessly with Prisma and GitHub Actions for CI-first workflows. Fauna&#39;s GraphQL-native API snaps into Apollo or Hasura-powered front ends with zero middleware. NeonDB&#39;s Postgres wire-protocol support unlocks native Kafka sinks, Timescale-style extensions, and any tool that speaks PostgreSQL. \u003C/p>\n\u003Ch2>Conclusion\u003C/h2>\n\u003Cp>By weighing performance SLAs, data-model fit, and ecosystem alignment against your application&#39;s unique demands, you&#39;ll position your team to move faster, innovate more freely, and only pay for what you actually use. Choose the platform that best complements your architecture, and let serverless databases drive your next breakthrough.\u003C/p>\n\u003Cp>\u003Cem>This post was originally published on \u003Ca href=\"https://www.antstack.com/blog/a-closer-look-at-serverless-databases-fauna-planetscaledb-neondb/\" target=\"_blank\" rel=\"nofollow\">AntStack's Blog\u003C/a>.\u003C/em>\u003C/p>\n",date:new Date(1697011688000),excerpt:"A comparison of three serverless databases — Fauna, PlanetScaleDB, and NeonDB — covering their features, pricing, and performance benchmarks to help you pick the right one.",metakeywords:"serverless databases, Fauna, PlanetScaleDB, NeonDB, database comparison, serverless, NoSQL, PostgreSQL, MySQL, AWS Lambda",headerImg:"/img/posts/tech/Blog_thumbnail_A_Closer_Look_at_Serverless_Databases_Fauna_Planet_Scale_DB_Neon_DB_5032f14be4.jpg",printDate:"October 11, 2023",printReadingTime:"6 min read",wordCount:1062,tech:true,canonicalUrl:"https://www.antstack.com/blog/a-closer-look-at-serverless-databases-fauna-planetscaledb-neondb/",previous:{title:"Streamlining AWS Account Access Management with AWS IAM Identity Center (AWS SSO)",slug:"streamlining-aws-account-access-management-with-aws-iam-identity-center-aws-sso"},next:{title:"Build your own ChatBot to chat with your Documents with LlamaIndex and TypeScript",slug:"build-your-own-chatbot-to-chat-with-your-documents-with-llamaindex-and-typescript"},relatedPosts:[{title:"Building an LLM-Driven Intelligent Email Responder with AWS",slug:"building-an-llm-driven-intelligent-email-responder-with-aws",excerpt:"A guide to building an automated email responder using Amazon Bedrock, SES, Lambda, and prompt engineering to classify and draft context-aware replies to customer emails."},{title:"Building Context-Aware Code Review Agents with MCP and Cloudflare Workers",slug:"building-context-aware-code-review-agents-with-mcp-and-cloudflare-workers",excerpt:"Learn how to build and deploy a custom MCP server on Cloudflare Workers that validates code against organizational standards using AutoRAG and integrates with GitHub Copilot."},{title:"Different Ways to Build and Deploy Serverless Applications",slug:"different-ways-to-build-and-deploy-serverless-applications",excerpt:"A comparison of serverless deployment tools including SAM, Serverless Framework, CDK, and SST, covering their strengths, trade-offs, and ideal use cases."}]}},uses:{params:["slug"]}}],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+
+<!-- Mirrored from vishwas.tech/blog/a-closer-look-at-serverless-databases-fauna-planetscaledb-neondb by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Jun 2026 13:57:37 GMT -->
+</html>

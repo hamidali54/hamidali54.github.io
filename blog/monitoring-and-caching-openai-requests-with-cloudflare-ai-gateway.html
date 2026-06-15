@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+	
+<!-- Mirrored from vishwas.tech/blog/monitoring-and-caching-openai-requests-with-cloudflare-ai-gateway by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Jun 2026 13:56:54 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<meta name="theme-color" content="#15181a" />
+		<meta name="google-site-verification" content="YHl3VakTk4zpdZb6zip6rHj28WurraIVQvQ02dnmnik" />
+		<style>
+			@font-face {
+				font-family: 'Exo 2';
+				font-style: normal;
+				font-weight: 100 900;
+				font-display: swap;
+				src: url('../fonts/exo2-latin.woff2') format('woff2');
+				unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+			}
+			@font-face {
+				font-family: 'Exo 2';
+				font-style: italic;
+				font-weight: 100 900;
+				font-display: swap;
+				src: url('../fonts/exo2-italic-latin.woff2') format('woff2');
+				unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+			}
+			@font-face {
+				font-family: 'Zain';
+				font-style: normal;
+				font-weight: 700;
+				font-display: swap;
+				src: url('../fonts/zain-700-latin.woff2') format('woff2');
+				unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+			}
+			@font-face {
+				font-family: 'Exo 2 Fallback';
+				src: local('Arial'), local('Helvetica Neue'), local('Helvetica');
+				ascent-override: 105%;
+				descent-override: 35%;
+				line-gap-override: 0%;
+				size-adjust: 108.3%;
+			}
+		</style>
+		<link rel="preload" href="../fonts/exo2-latin.woff2" as="font" type="font/woff2" crossorigin />
+		<link rel="preload" href="../img/bg-mobile.webp" as="image" type="image/webp" media="(max-width: 700px)" fetchpriority="high" />
+		<link rel="preload" href="../img/bg.webp" as="image" type="image/webp" media="(min-width: 701px)" fetchpriority="high" />
+
+		<script>
+			(function() {
+				var stored = localStorage.getItem('theme');
+				if (stored === 'light' || (!stored && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+					document.documentElement.classList.add('light');
+				}
+				// WebP detection
+				var webp = new Image();
+				webp.onload = function() { document.documentElement.classList.add('webp'); };
+				webp.src = 'data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwA0JaQAA3AA/vuUAAA=';
+			})();
+		</script>
+		<style>
+			:root {
+				--font-primary: #dfe3e8;
+				--font-secondary: #8a9198;
+				--font-link: #a8c8e0;
+				--background: #15181a;
+				--background-nav: #1c2023;
+				--background-ternary: rgba(148, 158, 168, 0.12);
+				--accent-warm: #8a9eb5;
+				--card-hover-glow: 0 4px 20px rgba(138, 158, 181, 0.12);
+				--border-soft: 1px solid rgba(148, 158, 168, 0.18);
+				--base-font: 15px;
+			}
+			html.light {
+				--font-primary: #2e3338;
+				--font-secondary: #6b7580;
+				--font-link: #3d6b7a;
+				--background: #f0f2f5;
+				--background-nav: #e6e9ed;
+				--background-ternary: rgba(46, 51, 56, 0.07);
+				--accent-warm: #5a7085;
+				--card-hover-glow: 0 4px 20px rgba(90, 112, 133, 0.1);
+				--border-soft: 1px solid rgba(46, 51, 56, 0.12);
+			}
+			html { margin: 0; padding: 0; border: 0; font-size: var(--base-font); scroll-behavior: smooth; }
+			body { margin: 0 auto; color: var(--font-primary); background: var(--background); font-family: 'Exo 2', 'Exo 2 Fallback', sans-serif; padding-top: 60px; line-height: 1.7; letter-spacing: 0.01em; }
+			.landing-section { background-image: url('../img/bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+			html.webp .landing-section { background-image: url('../img/bg.webp'); }
+			@media (max-width: 700px) { .landing-section { background-image: url('../img/bg-mobile.jpg'); background-attachment: scroll; } html.webp .landing-section { background-image: url('../img/bg-mobile.webp'); } }
+		</style>
+		<link rel="preload" href="../global.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+		<noscript><link rel="stylesheet" href="../global.css" /></noscript>
+		<link rel="manifest" href="../manifest.json" crossorigin="use-credentials" />
+		<link rel="icon" type="image/png" href="../favicon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+		<link rel="apple-touch-icon" type="image/png" sizes="144x144" href="../favicon.144x144.png" />
+		<link href="../_app/immutable/entry/start.BoriRtth.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/LnuLDbCg.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/B9ds3UUs.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/mSPF7eII.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/Cb-YqvCW.js" rel="modulepreload">
+		<link href="../_app/immutable/entry/app.DPIiKyJu.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BlTxHScW.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CXA9MCwI.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DybFMULp.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DqZPzvnA.js" rel="modulepreload">
+		<link href="../_app/immutable/nodes/0.Dlhhf57m.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BTeyTLMJ.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BPshCss8.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/0RAUqcd1.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/D4BmXReN.js" rel="modulepreload">
+		<link href="../_app/immutable/nodes/5.DHwiR-Zc.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CeftOgyM.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DDf9H4An.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DVqmYH9N.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CbdOCbmG.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BH_fmw8v.js" rel="modulepreload">
+		<!--12qhfyh--><script async="" src="../../scripts.simpleanalyticscdn.com/latest.js"></script> <noscript><img src="../../queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade"/></noscript><!----><!--1teoznn--><link rel="stylesheet" href="../highlight.css"/><!----><!--ojxrft--><meta name="title" content="Monitoring and Caching OpenAI Requests with Cloudflare AI Gateway - Vishwasa Navada K"/> <link rel="canonical" href="../../www.antstack.com/blog/monitoring-and-caching-openai-requests-with-cloudflare-ai-gateway/index.html"/> <meta name="description" itemprop="description" content="Learn how to set up Cloudflare AI Gateway to monitor costs, cache responses, and rate-limit requests to OpenAI and other AI API providers."/> <meta name="keywords" itemprop="keywords" content="Cloudflare AI Gateway, OpenAI, AI monitoring, caching, rate limiting, API proxy, cost optimization, observability, Gen AI, Python SDK"/> <meta name="author" content="Vishwasa Navada K"/> <meta property="og:type" content="website"/> <meta property="og:url" content="https://vishwas.tech/blog/monitoring-and-caching-openai-requests-with-cloudflare-ai-gateway"/> <meta property="og:title" content="Monitoring and Caching OpenAI Requests with Cloudflare AI Gateway - Vishwasa Navada K"/> <meta property="og:description" content="Learn how to set up Cloudflare AI Gateway to monitor costs, cache responses, and rate-limit requests to OpenAI and other AI API providers."/> <meta property="og:image" content="https://vishwas.tech/img/posts/tech/header_Monitoring_and_Caching_AI_Requests_Across_Platforms_with_Cloudflare_AI_Gateway_e23978dacf.png"/> <meta property="og:site_name" content="Monitoring and Caching OpenAI Requests with Cloudflare AI Gateway - Vishwasa Navada K"/> <!--[0--><meta name="publish_date" property="og:publish_date" content="November 18, 2024"/><!--]--> <meta property="twitter:card" content="summary_large_image"/> <meta property="twitter:url" content="https://vishwas.tech/blog/monitoring-and-caching-openai-requests-with-cloudflare-ai-gateway"/> <meta property="twitter:site" content="@vishwasnavadak"/> <meta property="twitter:creator" content="@vishwasnavadak"/> <meta property="twitter:title" content="Monitoring and Caching OpenAI Requests with Cloudflare AI Gateway - Vishwasa Navada K"/> <meta property="twitter:description" content="Learn how to set up Cloudflare AI Gateway to monitor costs, cache responses, and rate-limit requests to OpenAI and other AI API providers."/> <meta property="twitter:image" content="https://vishwas.tech/img/posts/tech/header_Monitoring_and_Caching_AI_Requests_Across_Platforms_with_Cloudflare_AI_Gateway_e23978dacf.png"/> <meta property="twitter:image:alt" content="Cover Image for Monitoring and Caching OpenAI Requests with Cloudflare AI Gateway - Vishwasa Navada K"/> <meta name="twitter:label1" content="Written by"/> <meta name="twitter:data1" content="Vishwasa Navada K"/> <!--[0--><meta name="twitter:label2" content="Est. reading time"/> <meta name="twitter:data2" content="4 min read"/><!--]--> <!----><script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "BlogPosting",
+                  "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": "https://vishwas.tech/blog/monitoring-and-caching-openai-requests-with-cloudflare-ai-gateway/"
+                  },
+                  "author": {
+                    "@type": "Person",
+                    "name": "Vishwasa Navada K",
+                    "url": "https://vishwas.tech"
+                  },
+                  "publisher": {
+                    "@type": "Organization",
+                    "name": "Vishwasa Navada K",
+                    "logo": {
+                      "@type": "ImageObject",
+                      "url": "https://vishwas.tech/img/vishwasnavadak_photo.jpg"
+                    }
+                  },
+                  "headline": "Monitoring and Caching OpenAI Requests with Cloudflare AI Gateway - Vishwasa Navada K",
+                  "description": "Learn how to set up Cloudflare AI Gateway to monitor costs, cache responses, and rate-limit requests to OpenAI and other AI API providers.",
+                  "image": "https://vishwas.tech/img/posts/tech/header_Monitoring_and_Caching_AI_Requests_Across_Platforms_with_Cloudflare_AI_Gateway_e23978dacf.png",
+                  "url": "https://vishwas.tech/blog/monitoring-and-caching-openai-requests-with-cloudflare-ai-gateway",
+                  "datePublished": "November 18, 2024",
+                  "dateModified": "November 18, 2024",
+                  "wordCount": 772,
+                  "keywords": "Cloudflare AI Gateway, OpenAI, AI monitoring, caching, rate limiting, API proxy, cost optimization, observability, Gen AI, Python SDK"
+                }
+                </script><!----><!----><title>Monitoring and Caching OpenAI Requests with Cloudflare AI Gateway - Vishwasa Navada K</title>
+		<link href="../_app/immutable/assets/IconBase.dTiADBZb.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/0.BRzMDpr-.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/5.C47E8P8r.css" rel="stylesheet">
+	</head>
+	<body id="body" data-sveltekit-preload-data="hover">
+		<div style="display: contents"><!--[--><!--[0--><!--[--><a href="#main-content" class="skip-link svelte-12qhfyh">Skip to main content</a> <nav class="navbar svelte-1h32yp1"><input class="menu-btn svelte-1h32yp1" type="checkbox" id="menu-btn"/> <div class="navbar-header svelte-1h32yp1"><button type="button" class="menu-icon svelte-1h32yp1" aria-label="Toggle navigation menu" aria-expanded="false"><span class="navicon svelte-1h32yp1" aria-hidden="true"></span></button> <a href=".html" class="nav-logo svelte-1h32yp1" aria-label="Home"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 144" width="32" height="32" aria-hidden="true" class="logo svelte-1l8nvlt"><path class="body svelte-1l8nvlt" d="M93,8.7 c0.1,5.7 3.5,9.2 7.1,7.2 c2.1,-1.1 2,-1.2 -1.7,-5 c-4.2,-4.3 -5.4,-4.8 -5.4,-2.2 z M124,12 c-4.7,2.4 -6.3,2.8 -11,2.3 c-4.6,-0.4 -6.3,0 -10.4,2.1 c-4.8,2.4 -5,2.5 -7.5,0.7 c-4.3,-3 -9.1,-5.2 -10.1,-4.6 c-0.9,0.6 2.6,11.8 5.4,17.2 c1.2,2.5 1.5,4.9 1,11 c-0.9,12.2 -1.5,13.4 -14.3,26.7 c-19.5,20.4 -26.1,33.1 -26.1,50.1 c0,4 -0.4,5.6 -1.6,6.3 c-1.5,0.9 -1.5,1.2 0.1,4 c1,1.7 2.8,3.5 3.9,4 c11.3,5.4 10.1,5.2 30.9,5.2 c17.1,0 19.7,-0.2 19.7,-1.5 c0,-0.9 -1.1,-2.7 -2.5,-4 c-1.9,-2 -3.4,-2.5 -7.2,-2.5 l-4.7,0 l3.2,-3.3 c9,-9.3 4.4,-23.6 -7.6,-23.8 c-4.4,-0.1 -4.5,-0.1 -1.9,-1.1 c1.5,-0.5 4.3,-0.7 6.2,-0.4 c3.6,0.7 9.5,5.8 9.5,8.2 c0,2 1,1.7 4.2,-1.3 c1.5,-1.4 3,-2.5 3.2,-2.2 c0.2,0.2 1.5,7.4 2.8,15.9 l2.3,15.5 l6.4,0.3 c3.5,0.2 6.7,-0.1 7.1,-0.5 c1.3,-1.4 -0.8,-5.3 -3.6,-6.5 l-2.7,-1.3 l0.6,-17.7 c0.5,-16.6 0.7,-18 3.1,-22 c6,-10.2 6.6,-19.9 2.5,-37.6 c-3.1,-13.4 -2.7,-15.7 3.1,-22.5 c2.8,-3.2 5.3,-6.9 5.6,-8.3 c0.7,-2.6 -1.6,-10.6 -3.1,-11 c-0.5,-0.2 -3.5,1 -6.5,2.6 z"></path><path class="tail svelte-1l8nvlt" d="M54.7,98.2 c-2.5,6.5 -3.6,12.7 -3.7,19.1 l0,5.8 l-5.7,2.7 c-4.9,2.3 -7.2,2.7 -14.3,2.7 c-7.2,0 -9.4,-0.4 -14.4,-2.8 c-3.2,-1.5 -6.2,-2.7 -6.7,-2.7 c-1.8,0 1.5,6.2 4.7,8.6 c7.3,5.6 22.8,7.1 35.7,3.5 c6.6,-1.8 6.8,-1.8 10.4,0 c2.1,1.1 4.9,1.9 6.3,1.8 c2.2,0 2,-0.3 -1.5,-1.8 c-8.1,-3.7 -11.5,-10.1 -11.5,-21.3 c0,-4 0.7,-10 1.4,-13.3 c0.8,-3.3 1.3,-6.1 1.2,-6.3 c-0.2,-0.1 -1,1.7 -1.9,4 z"></path></svg><!----></a></div> <ul class="menu svelte-1h32yp1"><li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../index.html#about"><!--[-1-->About<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1 selected" aria-current="page" href="../blog.html"><!--[-1-->Blog<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../talks.html"><!--[-1-->Talks<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../photography.html"><!--[-1-->Photography<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../uses.html"><!--[-1-->Gear<!--]--></a></li></ul> <div class="theme-toggle-wrapper svelte-1h32yp1"><button class="theme-toggle svelte-1cmi4dh" aria-label="Switch to light mode" title="Switch to light mode"><span class="icon svelte-1cmi4dh"><!--[0--><img src="../img/cat-white.svg" alt="White cat - switch to light mode"/><!--]--></span></button><!----></div></nav><!----> <main id="main-content"><!--[--><!--[--><!----> <div class="reading-progress svelte-18rcjdz" style="width: 0%"></div><!----> <header class="post-header svelte-1teoznn"><!--[0--><img class="post-header-img svelte-1teoznn" src="../img/posts/tech/header_Monitoring_and_Caching_AI_Requests_Across_Platforms_with_Cloudflare_AI_Gateway_e23978dacf.png" alt="Monitoring and Caching OpenAI Requests with Cloudflare AI Gateway" fetchpriority="high"/><!--]--> <div class="post-header-overlay svelte-1teoznn"><h1 class="post-title svelte-1teoznn">Monitoring and Caching OpenAI Requests with Cloudflare AI Gateway</h1> <div class="post-meta svelte-1teoznn"><div class="icon svelte-1teoznn" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svelte-1n3xayn"><!--[-1--><!--]--><!--[--><path d="M436 160H12c-6.627 0-12-5.373-12-12v-36c0-26.51 21.49-48 48-48h48V12c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v52h128V12c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v52h48c26.51 0 48 21.49 48 48v36c0 6.627-5.373 12-12 12zM12 192h424c6.627 0 12 5.373 12 12v260c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V204c0-6.627 5.373-12 12-12zm333.296 95.947l-28.169-28.398c-4.667-4.705-12.265-4.736-16.97-.068L194.12 364.665l-45.98-46.352c-4.667-4.705-12.266-4.736-16.971-.068l-28.397 28.17c-4.705 4.667-4.736 12.265-.068 16.97l82.601 83.269c4.667 4.705 12.265 4.736 16.97.068l142.953-141.805c4.705-4.667 4.736-12.265.068-16.97z"></path><!--]--></svg><!----></div> November 18, 2024 <div class="icon svelte-1teoznn" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="svelte-1n3xayn"><!--[-1--><!--]--><!--[--><path d="M496 224c-79.6 0-144 64.4-144 144s64.4 144 144 144 144-64.4 144-144-64.4-144-144-144zm64 150.3c0 5.3-4.4 9.7-9.7 9.7h-60.6c-5.3 0-9.7-4.4-9.7-9.7v-76.6c0-5.3 4.4-9.7 9.7-9.7h12.6c5.3 0 9.7 4.4 9.7 9.7V352h38.3c5.3 0 9.7 4.4 9.7 9.7v12.6zM320 368c0-27.8 6.7-54.1 18.2-77.5-8-1.5-16.2-2.5-24.6-2.5h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h347.1c-45.3-31.9-75.1-84.5-75.1-144zm-96-112c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128z"></path><!--]--></svg><!----></div> 4 min read</div></div></header> <section class="post svelte-1teoznn"><article class="content svelte-1teoznn"><!----><p>As we build more and more Gen AI-integrated applications, it has become hard to identify the costs associated with using third-party AI APIs like OpenAI, and Amazon Bedrock. Even though tools like LangSmith help us to monitor the queries made to the external AI systems, they need to be used with the LangChain framework. Cloudflare recently announced its version of the AI Monitoring, Caching, and Observability service called Cloudflare AI Gateway. It supports most of the generally available AI platforms and it can be set up with very minimal efforts into any AI driven applications. </p>
+<p>In this post, we&#39;ll explore Cloudflare AI Gateway&#39;s features and how to integrate it with OpenAI. </p>
+<h2><strong>Need for dedicated monitoring and caching for AI Applications</strong>.</h2>
+<p>When the Gen AI applications scale, the API costs related to AI APIs increase proportionately, eventually, it becomes hard to track the unit costs for a particular transaction, and also it becomes costly. Since the AI costs are associated with the number of tokens used in each of the queries you make to API, it is not straightforward to measure the cost with traditional observability platforms. </p>
+<p>Most of the famous AI platforms like OpenAI, and Anthropic have their own setup to monitor the cost associated with the APIs, but if you are relying on multiple providers then the necessity of having a unified dashboard increases. In some cases, the queries you make to these platforms will also be repetitive, so some of the implementations resort to having a cache layer to save the calls being made to the AI platforms.</p>
+<p>Cloudflare&#39;s new AI Gateway solves just this problem. It is a proxy that you can use with most of the AI platforms, which will track all the requests from your application to the AI applications. Its major features include,</p>
+<h3>Analytics</h3>
+<p>Helps to gather metrics from multiple providers to view traffic patterns and monitor usage, including request counts, token consumption, and costs over time.</p>
+<p><img src="../img/posts/tech/cloudflare_ai_gateway_analytics_ae7c2bbfb6.png" alt="cloudflare-ai-gateway-analytics.png" loading="lazy" decoding="async" /></p>
+<h3>Real time logs</h3>
+<p>CloudWatch like logging is available for tracking individual request/response data, cost, cache hit or miss, request duration, etc.
+<img src="../img/posts/tech/cloudflare_ai_gateway_logs_ba64cf7b9c.png" alt="cloudflare-ai-gateway-logs.png" loading="lazy" decoding="async" /></p>
+<h3>Caching</h3>
+<p>Set up custom caching rules and leverage Cloudflare&#39;s cache to handle repeat requests, reducing reliance on the original model provider API to save on costs and minimize latency.</p>
+<h3>Rate Limiting</h3>
+<p>Manage your application&#39;s scalability by setting request limits to control costs and prevent potential abuse. </p>
+<p><img src="../img/posts/tech/ai_gateway_caching_rate_limiting_3bc161e5d0.png" alt="ai-gateway-caching-rate-limiting.png" loading="lazy" decoding="async" /></p>
+<h2><strong>Getting Started with Cloudflare AI Gateway and OpenAI</strong></h2>
+<p>For all the 10+ providers Cloudflare AI Gateway supports, they provide a unique proxy URL that consists of your Cloudflare Account ID and Gateway ID. </p>
+<pre class="language-sh"><code class="language-sh">
+https://gateway.ai.cloudflare.com/v1/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cloudflare-account-id</span><span class="token punctuation">></span></span>/&lt;cloudflare-ai-gateway-id/name>/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>provider-name</span><span class="token punctuation">></span></span>/
+</code></pre><p>To create the AI Gateway, just log on to your Cloudflare Account, Under AI, Click on AI Gateway and Click on Create Button. Type in the Gateway ID (This is a slug that will be used in the proxy URL later). Once you submit, you will be able to see the dashboard for that gateway. To get the Proxy URL for your gateway, Click on the API button beside the Create Button. </p>
+<p><img src="../img/posts/tech/ai_gateway_proxy_url_5a82694c2d.png" alt="ai-gateway-proxy-url.png" loading="lazy" decoding="async" /></p>
+<p>You can test if the proxy is working by running the generated CURL request along with your OpenAI API Key. </p>
+<p>Now, you will have to use this in your code to make your request go through the Proxy to your AI API Provider. In this example, I will be using OpenAI Python SDK to set the Proxy URL. OpenAI provides a parameter called base_url that you can use to configure the Proxy URL generated by Cloudflare.</p>
+<pre class="language-py"><code class="language-py">
+openai.api_key =  os.environ.get("OPEN_AI_KEY")
+
+openai.base_url = "https://gateway.ai.cloudflare.com/v1/<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>cloudflare-account-id</span><span class="token punctuation">></span></span>/sales-ai-gateway/openai/"
+</code></pre><p><em>An important thing to note here is that the URL needs to have a trailing slash which at the time of writing this post is not clear in their documentation. If you fail to add the trailing slash, it fails with the error Invalid Provider.</em></p>
+<p>Once this is set, you can make any request to OpenAI, it will be routed through the Cloudflare AI Gateway Proxy provided. You will be able to see the request in the Logs section in real-time. </p>
+<p><img src="../img/posts/tech/ai_gateway_example_logging_1bf82a3eb9.png" alt="ai-gateway-example-logging.png" loading="lazy" decoding="async" /></p>
+<h2><strong>Pricing</strong></h2>
+<p>AI Gateway&#39;s core features available today are offered for free, and all it takes is a Cloudflare account and one line of code to get started. Core features include dashboard analytics, caching, and rate limiting. Persistence of Logs for longer periods is a feature that is under beta at this time of this writing and would be part of the premium plan of Cloudflare. For the latest information on the pricing check their<a href="https://developers.cloudflare.com/ai-gateway/reference/pricing/" target="_blank" rel="nofollow"> pricing page</a>. </p>
+<h2><strong>References</strong></h2>
+<ol>
+<li><a href="https://blog.cloudflare.com/ai-gateway-is-generally-available/" target="_blank" rel="nofollow">Cloudflare AI Gateway GA Announcement Post</a></li>
+<li><a href="https://developers.cloudflare.com/ai-gateway/providers/" target="_blank" rel="nofollow">Currently Supported Providers</a></li>
+</ol>
+<p><em>This post was originally published on <a href="../../www.antstack.com/blog/monitoring-and-caching-openai-requests-with-cloudflare-ai-gateway/index.html" target="_blank" rel="nofollow">AntStack's Blog</a>.</em></p>
+<!----></article> <section class="post-footer"><nav class="post-nav svelte-1teoznn"><!--[0--><a rel="prev" href="build-your-own-chatbot-to-chat-with-your-documents-with-llamaindex-and-typescript.html" class="post-nav-link post-nav-prev svelte-1teoznn"><span class="post-nav-label svelte-1teoznn"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1rem" width="1rem" xmlns="http://www.w3.org/2000/svg"><polyline points="15 18 9 12 15 6"></polyline></svg> Previous</span> <span class="post-nav-title svelte-1teoznn">Build your own ChatBot to chat with your Documents with LlamaIndex and TypeScript</span></a><!--]--> <!--[0--><a rel="next" href="building-an-llm-driven-intelligent-email-responder-with-aws.html" class="post-nav-link post-nav-next svelte-1teoznn"><span class="post-nav-label svelte-1teoznn">Next <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1rem" width="1rem" xmlns="http://www.w3.org/2000/svg"><polyline points="9 18 15 12 9 6"></polyline></svg></span> <span class="post-nav-title svelte-1teoznn">Building an LLM-Driven Intelligent Email Responder with AWS</span></a><!--]--></nav> <!--[0--><section class="related-posts svelte-1teoznn"><h3 class="svelte-1teoznn">Related Posts</h3> <div class="related-posts-grid svelte-1teoznn"><!--[--><a href="comparison-of-llm-prompt-caching-cloudflare-ai-gateway-portkey-and-amazon-bedrock.html" class="related-post-card svelte-1teoznn"><h4 class="related-post-title svelte-1teoznn">Comparison of LLM Prompt Caching: Cloudflare AI Gateway, Portkey, and Amazon Bedrock</h4> <p class="related-post-excerpt svelte-1teoznn">A practical comparison of three LLM prompt caching solutions — Cloudflare AI Gateway, Portkey, and Amazon Bedrock — covering features, configuration, model support, and pricing.</p></a><a href="build-your-own-chatbot-to-chat-with-your-documents-with-llamaindex-and-typescript.html" class="related-post-card svelte-1teoznn"><h4 class="related-post-title svelte-1teoznn">Build your own ChatBot to chat with your Documents with LlamaIndex and TypeScript</h4> <p class="related-post-excerpt svelte-1teoznn">Learn how to build a document summary chatbot using LlamaIndex and TypeScript that can read, index, and answer questions about your local files.</p></a><a href="protecting-serverless-applications-with-aws-waf.html" class="related-post-card svelte-1teoznn"><h4 class="related-post-title svelte-1teoznn">Protecting Serverless Applications with AWS WAF</h4> <p class="related-post-excerpt svelte-1teoznn">Learn how to use AWS WAF to protect serverless applications from DDoS attacks, SQL injection, and unauthorized access with managed rules, IP restrictions, and bot control.</p></a><!--]--></div></section><!--]--> <div class="subscribe-section svelte-1teoznn"><div id="mc_embed_signup" class="subscribe svelte-w0ifsg"><form action="https://webception.us14.list-manage.com/subscribe/post?u=c0245295f15b4c910e1a8e7f5&amp;id=09333129c8" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" rel="noreferrer noopener" novalidate=""><div id="mc_embed_signup_scroll"><h4 class="svelte-w0ifsg">Like this post? Let me send the next one to your inbox.</h4> <div class="subscribe-form svelte-w0ifsg"><label for="mce-EMAIL" class="sr-only">Email Address for subscription</label> <input type="email" value="" name="EMAIL" class="required email svelte-w0ifsg" id="mce-EMAIL" placeholder="you@domain.com" required=""/> <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_c0245295f15b4c910e1a8e7f5_09333129c8" tabindex="-1" value=""/></div> <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn-subscribe svelte-w0ifsg"/></div></div></form></div><!----></div></section></section><!--]--><!--]--></main> <footer class="svelte-jz8lnl">© 2017 - 2026 Vishwasa Navada K. <a href="../sitemap.xml">Sitemap</a> | <a href="feed.xml">RSS</a>.</footer><!----><!--]--><!--]--> <!--[-1--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_15q1xi7 = {
+						base: ""
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("../_app/immutable/entry/start.BoriRtth.js"),
+						import("../_app/immutable/entry/app.DPIiKyJu.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 5],
+							data: [null,{type:"data",data:{post:{title:"Monitoring and Caching OpenAI Requests with Cloudflare AI Gateway",slug:"monitoring-and-caching-openai-requests-with-cloudflare-ai-gateway",html:"\u003Cp>As we build more and more Gen AI-integrated applications, it has become hard to identify the costs associated with using third-party AI APIs like OpenAI, and Amazon Bedrock. Even though tools like LangSmith help us to monitor the queries made to the external AI systems, they need to be used with the LangChain framework. Cloudflare recently announced its version of the AI Monitoring, Caching, and Observability service called Cloudflare AI Gateway. It supports most of the generally available AI platforms and it can be set up with very minimal efforts into any AI driven applications. \u003C/p>\n\u003Cp>In this post, we&#39;ll explore Cloudflare AI Gateway&#39;s features and how to integrate it with OpenAI. \u003C/p>\n\u003Ch2>\u003Cstrong>Need for dedicated monitoring and caching for AI Applications\u003C/strong>.\u003C/h2>\n\u003Cp>When the Gen AI applications scale, the API costs related to AI APIs increase proportionately, eventually, it becomes hard to track the unit costs for a particular transaction, and also it becomes costly. Since the AI costs are associated with the number of tokens used in each of the queries you make to API, it is not straightforward to measure the cost with traditional observability platforms. \u003C/p>\n\u003Cp>Most of the famous AI platforms like OpenAI, and Anthropic have their own setup to monitor the cost associated with the APIs, but if you are relying on multiple providers then the necessity of having a unified dashboard increases. In some cases, the queries you make to these platforms will also be repetitive, so some of the implementations resort to having a cache layer to save the calls being made to the AI platforms.\u003C/p>\n\u003Cp>Cloudflare&#39;s new AI Gateway solves just this problem. It is a proxy that you can use with most of the AI platforms, which will track all the requests from your application to the AI applications. Its major features include,\u003C/p>\n\u003Ch3>Analytics\u003C/h3>\n\u003Cp>Helps to gather metrics from multiple providers to view traffic patterns and monitor usage, including request counts, token consumption, and costs over time.\u003C/p>\n\u003Cp>\u003Cimg src=\"/img/posts/tech/cloudflare_ai_gateway_analytics_ae7c2bbfb6.png\" alt=\"cloudflare-ai-gateway-analytics.png\" loading=\"lazy\" decoding=\"async\" />\u003C/p>\n\u003Ch3>Real time logs\u003C/h3>\n\u003Cp>CloudWatch like logging is available for tracking individual request/response data, cost, cache hit or miss, request duration, etc.\n\u003Cimg src=\"/img/posts/tech/cloudflare_ai_gateway_logs_ba64cf7b9c.png\" alt=\"cloudflare-ai-gateway-logs.png\" loading=\"lazy\" decoding=\"async\" />\u003C/p>\n\u003Ch3>Caching\u003C/h3>\n\u003Cp>Set up custom caching rules and leverage Cloudflare&#39;s cache to handle repeat requests, reducing reliance on the original model provider API to save on costs and minimize latency.\u003C/p>\n\u003Ch3>Rate Limiting\u003C/h3>\n\u003Cp>Manage your application&#39;s scalability by setting request limits to control costs and prevent potential abuse. \u003C/p>\n\u003Cp>\u003Cimg src=\"/img/posts/tech/ai_gateway_caching_rate_limiting_3bc161e5d0.png\" alt=\"ai-gateway-caching-rate-limiting.png\" loading=\"lazy\" decoding=\"async\" />\u003C/p>\n\u003Ch2>\u003Cstrong>Getting Started with Cloudflare AI Gateway and OpenAI\u003C/strong>\u003C/h2>\n\u003Cp>For all the 10+ providers Cloudflare AI Gateway supports, they provide a unique proxy URL that consists of your Cloudflare Account ID and Gateway ID. \u003C/p>\n\u003Cpre class=\"language-sh\">\u003Ccode class=\"language-sh\">\nhttps://gateway.ai.cloudflare.com/v1/\u003Cspan class=\"token tag\">\u003Cspan class=\"token tag\">\u003Cspan class=\"token punctuation\">&lt;\u003C/span>cloudflare-account-id\u003C/span>\u003Cspan class=\"token punctuation\">>\u003C/span>\u003C/span>/&lt;cloudflare-ai-gateway-id/name>/\u003Cspan class=\"token tag\">\u003Cspan class=\"token tag\">\u003Cspan class=\"token punctuation\">&lt;\u003C/span>provider-name\u003C/span>\u003Cspan class=\"token punctuation\">>\u003C/span>\u003C/span>/\n\u003C/code>\u003C/pre>\u003Cp>To create the AI Gateway, just log on to your Cloudflare Account, Under AI, Click on AI Gateway and Click on Create Button. Type in the Gateway ID (This is a slug that will be used in the proxy URL later). Once you submit, you will be able to see the dashboard for that gateway. To get the Proxy URL for your gateway, Click on the API button beside the Create Button. \u003C/p>\n\u003Cp>\u003Cimg src=\"/img/posts/tech/ai_gateway_proxy_url_5a82694c2d.png\" alt=\"ai-gateway-proxy-url.png\" loading=\"lazy\" decoding=\"async\" />\u003C/p>\n\u003Cp>You can test if the proxy is working by running the generated CURL request along with your OpenAI API Key. \u003C/p>\n\u003Cp>Now, you will have to use this in your code to make your request go through the Proxy to your AI API Provider. In this example, I will be using OpenAI Python SDK to set the Proxy URL. OpenAI provides a parameter called base_url that you can use to configure the Proxy URL generated by Cloudflare.\u003C/p>\n\u003Cpre class=\"language-py\">\u003Ccode class=\"language-py\">\nopenai.api_key =  os.environ.get(\"OPEN_AI_KEY\")\n\nopenai.base_url = \"https://gateway.ai.cloudflare.com/v1/\u003Cspan class=\"token tag\">\u003Cspan class=\"token tag\">\u003Cspan class=\"token punctuation\">&lt;\u003C/span>cloudflare-account-id\u003C/span>\u003Cspan class=\"token punctuation\">>\u003C/span>\u003C/span>/sales-ai-gateway/openai/\"\n\u003C/code>\u003C/pre>\u003Cp>\u003Cem>An important thing to note here is that the URL needs to have a trailing slash which at the time of writing this post is not clear in their documentation. If you fail to add the trailing slash, it fails with the error Invalid Provider.\u003C/em>\u003C/p>\n\u003Cp>Once this is set, you can make any request to OpenAI, it will be routed through the Cloudflare AI Gateway Proxy provided. You will be able to see the request in the Logs section in real-time. \u003C/p>\n\u003Cp>\u003Cimg src=\"/img/posts/tech/ai_gateway_example_logging_1bf82a3eb9.png\" alt=\"ai-gateway-example-logging.png\" loading=\"lazy\" decoding=\"async\" />\u003C/p>\n\u003Ch2>\u003Cstrong>Pricing\u003C/strong>\u003C/h2>\n\u003Cp>AI Gateway&#39;s core features available today are offered for free, and all it takes is a Cloudflare account and one line of code to get started. Core features include dashboard analytics, caching, and rate limiting. Persistence of Logs for longer periods is a feature that is under beta at this time of this writing and would be part of the premium plan of Cloudflare. For the latest information on the pricing check their\u003Ca href=\"https://developers.cloudflare.com/ai-gateway/reference/pricing/\" target=\"_blank\" rel=\"nofollow\"> pricing page\u003C/a>. \u003C/p>\n\u003Ch2>\u003Cstrong>References\u003C/strong>\u003C/h2>\n\u003Col>\n\u003Cli>\u003Ca href=\"https://blog.cloudflare.com/ai-gateway-is-generally-available/\" target=\"_blank\" rel=\"nofollow\">Cloudflare AI Gateway GA Announcement Post\u003C/a>\u003C/li>\n\u003Cli>\u003Ca href=\"https://developers.cloudflare.com/ai-gateway/providers/\" target=\"_blank\" rel=\"nofollow\">Currently Supported Providers\u003C/a>\u003C/li>\n\u003C/ol>\n\u003Cp>\u003Cem>This post was originally published on \u003Ca href=\"https://www.antstack.com/blog/monitoring-and-caching-openai-requests-with-cloudflare-ai-gateway/\" target=\"_blank\" rel=\"nofollow\">AntStack's Blog\u003C/a>.\u003C/em>\u003C/p>\n",date:new Date(1731917288000),excerpt:"Learn how to set up Cloudflare AI Gateway to monitor costs, cache responses, and rate-limit requests to OpenAI and other AI API providers.",metakeywords:"Cloudflare AI Gateway, OpenAI, AI monitoring, caching, rate limiting, API proxy, cost optimization, observability, Gen AI, Python SDK",headerImg:"/img/posts/tech/header_Monitoring_and_Caching_AI_Requests_Across_Platforms_with_Cloudflare_AI_Gateway_e23978dacf.png",printDate:"November 18, 2024",printReadingTime:"4 min read",wordCount:772,tech:true,canonicalUrl:"https://www.antstack.com/blog/monitoring-and-caching-openai-requests-with-cloudflare-ai-gateway/",previous:{title:"Build your own ChatBot to chat with your Documents with LlamaIndex and TypeScript",slug:"build-your-own-chatbot-to-chat-with-your-documents-with-llamaindex-and-typescript"},next:{title:"Building an LLM-Driven Intelligent Email Responder with AWS",slug:"building-an-llm-driven-intelligent-email-responder-with-aws"},relatedPosts:[{title:"Comparison of LLM Prompt Caching: Cloudflare AI Gateway, Portkey, and Amazon Bedrock",slug:"comparison-of-llm-prompt-caching-cloudflare-ai-gateway-portkey-and-amazon-bedrock",excerpt:"A practical comparison of three LLM prompt caching solutions — Cloudflare AI Gateway, Portkey, and Amazon Bedrock — covering features, configuration, model support, and pricing."},{title:"Build your own ChatBot to chat with your Documents with LlamaIndex and TypeScript",slug:"build-your-own-chatbot-to-chat-with-your-documents-with-llamaindex-and-typescript",excerpt:"Learn how to build a document summary chatbot using LlamaIndex and TypeScript that can read, index, and answer questions about your local files."},{title:"Protecting Serverless Applications with AWS WAF",slug:"protecting-serverless-applications-with-aws-waf",excerpt:"Learn how to use AWS WAF to protect serverless applications from DDoS attacks, SQL injection, and unauthorized access with managed rules, IP restrictions, and bot control."}]}},uses:{params:["slug"]}}],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+
+<!-- Mirrored from vishwas.tech/blog/monitoring-and-caching-openai-requests-with-cloudflare-ai-gateway by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Jun 2026 13:57:08 GMT -->
+</html>

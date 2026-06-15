@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+	
+<!-- Mirrored from vishwas.tech/blog/lamp-to-jam-stack by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Jun 2026 13:55:43 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<meta name="theme-color" content="#15181a" />
+		<meta name="google-site-verification" content="YHl3VakTk4zpdZb6zip6rHj28WurraIVQvQ02dnmnik" />
+		<style>
+			@font-face {
+				font-family: 'Exo 2';
+				font-style: normal;
+				font-weight: 100 900;
+				font-display: swap;
+				src: url('../fonts/exo2-latin.woff2') format('woff2');
+				unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+			}
+			@font-face {
+				font-family: 'Exo 2';
+				font-style: italic;
+				font-weight: 100 900;
+				font-display: swap;
+				src: url('../fonts/exo2-italic-latin.woff2') format('woff2');
+				unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+			}
+			@font-face {
+				font-family: 'Zain';
+				font-style: normal;
+				font-weight: 700;
+				font-display: swap;
+				src: url('../fonts/zain-700-latin.woff2') format('woff2');
+				unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+			}
+			@font-face {
+				font-family: 'Exo 2 Fallback';
+				src: local('Arial'), local('Helvetica Neue'), local('Helvetica');
+				ascent-override: 105%;
+				descent-override: 35%;
+				line-gap-override: 0%;
+				size-adjust: 108.3%;
+			}
+		</style>
+		<link rel="preload" href="../fonts/exo2-latin.woff2" as="font" type="font/woff2" crossorigin />
+		<link rel="preload" href="../img/bg-mobile.webp" as="image" type="image/webp" media="(max-width: 700px)" fetchpriority="high" />
+		<link rel="preload" href="../img/bg.webp" as="image" type="image/webp" media="(min-width: 701px)" fetchpriority="high" />
+
+		<script>
+			(function() {
+				var stored = localStorage.getItem('theme');
+				if (stored === 'light' || (!stored && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+					document.documentElement.classList.add('light');
+				}
+				// WebP detection
+				var webp = new Image();
+				webp.onload = function() { document.documentElement.classList.add('webp'); };
+				webp.src = 'data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwA0JaQAA3AA/vuUAAA=';
+			})();
+		</script>
+		<style>
+			:root {
+				--font-primary: #dfe3e8;
+				--font-secondary: #8a9198;
+				--font-link: #a8c8e0;
+				--background: #15181a;
+				--background-nav: #1c2023;
+				--background-ternary: rgba(148, 158, 168, 0.12);
+				--accent-warm: #8a9eb5;
+				--card-hover-glow: 0 4px 20px rgba(138, 158, 181, 0.12);
+				--border-soft: 1px solid rgba(148, 158, 168, 0.18);
+				--base-font: 15px;
+			}
+			html.light {
+				--font-primary: #2e3338;
+				--font-secondary: #6b7580;
+				--font-link: #3d6b7a;
+				--background: #f0f2f5;
+				--background-nav: #e6e9ed;
+				--background-ternary: rgba(46, 51, 56, 0.07);
+				--accent-warm: #5a7085;
+				--card-hover-glow: 0 4px 20px rgba(90, 112, 133, 0.1);
+				--border-soft: 1px solid rgba(46, 51, 56, 0.12);
+			}
+			html { margin: 0; padding: 0; border: 0; font-size: var(--base-font); scroll-behavior: smooth; }
+			body { margin: 0 auto; color: var(--font-primary); background: var(--background); font-family: 'Exo 2', 'Exo 2 Fallback', sans-serif; padding-top: 60px; line-height: 1.7; letter-spacing: 0.01em; }
+			.landing-section { background-image: url('../img/bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+			html.webp .landing-section { background-image: url('../img/bg.webp'); }
+			@media (max-width: 700px) { .landing-section { background-image: url('../img/bg-mobile.jpg'); background-attachment: scroll; } html.webp .landing-section { background-image: url('../img/bg-mobile.webp'); } }
+		</style>
+		<link rel="preload" href="../global.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+		<noscript><link rel="stylesheet" href="../global.css" /></noscript>
+		<link rel="manifest" href="../manifest.json" crossorigin="use-credentials" />
+		<link rel="icon" type="image/png" href="../favicon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+		<link rel="apple-touch-icon" type="image/png" sizes="144x144" href="../favicon.144x144.png" />
+		<link href="../_app/immutable/entry/start.BoriRtth.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/LnuLDbCg.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/B9ds3UUs.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/mSPF7eII.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/Cb-YqvCW.js" rel="modulepreload">
+		<link href="../_app/immutable/entry/app.DPIiKyJu.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BlTxHScW.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CXA9MCwI.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DybFMULp.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DqZPzvnA.js" rel="modulepreload">
+		<link href="../_app/immutable/nodes/0.Dlhhf57m.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BTeyTLMJ.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BPshCss8.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/0RAUqcd1.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/D4BmXReN.js" rel="modulepreload">
+		<link href="../_app/immutable/nodes/5.DHwiR-Zc.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CeftOgyM.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DDf9H4An.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DVqmYH9N.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CbdOCbmG.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BH_fmw8v.js" rel="modulepreload">
+		<!--12qhfyh--><script async="" src="../../scripts.simpleanalyticscdn.com/latest.js"></script> <noscript><img src="../../queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade"/></noscript><!----><!--1teoznn--><link rel="stylesheet" href="../highlight.css"/><!----><!--ojxrft--><meta name="title" content="Transition from LAMP to JAMStack - Vishwasa Navada K"/> <link rel="canonical" href="lamp-to-jam-stack.html"/> <meta name="description" itemprop="description" content="Look back at how web development technology stacks have evolved in the last decade."/> <meta name="keywords" itemprop="keywords" content="javascript, LAMP, MEAN, MERN, JAMstack, Web development, technology stacks"/> <meta name="author" content="Vishwasa Navada K"/> <meta property="og:type" content="website"/> <meta property="og:url" content="https://vishwas.tech/blog/lamp-to-jam-stack"/> <meta property="og:title" content="Transition from LAMP to JAMStack - Vishwasa Navada K"/> <meta property="og:description" content="Look back at how web development technology stacks have evolved in the last decade."/> <meta property="og:image" content="https://vishwas.tech/img/posts/post_16.jpg"/> <meta property="og:site_name" content="Transition from LAMP to JAMStack - Vishwasa Navada K"/> <!--[0--><meta name="publish_date" property="og:publish_date" content="April 11, 2020"/><!--]--> <meta property="twitter:card" content="summary_large_image"/> <meta property="twitter:url" content="https://vishwas.tech/blog/lamp-to-jam-stack"/> <meta property="twitter:site" content="@vishwasnavadak"/> <meta property="twitter:creator" content="@vishwasnavadak"/> <meta property="twitter:title" content="Transition from LAMP to JAMStack - Vishwasa Navada K"/> <meta property="twitter:description" content="Look back at how web development technology stacks have evolved in the last decade."/> <meta property="twitter:image" content="https://vishwas.tech/img/posts/post_16.jpg"/> <meta property="twitter:image:alt" content="Cover Image for Transition from LAMP to JAMStack - Vishwasa Navada K"/> <meta name="twitter:label1" content="Written by"/> <meta name="twitter:data1" content="Vishwasa Navada K"/> <!--[0--><meta name="twitter:label2" content="Est. reading time"/> <meta name="twitter:data2" content="3 min read"/><!--]--> <!----><script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "BlogPosting",
+                  "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": "https://vishwas.tech/blog/lamp-to-jam-stack/"
+                  },
+                  "author": {
+                    "@type": "Person",
+                    "name": "Vishwasa Navada K",
+                    "url": "https://vishwas.tech"
+                  },
+                  "publisher": {
+                    "@type": "Organization",
+                    "name": "Vishwasa Navada K",
+                    "logo": {
+                      "@type": "ImageObject",
+                      "url": "https://vishwas.tech/img/vishwasnavadak_photo.jpg"
+                    }
+                  },
+                  "headline": "Transition from LAMP to JAMStack - Vishwasa Navada K",
+                  "description": "Look back at how web development technology stacks have evolved in the last decade.",
+                  "image": "https://vishwas.tech/img/posts/post_16.jpg",
+                  "url": "https://vishwas.tech/blog/lamp-to-jam-stack",
+                  "datePublished": "April 11, 2020",
+                  "dateModified": "April 11, 2020",
+                  "wordCount": 550,
+                  "keywords": "javascript, LAMP, MEAN, MERN, JAMstack, Web development, technology stacks"
+                }
+                </script><!----><!----><title>Transition from LAMP to JAMStack - Vishwasa Navada K</title>
+		<link href="../_app/immutable/assets/IconBase.dTiADBZb.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/0.BRzMDpr-.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/5.C47E8P8r.css" rel="stylesheet">
+	</head>
+	<body id="body" data-sveltekit-preload-data="hover">
+		<div style="display: contents"><!--[--><!--[0--><!--[--><a href="#main-content" class="skip-link svelte-12qhfyh">Skip to main content</a> <nav class="navbar svelte-1h32yp1"><input class="menu-btn svelte-1h32yp1" type="checkbox" id="menu-btn"/> <div class="navbar-header svelte-1h32yp1"><button type="button" class="menu-icon svelte-1h32yp1" aria-label="Toggle navigation menu" aria-expanded="false"><span class="navicon svelte-1h32yp1" aria-hidden="true"></span></button> <a href=".html" class="nav-logo svelte-1h32yp1" aria-label="Home"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 144" width="32" height="32" aria-hidden="true" class="logo svelte-1l8nvlt"><path class="body svelte-1l8nvlt" d="M93,8.7 c0.1,5.7 3.5,9.2 7.1,7.2 c2.1,-1.1 2,-1.2 -1.7,-5 c-4.2,-4.3 -5.4,-4.8 -5.4,-2.2 z M124,12 c-4.7,2.4 -6.3,2.8 -11,2.3 c-4.6,-0.4 -6.3,0 -10.4,2.1 c-4.8,2.4 -5,2.5 -7.5,0.7 c-4.3,-3 -9.1,-5.2 -10.1,-4.6 c-0.9,0.6 2.6,11.8 5.4,17.2 c1.2,2.5 1.5,4.9 1,11 c-0.9,12.2 -1.5,13.4 -14.3,26.7 c-19.5,20.4 -26.1,33.1 -26.1,50.1 c0,4 -0.4,5.6 -1.6,6.3 c-1.5,0.9 -1.5,1.2 0.1,4 c1,1.7 2.8,3.5 3.9,4 c11.3,5.4 10.1,5.2 30.9,5.2 c17.1,0 19.7,-0.2 19.7,-1.5 c0,-0.9 -1.1,-2.7 -2.5,-4 c-1.9,-2 -3.4,-2.5 -7.2,-2.5 l-4.7,0 l3.2,-3.3 c9,-9.3 4.4,-23.6 -7.6,-23.8 c-4.4,-0.1 -4.5,-0.1 -1.9,-1.1 c1.5,-0.5 4.3,-0.7 6.2,-0.4 c3.6,0.7 9.5,5.8 9.5,8.2 c0,2 1,1.7 4.2,-1.3 c1.5,-1.4 3,-2.5 3.2,-2.2 c0.2,0.2 1.5,7.4 2.8,15.9 l2.3,15.5 l6.4,0.3 c3.5,0.2 6.7,-0.1 7.1,-0.5 c1.3,-1.4 -0.8,-5.3 -3.6,-6.5 l-2.7,-1.3 l0.6,-17.7 c0.5,-16.6 0.7,-18 3.1,-22 c6,-10.2 6.6,-19.9 2.5,-37.6 c-3.1,-13.4 -2.7,-15.7 3.1,-22.5 c2.8,-3.2 5.3,-6.9 5.6,-8.3 c0.7,-2.6 -1.6,-10.6 -3.1,-11 c-0.5,-0.2 -3.5,1 -6.5,2.6 z"></path><path class="tail svelte-1l8nvlt" d="M54.7,98.2 c-2.5,6.5 -3.6,12.7 -3.7,19.1 l0,5.8 l-5.7,2.7 c-4.9,2.3 -7.2,2.7 -14.3,2.7 c-7.2,0 -9.4,-0.4 -14.4,-2.8 c-3.2,-1.5 -6.2,-2.7 -6.7,-2.7 c-1.8,0 1.5,6.2 4.7,8.6 c7.3,5.6 22.8,7.1 35.7,3.5 c6.6,-1.8 6.8,-1.8 10.4,0 c2.1,1.1 4.9,1.9 6.3,1.8 c2.2,0 2,-0.3 -1.5,-1.8 c-8.1,-3.7 -11.5,-10.1 -11.5,-21.3 c0,-4 0.7,-10 1.4,-13.3 c0.8,-3.3 1.3,-6.1 1.2,-6.3 c-0.2,-0.1 -1,1.7 -1.9,4 z"></path></svg><!----></a></div> <ul class="menu svelte-1h32yp1"><li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../index.html#about"><!--[-1-->About<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1 selected" aria-current="page" href="../blog.html"><!--[-1-->Blog<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../talks.html"><!--[-1-->Talks<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../photography.html"><!--[-1-->Photography<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../uses.html"><!--[-1-->Gear<!--]--></a></li></ul> <div class="theme-toggle-wrapper svelte-1h32yp1"><button class="theme-toggle svelte-1cmi4dh" aria-label="Switch to light mode" title="Switch to light mode"><span class="icon svelte-1cmi4dh"><!--[0--><img src="../img/cat-white.svg" alt="White cat - switch to light mode"/><!--]--></span></button><!----></div></nav><!----> <main id="main-content"><!--[--><!--[--><!----> <div class="reading-progress svelte-18rcjdz" style="width: 0%"></div><!----> <header class="post-header svelte-1teoznn"><!--[0--><img class="post-header-img svelte-1teoznn" src="../img/posts/post_16.jpg" alt="Transition from LAMP to JAMStack" fetchpriority="high"/><!--]--> <div class="post-header-overlay svelte-1teoznn"><h1 class="post-title svelte-1teoznn">Transition from LAMP to JAMStack</h1> <div class="post-meta svelte-1teoznn"><div class="icon svelte-1teoznn" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svelte-1n3xayn"><!--[-1--><!--]--><!--[--><path d="M436 160H12c-6.627 0-12-5.373-12-12v-36c0-26.51 21.49-48 48-48h48V12c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v52h128V12c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v52h48c26.51 0 48 21.49 48 48v36c0 6.627-5.373 12-12 12zM12 192h424c6.627 0 12 5.373 12 12v260c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V204c0-6.627 5.373-12 12-12zm333.296 95.947l-28.169-28.398c-4.667-4.705-12.265-4.736-16.97-.068L194.12 364.665l-45.98-46.352c-4.667-4.705-12.266-4.736-16.971-.068l-28.397 28.17c-4.705 4.667-4.736 12.265-.068 16.97l82.601 83.269c4.667 4.705 12.265 4.736 16.97.068l142.953-141.805c4.705-4.667 4.736-12.265.068-16.97z"></path><!--]--></svg><!----></div> April 11, 2020 <div class="icon svelte-1teoznn" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="svelte-1n3xayn"><!--[-1--><!--]--><!--[--><path d="M496 224c-79.6 0-144 64.4-144 144s64.4 144 144 144 144-64.4 144-144-64.4-144-144-144zm64 150.3c0 5.3-4.4 9.7-9.7 9.7h-60.6c-5.3 0-9.7-4.4-9.7-9.7v-76.6c0-5.3 4.4-9.7 9.7-9.7h12.6c5.3 0 9.7 4.4 9.7 9.7V352h38.3c5.3 0 9.7 4.4 9.7 9.7v12.6zM320 368c0-27.8 6.7-54.1 18.2-77.5-8-1.5-16.2-2.5-24.6-2.5h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h347.1c-45.3-31.9-75.1-84.5-75.1-144zm-96-112c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128z"></path><!--]--></svg><!----></div> 3 min read</div></div></header> <section class="post svelte-1teoznn"><article class="content svelte-1teoznn"><!----><p>Recently I came across this <a href="https://andreasbm.github.io/web-skills/" target="_blank" rel="nofollow">website</a> which had the complete guide on web development. That made me realize how the web development stack had evolved over the last decade. From generating HTML on the server to running JS on the client and back to rendering on the server we had multiple popular stacks that changed the outlook of web dev. Here is a small list of stacks put together with their basic history and details.</p>
+<h3>LAMP</h3>
+<p>When enterprises were struggling to choose between JSP and ASP, PHP gained popularity as it was open source and easy to learn. Since there was no licensing cost involved for using the language, PHP found its place with other free to use tools like Linux, Apache, and MySQL. It soon became one of the most used stack for a lot of websites and web applications at the time. Many of the hosting providers still make money out of selling shared Linux server spaces with LAMP stack. This also made WordPress and Laravel be the goto technologies for several years.</p>
+<h3>MEAN / MERN</h3>
+<p>Use cases for more client-side Javascript began to increase when web applications started demanding more functionalities and interactions. This led to the development of JavaScript libraries like jQuery, Ember, and Backbone which helped in making web development easy and fast. At the same time, developers decided to take JS to the next level by making it run on servers instead of depending on a different language for the backend. This might have been the first step at having the JavaScript only technology stack for all kinds of web applications. When Google open sourced AngularJS, people started loving it (even though it got hell load of hatred after they re-wrote it as Angular). Since Angular was the complete package that came with everything people wanted to do with their app as it is, it was the first choice for most front-end developers. The combination of MongoDB, Express, Angular and Node soon became the gold standard.</p>
+<p>The advantage of Angular being all in one framework for web dev also seemed like a disadvantage when React started to see the limelight as a simple customizable library. Due to Facebook&#39;s backing &amp; community support, it royally replaced A in MEAN to R.</p>
+<h3>JAM</h3>
+<p>LAMP, MEAN and MERN stacks had the database layer with it, but for certain use cases like personal blogs, the database layer seemed overkill. With that thought, JAMstack (JavaScript, API, Markdown) started to take shape. This concept is not exactly new, Jekyll - a static site generator written in Ruby was released in early 2008 which later was made popular by Github had the same principle of generating the pages during build time and serve them when requested. For the React side of the world, Gatsby, a React framework pretty much is the reason JAMstack got popular. The main advantages of using JAM include almost free server cost, easy to maintain and customize. This stack has the power to end the WordPress era eventually.</p>
+<h4>Further reading on how to use JAMstack</h4>
+<ul>
+<li><a href="https://jamstack.org/" target="_blank" rel="nofollow">JAMstack.org</a></li>
+<li><a href="https://www.freecodecamp.org/news/what-is-the-jamstack-and-how-do-i-host-my-website-on-it/" target="_blank" rel="nofollow">What is the JAMstack and how do I get started?</a></li>
+<li><a href="https://www.netlify.com/jamstack/" target="_blank" rel="nofollow">Welcome to the JAMstack</a></li>
+</ul>
+<p>This post is part one of the series of posts I <strong>might</strong> write about modern web development. Consider subscribing 🙃</p>
+<!----></article> <section class="post-footer"><nav class="post-nav svelte-1teoznn"><!--[0--><a rel="prev" href="serverless-deployment-using-serverless-framework-github-actions.html" class="post-nav-link post-nav-prev svelte-1teoznn"><span class="post-nav-label svelte-1teoznn"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1rem" width="1rem" xmlns="http://www.w3.org/2000/svg"><polyline points="15 18 9 12 15 6"></polyline></svg> Previous</span> <span class="post-nav-title svelte-1teoznn">Easy Serverless Deployment using Serverless Framework &amp; Github Actions</span></a><!--]--> <!--[0--><a rel="next" href="svelte-sapper-first-impressions.html" class="post-nav-link post-nav-next svelte-1teoznn"><span class="post-nav-label svelte-1teoznn">Next <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1rem" width="1rem" xmlns="http://www.w3.org/2000/svg"><polyline points="9 18 15 12 9 6"></polyline></svg></span> <span class="post-nav-title svelte-1teoznn">Svelte and Sapper: First Impressions</span></a><!--]--></nav> <!--[0--><section class="related-posts svelte-1teoznn"><h3 class="svelte-1teoznn">Related Posts</h3> <div class="related-posts-grid svelte-1teoznn"><!--[--><a href="svelte-sapper-first-impressions.html" class="related-post-card svelte-1teoznn"><h4 class="related-post-title svelte-1teoznn">Svelte and Sapper: First Impressions</h4> <p class="related-post-excerpt svelte-1teoznn">Things I have learnt about Svelte while re-writing my website with Sapper Framework</p></a><a href="build-your-own-chatbot-to-chat-with-your-documents-with-llamaindex-and-typescript.html" class="related-post-card svelte-1teoznn"><h4 class="related-post-title svelte-1teoznn">Build your own ChatBot to chat with your Documents with LlamaIndex and TypeScript</h4> <p class="related-post-excerpt svelte-1teoznn">Learn how to build a document summary chatbot using LlamaIndex and TypeScript that can read, index, and answer questions about your local files.</p></a><a href="serverless-deployment-using-serverless-framework-github-actions.html" class="related-post-card svelte-1teoznn"><h4 class="related-post-title svelte-1teoznn">Easy Serverless Deployment using Serverless Framework &amp; Github Actions</h4> <p class="related-post-excerpt svelte-1teoznn">Setting up CI/CD pipeline for deploying AWS lambda using serverless framework &amp; Github Actions</p></a><!--]--></div></section><!--]--> <div class="subscribe-section svelte-1teoznn"><div id="mc_embed_signup" class="subscribe svelte-w0ifsg"><form action="https://webception.us14.list-manage.com/subscribe/post?u=c0245295f15b4c910e1a8e7f5&amp;id=09333129c8" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" rel="noreferrer noopener" novalidate=""><div id="mc_embed_signup_scroll"><h4 class="svelte-w0ifsg">Like this post? Let me send the next one to your inbox.</h4> <div class="subscribe-form svelte-w0ifsg"><label for="mce-EMAIL" class="sr-only">Email Address for subscription</label> <input type="email" value="" name="EMAIL" class="required email svelte-w0ifsg" id="mce-EMAIL" placeholder="you@domain.com" required=""/> <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_c0245295f15b4c910e1a8e7f5_09333129c8" tabindex="-1" value=""/></div> <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn-subscribe svelte-w0ifsg"/></div></div></form></div><!----></div></section></section><!--]--><!--]--></main> <footer class="svelte-jz8lnl">© 2017 - 2026 Vishwasa Navada K. <a href="../sitemap.xml">Sitemap</a> | <a href="feed.xml">RSS</a>.</footer><!----><!--]--><!--]--> <!--[-1--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_15q1xi7 = {
+						base: ""
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("../_app/immutable/entry/start.BoriRtth.js"),
+						import("../_app/immutable/entry/app.DPIiKyJu.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 5],
+							data: [null,{type:"data",data:{post:{title:"Transition from LAMP to JAMStack",slug:"lamp-to-jam-stack",html:"\u003Cp>Recently I came across this \u003Ca href=\"https://andreasbm.github.io/web-skills/\" target=\"_blank\" rel=\"nofollow\">website\u003C/a> which had the complete guide on web development. That made me realize how the web development stack had evolved over the last decade. From generating HTML on the server to running JS on the client and back to rendering on the server we had multiple popular stacks that changed the outlook of web dev. Here is a small list of stacks put together with their basic history and details.\u003C/p>\n\u003Ch3>LAMP\u003C/h3>\n\u003Cp>When enterprises were struggling to choose between JSP and ASP, PHP gained popularity as it was open source and easy to learn. Since there was no licensing cost involved for using the language, PHP found its place with other free to use tools like Linux, Apache, and MySQL. It soon became one of the most used stack for a lot of websites and web applications at the time. Many of the hosting providers still make money out of selling shared Linux server spaces with LAMP stack. This also made WordPress and Laravel be the goto technologies for several years.\u003C/p>\n\u003Ch3>MEAN / MERN\u003C/h3>\n\u003Cp>Use cases for more client-side Javascript began to increase when web applications started demanding more functionalities and interactions. This led to the development of JavaScript libraries like jQuery, Ember, and Backbone which helped in making web development easy and fast. At the same time, developers decided to take JS to the next level by making it run on servers instead of depending on a different language for the backend. This might have been the first step at having the JavaScript only technology stack for all kinds of web applications. When Google open sourced AngularJS, people started loving it (even though it got hell load of hatred after they re-wrote it as Angular). Since Angular was the complete package that came with everything people wanted to do with their app as it is, it was the first choice for most front-end developers. The combination of MongoDB, Express, Angular and Node soon became the gold standard.\u003C/p>\n\u003Cp>The advantage of Angular being all in one framework for web dev also seemed like a disadvantage when React started to see the limelight as a simple customizable library. Due to Facebook&#39;s backing &amp; community support, it royally replaced A in MEAN to R.\u003C/p>\n\u003Ch3>JAM\u003C/h3>\n\u003Cp>LAMP, MEAN and MERN stacks had the database layer with it, but for certain use cases like personal blogs, the database layer seemed overkill. With that thought, JAMstack (JavaScript, API, Markdown) started to take shape. This concept is not exactly new, Jekyll - a static site generator written in Ruby was released in early 2008 which later was made popular by Github had the same principle of generating the pages during build time and serve them when requested. For the React side of the world, Gatsby, a React framework pretty much is the reason JAMstack got popular. The main advantages of using JAM include almost free server cost, easy to maintain and customize. This stack has the power to end the WordPress era eventually.\u003C/p>\n\u003Ch4>Further reading on how to use JAMstack\u003C/h4>\n\u003Cul>\n\u003Cli>\u003Ca href=\"https://jamstack.org/\" target=\"_blank\" rel=\"nofollow\">JAMstack.org\u003C/a>\u003C/li>\n\u003Cli>\u003Ca href=\"https://www.freecodecamp.org/news/what-is-the-jamstack-and-how-do-i-host-my-website-on-it/\" target=\"_blank\" rel=\"nofollow\">What is the JAMstack and how do I get started?\u003C/a>\u003C/li>\n\u003Cli>\u003Ca href=\"https://www.netlify.com/jamstack/\" target=\"_blank\" rel=\"nofollow\">Welcome to the JAMstack\u003C/a>\u003C/li>\n\u003C/ul>\n\u003Cp>This post is part one of the series of posts I \u003Cstrong>might\u003C/strong> write about modern web development. Consider subscribing 🙃\u003C/p>\n",date:new Date(1586592488000),excerpt:"Look back at how web development technology stacks have evolved in the last decade.",metakeywords:"javascript, LAMP, MEAN, MERN, JAMstack, Web development, technology stacks",headerImg:"/img/posts/post_16.jpg",printDate:"April 11, 2020",printReadingTime:"3 min read",wordCount:550,tech:true,canonicalUrl:"",previous:{title:"Easy Serverless Deployment using Serverless Framework & Github Actions",slug:"serverless-deployment-using-serverless-framework-github-actions"},next:{title:"Svelte and Sapper: First Impressions",slug:"svelte-sapper-first-impressions"},relatedPosts:[{title:"Svelte and Sapper: First Impressions",slug:"svelte-sapper-first-impressions",excerpt:"Things I have learnt about Svelte while re-writing my website with Sapper Framework"},{title:"Build your own ChatBot to chat with your Documents with LlamaIndex and TypeScript",slug:"build-your-own-chatbot-to-chat-with-your-documents-with-llamaindex-and-typescript",excerpt:"Learn how to build a document summary chatbot using LlamaIndex and TypeScript that can read, index, and answer questions about your local files."},{title:"Easy Serverless Deployment using Serverless Framework & Github Actions",slug:"serverless-deployment-using-serverless-framework-github-actions",excerpt:"Setting up CI/CD pipeline for deploying AWS lambda using serverless framework & Github Actions"}]}},uses:{params:["slug"]}}],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+
+<!-- Mirrored from vishwas.tech/blog/lamp-to-jam-stack by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Jun 2026 13:55:45 GMT -->
+</html>

@@ -1,0 +1,25 @@
+{
+  "background_color": "#101010",
+  "theme_color": "#ffffff",
+  "name": "Vishwasa Navada K",
+  "short_name": "Vishwasa Navada K",
+  "display": "standalone",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "logo-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
+  ]
+}

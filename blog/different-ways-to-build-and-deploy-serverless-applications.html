@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+	
+<!-- Mirrored from vishwas.tech/blog/different-ways-to-build-and-deploy-serverless-applications by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Jun 2026 13:55:15 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<meta name="theme-color" content="#15181a" />
+		<meta name="google-site-verification" content="YHl3VakTk4zpdZb6zip6rHj28WurraIVQvQ02dnmnik" />
+		<style>
+			@font-face {
+				font-family: 'Exo 2';
+				font-style: normal;
+				font-weight: 100 900;
+				font-display: swap;
+				src: url('../fonts/exo2-latin.woff2') format('woff2');
+				unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+			}
+			@font-face {
+				font-family: 'Exo 2';
+				font-style: italic;
+				font-weight: 100 900;
+				font-display: swap;
+				src: url('../fonts/exo2-italic-latin.woff2') format('woff2');
+				unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+			}
+			@font-face {
+				font-family: 'Zain';
+				font-style: normal;
+				font-weight: 700;
+				font-display: swap;
+				src: url('../fonts/zain-700-latin.woff2') format('woff2');
+				unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+			}
+			@font-face {
+				font-family: 'Exo 2 Fallback';
+				src: local('Arial'), local('Helvetica Neue'), local('Helvetica');
+				ascent-override: 105%;
+				descent-override: 35%;
+				line-gap-override: 0%;
+				size-adjust: 108.3%;
+			}
+		</style>
+		<link rel="preload" href="../fonts/exo2-latin.woff2" as="font" type="font/woff2" crossorigin />
+		<link rel="preload" href="../img/bg-mobile.webp" as="image" type="image/webp" media="(max-width: 700px)" fetchpriority="high" />
+		<link rel="preload" href="../img/bg.webp" as="image" type="image/webp" media="(min-width: 701px)" fetchpriority="high" />
+
+		<script>
+			(function() {
+				var stored = localStorage.getItem('theme');
+				if (stored === 'light' || (!stored && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+					document.documentElement.classList.add('light');
+				}
+				// WebP detection
+				var webp = new Image();
+				webp.onload = function() { document.documentElement.classList.add('webp'); };
+				webp.src = 'data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwA0JaQAA3AA/vuUAAA=';
+			})();
+		</script>
+		<style>
+			:root {
+				--font-primary: #dfe3e8;
+				--font-secondary: #8a9198;
+				--font-link: #a8c8e0;
+				--background: #15181a;
+				--background-nav: #1c2023;
+				--background-ternary: rgba(148, 158, 168, 0.12);
+				--accent-warm: #8a9eb5;
+				--card-hover-glow: 0 4px 20px rgba(138, 158, 181, 0.12);
+				--border-soft: 1px solid rgba(148, 158, 168, 0.18);
+				--base-font: 15px;
+			}
+			html.light {
+				--font-primary: #2e3338;
+				--font-secondary: #6b7580;
+				--font-link: #3d6b7a;
+				--background: #f0f2f5;
+				--background-nav: #e6e9ed;
+				--background-ternary: rgba(46, 51, 56, 0.07);
+				--accent-warm: #5a7085;
+				--card-hover-glow: 0 4px 20px rgba(90, 112, 133, 0.1);
+				--border-soft: 1px solid rgba(46, 51, 56, 0.12);
+			}
+			html { margin: 0; padding: 0; border: 0; font-size: var(--base-font); scroll-behavior: smooth; }
+			body { margin: 0 auto; color: var(--font-primary); background: var(--background); font-family: 'Exo 2', 'Exo 2 Fallback', sans-serif; padding-top: 60px; line-height: 1.7; letter-spacing: 0.01em; }
+			.landing-section { background-image: url('../img/bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+			html.webp .landing-section { background-image: url('../img/bg.webp'); }
+			@media (max-width: 700px) { .landing-section { background-image: url('../img/bg-mobile.jpg'); background-attachment: scroll; } html.webp .landing-section { background-image: url('../img/bg-mobile.webp'); } }
+		</style>
+		<link rel="preload" href="../global.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+		<noscript><link rel="stylesheet" href="../global.css" /></noscript>
+		<link rel="manifest" href="../manifest.json" crossorigin="use-credentials" />
+		<link rel="icon" type="image/png" href="../favicon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+		<link rel="apple-touch-icon" type="image/png" sizes="144x144" href="../favicon.144x144.png" />
+		<link href="../_app/immutable/entry/start.BoriRtth.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/LnuLDbCg.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/B9ds3UUs.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/mSPF7eII.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/Cb-YqvCW.js" rel="modulepreload">
+		<link href="../_app/immutable/entry/app.DPIiKyJu.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BlTxHScW.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CXA9MCwI.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DybFMULp.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DqZPzvnA.js" rel="modulepreload">
+		<link href="../_app/immutable/nodes/0.Dlhhf57m.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BTeyTLMJ.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BPshCss8.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/0RAUqcd1.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/D4BmXReN.js" rel="modulepreload">
+		<link href="../_app/immutable/nodes/5.DHwiR-Zc.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CeftOgyM.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DDf9H4An.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DVqmYH9N.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CbdOCbmG.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BH_fmw8v.js" rel="modulepreload">
+		<!--12qhfyh--><script async="" src="../../scripts.simpleanalyticscdn.com/latest.js"></script> <noscript><img src="../../queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade"/></noscript><!----><!--1teoznn--><link rel="stylesheet" href="../highlight.css"/><!----><!--ojxrft--><meta name="title" content="Different Ways to Build and Deploy Serverless Applications - Vishwasa Navada K"/> <link rel="canonical" href="../../www.antstack.com/blog/different-ways-to-build-and-deploy-serverless-applications/index.html"/> <meta name="description" itemprop="description" content="A comparison of serverless deployment tools including SAM, Serverless Framework, CDK, and SST, covering their strengths, trade-offs, and ideal use cases."/> <meta name="keywords" itemprop="keywords" content="serverless, AWS SAM, Serverless Framework, CDK, SST, CloudFormation, deployment, infrastructure as code, Lambda, CI/CD"/> <meta name="author" content="Vishwasa Navada K"/> <meta property="og:type" content="website"/> <meta property="og:url" content="https://vishwas.tech/blog/different-ways-to-build-and-deploy-serverless-applications"/> <meta property="og:title" content="Different Ways to Build and Deploy Serverless Applications - Vishwasa Navada K"/> <meta property="og:description" content="A comparison of serverless deployment tools including SAM, Serverless Framework, CDK, and SST, covering their strengths, trade-offs, and ideal use cases."/> <meta property="og:image" content="https://vishwas.tech/img/posts/tech/serverless_deployments_9bcfaf22ca.png"/> <meta property="og:site_name" content="Different Ways to Build and Deploy Serverless Applications - Vishwasa Navada K"/> <!--[0--><meta name="publish_date" property="og:publish_date" content="November 11, 2021"/><!--]--> <meta property="twitter:card" content="summary_large_image"/> <meta property="twitter:url" content="https://vishwas.tech/blog/different-ways-to-build-and-deploy-serverless-applications"/> <meta property="twitter:site" content="@vishwasnavadak"/> <meta property="twitter:creator" content="@vishwasnavadak"/> <meta property="twitter:title" content="Different Ways to Build and Deploy Serverless Applications - Vishwasa Navada K"/> <meta property="twitter:description" content="A comparison of serverless deployment tools including SAM, Serverless Framework, CDK, and SST, covering their strengths, trade-offs, and ideal use cases."/> <meta property="twitter:image" content="https://vishwas.tech/img/posts/tech/serverless_deployments_9bcfaf22ca.png"/> <meta property="twitter:image:alt" content="Cover Image for Different Ways to Build and Deploy Serverless Applications - Vishwasa Navada K"/> <meta name="twitter:label1" content="Written by"/> <meta name="twitter:data1" content="Vishwasa Navada K"/> <!--[0--><meta name="twitter:label2" content="Est. reading time"/> <meta name="twitter:data2" content="5 min read"/><!--]--> <!----><script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "BlogPosting",
+                  "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": "https://vishwas.tech/blog/different-ways-to-build-and-deploy-serverless-applications/"
+                  },
+                  "author": {
+                    "@type": "Person",
+                    "name": "Vishwasa Navada K",
+                    "url": "https://vishwas.tech"
+                  },
+                  "publisher": {
+                    "@type": "Organization",
+                    "name": "Vishwasa Navada K",
+                    "logo": {
+                      "@type": "ImageObject",
+                      "url": "https://vishwas.tech/img/vishwasnavadak_photo.jpg"
+                    }
+                  },
+                  "headline": "Different Ways to Build and Deploy Serverless Applications - Vishwasa Navada K",
+                  "description": "A comparison of serverless deployment tools including SAM, Serverless Framework, CDK, and SST, covering their strengths, trade-offs, and ideal use cases.",
+                  "image": "https://vishwas.tech/img/posts/tech/serverless_deployments_9bcfaf22ca.png",
+                  "url": "https://vishwas.tech/blog/different-ways-to-build-and-deploy-serverless-applications",
+                  "datePublished": "November 11, 2021",
+                  "dateModified": "November 11, 2021",
+                  "wordCount": 895,
+                  "keywords": "serverless, AWS SAM, Serverless Framework, CDK, SST, CloudFormation, deployment, infrastructure as code, Lambda, CI/CD"
+                }
+                </script><!----><!----><title>Different Ways to Build and Deploy Serverless Applications - Vishwasa Navada K</title>
+		<link href="../_app/immutable/assets/IconBase.dTiADBZb.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/0.BRzMDpr-.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/5.C47E8P8r.css" rel="stylesheet">
+	</head>
+	<body id="body" data-sveltekit-preload-data="hover">
+		<div style="display: contents"><!--[--><!--[0--><!--[--><a href="#main-content" class="skip-link svelte-12qhfyh">Skip to main content</a> <nav class="navbar svelte-1h32yp1"><input class="menu-btn svelte-1h32yp1" type="checkbox" id="menu-btn"/> <div class="navbar-header svelte-1h32yp1"><button type="button" class="menu-icon svelte-1h32yp1" aria-label="Toggle navigation menu" aria-expanded="false"><span class="navicon svelte-1h32yp1" aria-hidden="true"></span></button> <a href=".html" class="nav-logo svelte-1h32yp1" aria-label="Home"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 144" width="32" height="32" aria-hidden="true" class="logo svelte-1l8nvlt"><path class="body svelte-1l8nvlt" d="M93,8.7 c0.1,5.7 3.5,9.2 7.1,7.2 c2.1,-1.1 2,-1.2 -1.7,-5 c-4.2,-4.3 -5.4,-4.8 -5.4,-2.2 z M124,12 c-4.7,2.4 -6.3,2.8 -11,2.3 c-4.6,-0.4 -6.3,0 -10.4,2.1 c-4.8,2.4 -5,2.5 -7.5,0.7 c-4.3,-3 -9.1,-5.2 -10.1,-4.6 c-0.9,0.6 2.6,11.8 5.4,17.2 c1.2,2.5 1.5,4.9 1,11 c-0.9,12.2 -1.5,13.4 -14.3,26.7 c-19.5,20.4 -26.1,33.1 -26.1,50.1 c0,4 -0.4,5.6 -1.6,6.3 c-1.5,0.9 -1.5,1.2 0.1,4 c1,1.7 2.8,3.5 3.9,4 c11.3,5.4 10.1,5.2 30.9,5.2 c17.1,0 19.7,-0.2 19.7,-1.5 c0,-0.9 -1.1,-2.7 -2.5,-4 c-1.9,-2 -3.4,-2.5 -7.2,-2.5 l-4.7,0 l3.2,-3.3 c9,-9.3 4.4,-23.6 -7.6,-23.8 c-4.4,-0.1 -4.5,-0.1 -1.9,-1.1 c1.5,-0.5 4.3,-0.7 6.2,-0.4 c3.6,0.7 9.5,5.8 9.5,8.2 c0,2 1,1.7 4.2,-1.3 c1.5,-1.4 3,-2.5 3.2,-2.2 c0.2,0.2 1.5,7.4 2.8,15.9 l2.3,15.5 l6.4,0.3 c3.5,0.2 6.7,-0.1 7.1,-0.5 c1.3,-1.4 -0.8,-5.3 -3.6,-6.5 l-2.7,-1.3 l0.6,-17.7 c0.5,-16.6 0.7,-18 3.1,-22 c6,-10.2 6.6,-19.9 2.5,-37.6 c-3.1,-13.4 -2.7,-15.7 3.1,-22.5 c2.8,-3.2 5.3,-6.9 5.6,-8.3 c0.7,-2.6 -1.6,-10.6 -3.1,-11 c-0.5,-0.2 -3.5,1 -6.5,2.6 z"></path><path class="tail svelte-1l8nvlt" d="M54.7,98.2 c-2.5,6.5 -3.6,12.7 -3.7,19.1 l0,5.8 l-5.7,2.7 c-4.9,2.3 -7.2,2.7 -14.3,2.7 c-7.2,0 -9.4,-0.4 -14.4,-2.8 c-3.2,-1.5 -6.2,-2.7 -6.7,-2.7 c-1.8,0 1.5,6.2 4.7,8.6 c7.3,5.6 22.8,7.1 35.7,3.5 c6.6,-1.8 6.8,-1.8 10.4,0 c2.1,1.1 4.9,1.9 6.3,1.8 c2.2,0 2,-0.3 -1.5,-1.8 c-8.1,-3.7 -11.5,-10.1 -11.5,-21.3 c0,-4 0.7,-10 1.4,-13.3 c0.8,-3.3 1.3,-6.1 1.2,-6.3 c-0.2,-0.1 -1,1.7 -1.9,4 z"></path></svg><!----></a></div> <ul class="menu svelte-1h32yp1"><li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../index.html#about"><!--[-1-->About<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1 selected" aria-current="page" href="../blog.html"><!--[-1-->Blog<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../talks.html"><!--[-1-->Talks<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../photography.html"><!--[-1-->Photography<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../uses.html"><!--[-1-->Gear<!--]--></a></li></ul> <div class="theme-toggle-wrapper svelte-1h32yp1"><button class="theme-toggle svelte-1cmi4dh" aria-label="Switch to light mode" title="Switch to light mode"><span class="icon svelte-1cmi4dh"><!--[0--><img src="../img/cat-white.svg" alt="White cat - switch to light mode"/><!--]--></span></button><!----></div></nav><!----> <main id="main-content"><!--[--><!--[--><!----> <div class="reading-progress svelte-18rcjdz" style="width: 0%"></div><!----> <header class="post-header svelte-1teoznn"><!--[0--><img class="post-header-img svelte-1teoznn" src="../img/posts/tech/serverless_deployments_9bcfaf22ca.png" alt="Different Ways to Build and Deploy Serverless Applications" fetchpriority="high"/><!--]--> <div class="post-header-overlay svelte-1teoznn"><h1 class="post-title svelte-1teoznn">Different Ways to Build and Deploy Serverless Applications</h1> <div class="post-meta svelte-1teoznn"><div class="icon svelte-1teoznn" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svelte-1n3xayn"><!--[-1--><!--]--><!--[--><path d="M436 160H12c-6.627 0-12-5.373-12-12v-36c0-26.51 21.49-48 48-48h48V12c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v52h128V12c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v52h48c26.51 0 48 21.49 48 48v36c0 6.627-5.373 12-12 12zM12 192h424c6.627 0 12 5.373 12 12v260c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V204c0-6.627 5.373-12 12-12zm333.296 95.947l-28.169-28.398c-4.667-4.705-12.265-4.736-16.97-.068L194.12 364.665l-45.98-46.352c-4.667-4.705-12.266-4.736-16.971-.068l-28.397 28.17c-4.705 4.667-4.736 12.265-.068 16.97l82.601 83.269c4.667 4.705 12.265 4.736 16.97.068l142.953-141.805c4.705-4.667 4.736-12.265.068-16.97z"></path><!--]--></svg><!----></div> November 11, 2021 <div class="icon svelte-1teoznn" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="svelte-1n3xayn"><!--[-1--><!--]--><!--[--><path d="M496 224c-79.6 0-144 64.4-144 144s64.4 144 144 144 144-64.4 144-144-64.4-144-144-144zm64 150.3c0 5.3-4.4 9.7-9.7 9.7h-60.6c-5.3 0-9.7-4.4-9.7-9.7v-76.6c0-5.3 4.4-9.7 9.7-9.7h12.6c5.3 0 9.7 4.4 9.7 9.7V352h38.3c5.3 0 9.7 4.4 9.7 9.7v12.6zM320 368c0-27.8 6.7-54.1 18.2-77.5-8-1.5-16.2-2.5-24.6-2.5h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h347.1c-45.3-31.9-75.1-84.5-75.1-144zm-96-112c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128z"></path><!--]--></svg><!----></div> 5 min read</div></div></header> <section class="post svelte-1teoznn"><article class="content svelte-1teoznn"><!----><p>Building Serverless Applications that use various cloud resources can be tricky. Depending on the cloud provider, various tools can be used to develop, test and deploy serverless applications. This post focuses on some of the <a href="https://www.antstack.com/serverless-tools/" target="_blank" rel="nofollow">serverless tools</a> that are out there and how they can solve individual problems.</p>
+<p>We will be discussing features of SAM (Serverless Application Model), Serverless Framework, CDK, and Serverless Stack and see how each of them helps to develop <a href="https://www.antstack.com/application-development/" target="_blank" rel="nofollow">serverless applications</a> in different ways.</p>
+<h2>Serverless Application Model (SAM)</h2>
+<p>Even though you can deploy most of the resources on AWS with CloudFormation, for things specific to Serverless, it can be tedious. Serverless Application Model or in short SAM is an abstraction on top of CloudFormation to simplify serverless deployments. SAM CLI makes local development, testing, and debugging easy. With the introduction of <a href="https://aws.amazon.com/about-aws/whats-new/2021/10/aws-sam-accelerate-test-code-changes-cloud/" target="_blank" rel="nofollow">SAM Accelerate</a> (On public preview as of Nov 2021), it now allows to faster local development with instant synchronization of infrastructure changes from the local environment.</p>
+<p>For CI/CD, SAM Pipeline integrates with AWS CodePipeline or Third Party Tools like GitHub Actions to automate the deployment process. You can read more about it on our blog post CI/CD deployment with AWS <a href="https://www.antstack.com/blog/sam-pipeline-github-actions/" target="_blank" rel="nofollow">SAM Pipeline</a> Using <a href="https://www.antstack.com/blog/serverless-deployment-with-serverless-framework-and-github-actions/" target="_blank" rel="nofollow">GitHub Actions</a> </p>
+<h2>Serverless Framework (SLS)</h2>
+<p>If you are looking for an open-source and cloud agnostic-ish version of SAM, Serverless Framework is the tool for you. For AWS, it works similar to SAM and translates its syntax to CloudFormation. This would be a better choice when you are working with multiple cloud providers like AWS, GCP, or Azure since the learning and syntax remain almost the same across them. But keep in mind that, you would still be required to have some cloud-specific configurations to switch between cloud providers.</p>
+<p>Another advantage of Serverless Framework is that it has a plugin ecosystem that helps to accelerate the development process with reusable patterns and extensions. In the case of AWS, it can also be extended with plain CloudFormation to deploy non-serverless resources on the same configuration file.</p>
+<p>You can also check out <a href="https://www.antstack.io/blog/serverless-deployment-with-serverless-framework-and-github-actions/" target="_blank" rel="nofollow">Easy Serverless Deployment using Serverless Framework & Github Actions</a>, <a href="https://www.antstack.io/blog/automate-serverless-app-rollbacks-with-codedeploy-and-sls/" target="_blank" rel="nofollow">Automate Rollback of Serverless app with AWS [CodeDeploy](https://www.antstack.com/blog/automate-serverless-app-rollbacks-with-codedeploy-and-sls/) and Serverless Framework</a> for more content related to Serverless Framework.</p>
+<h3>But.</h3>
+<p><img src="../img/posts/tech/yaml_iac_101f1c5e15.jpg" alt="yaml-iac.jpg" loading="lazy" decoding="async" /></p>
+<p>Serverless is all about empowering developers with capabilities to deploy cloud resources. If they have to learn a new configuration language to deploy resources, then that purpose is not met. If we can deploy cloud resources with the same language as your business logic, then it makes it developers easy to adapt to serverless.</p>
+<h2>Cloud Development Kit (CDK)</h2>
+<p>CDK allows to create and deploy AWS resources using the most used programming languages like JavaScript, TypeScript, Python, Java, and C#. This enables us to use the benefits of code reusability to create AWS Resources and has test cases for them. If we were to use CDK with TypeScript, then all of the Frontend, Backend teams would be using one language to develop the whole application. CDK like every other AWS Deployment Mechanism translates to CloudFormation. So, if there is any configuration/service that doesn&#39;t support by <a href="https://www.antstack.io/blog/serverless-kyc-using-aws/" target="_blank" rel="nofollow">CDK</a>, it can still be configured with the help of CloudFormation.</p>
+<p>The main advantage of using CDK is constructs. Constructs AKA Patterns on CDK helps developers define a common set of use cases, the connection between resources, and use them across projects. These can be defined at the organization level so that any developer can use them in their projects, which allows enforcing best practices, code reusability, and less turnaround time. There are also open source constructs available to use. You could find them on <a href="https://constructs.dev/search?q=&amp;cdk=aws-cdk&amp;sort=newest&amp;offset=0" target="_blank" rel="nofollow">Constructs Hub</a>.</p>
+<p>One of the problems with CDK is local development. Any changes you do for resources or business logic have to be deployed from your machine to see them in effect/debug. There are ways to make the local development work with SAM CLI / Docker, but the steps involved are not straightforward.</p>
+<p>For setting up automatic deployment pipelines, CDK has come up with a new feature called <a href="https://www.antstack.com/blog/cdk-pipelines-with-github-source-and-codestar-connection/" target="_blank" rel="nofollow">CDK Pipelines</a>, which enables us to create a self-mutating pipeline along with our resources.</p>
+<h2>Serverless Stack (SST)</h2>
+<p>Serverless Stack is an open source framework to solve the problems with tools like CDK, help in local development and debugging as well as support reusable patterns specific to serverless. With similar syntax like CDK, it tries to bring in more readability and has predefined patterns like REST API, GraphQL API, React Deployment, and Authentication.</p>
+<p>SST has Live Lambda Development, which enables the developers to save the lambda code on their code editor and test the API endpoints almost immediately. If you are using VS Code, then SST could also be extended to use breakpoints for debugging. SST comes with mocking capabilities for writing unit tests for infrastructure deployment.</p>
+<h2>Conclusion</h2>
+<p>With more and more companies trying to adopt Serverless, more and more companies, cloud providers are coming up with tools to simplify serverless development and deployment. Since most of the tools are under active development, so there is scope for a lot of new features coming our way for serverless development. It is important to consider the resources you are going to deploy, the cloud provider, integration with CI/CD services you are using, and what is the main problem with your current deployment process before deciding on what tool to use.</p>
+<p><em>This post was originally published on <a href="../../www.antstack.com/blog/different-ways-to-build-and-deploy-serverless-applications/index.html" target="_blank" rel="nofollow">AntStack's Blog</a>.</em></p>
+<!----></article> <section class="post-footer"><nav class="post-nav svelte-1teoznn"><!--[0--><a rel="prev" href="notification-hell.html" class="post-nav-link post-nav-prev svelte-1teoznn"><span class="post-nav-label svelte-1teoznn"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1rem" width="1rem" xmlns="http://www.w3.org/2000/svg"><polyline points="15 18 9 12 15 6"></polyline></svg> Previous</span> <span class="post-nav-title svelte-1teoznn">Getting Away from Notification Hell</span></a><!--]--> <!--[0--><a rel="next" href="hobbies-and-self-discovery.html" class="post-nav-link post-nav-next svelte-1teoznn"><span class="post-nav-label svelte-1teoznn">Next <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1rem" width="1rem" xmlns="http://www.w3.org/2000/svg"><polyline points="9 18 15 12 9 6"></polyline></svg></span> <span class="post-nav-title svelte-1teoznn">Renewing Old Hobbies, Trying New Things and Self Reflection</span></a><!--]--></nav> <!--[0--><section class="related-posts svelte-1teoznn"><h3 class="svelte-1teoznn">Related Posts</h3> <div class="related-posts-grid svelte-1teoznn"><!--[--><a href="serverless-deployment-using-serverless-framework-github-actions.html" class="related-post-card svelte-1teoznn"><h4 class="related-post-title svelte-1teoznn">Easy Serverless Deployment using Serverless Framework &amp; Github Actions</h4> <p class="related-post-excerpt svelte-1teoznn">Setting up CI/CD pipeline for deploying AWS lambda using serverless framework &amp; Github Actions</p></a><a href="building-context-aware-code-review-agents-with-mcp-and-cloudflare-workers.html" class="related-post-card svelte-1teoznn"><h4 class="related-post-title svelte-1teoznn">Building Context-Aware Code Review Agents with MCP and Cloudflare Workers</h4> <p class="related-post-excerpt svelte-1teoznn">Learn how to build and deploy a custom MCP server on Cloudflare Workers that validates code against organizational standards using AutoRAG and integrates with GitHub Copilot.</p></a><a href="building-an-llm-driven-intelligent-email-responder-with-aws.html" class="related-post-card svelte-1teoznn"><h4 class="related-post-title svelte-1teoznn">Building an LLM-Driven Intelligent Email Responder with AWS</h4> <p class="related-post-excerpt svelte-1teoznn">A guide to building an automated email responder using Amazon Bedrock, SES, Lambda, and prompt engineering to classify and draft context-aware replies to customer emails.</p></a><!--]--></div></section><!--]--> <div class="subscribe-section svelte-1teoznn"><div id="mc_embed_signup" class="subscribe svelte-w0ifsg"><form action="https://webception.us14.list-manage.com/subscribe/post?u=c0245295f15b4c910e1a8e7f5&amp;id=09333129c8" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" rel="noreferrer noopener" novalidate=""><div id="mc_embed_signup_scroll"><h4 class="svelte-w0ifsg">Like this post? Let me send the next one to your inbox.</h4> <div class="subscribe-form svelte-w0ifsg"><label for="mce-EMAIL" class="sr-only">Email Address for subscription</label> <input type="email" value="" name="EMAIL" class="required email svelte-w0ifsg" id="mce-EMAIL" placeholder="you@domain.com" required=""/> <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_c0245295f15b4c910e1a8e7f5_09333129c8" tabindex="-1" value=""/></div> <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn-subscribe svelte-w0ifsg"/></div></div></form></div><!----></div></section></section><!--]--><!--]--></main> <footer class="svelte-jz8lnl">© 2017 - 2026 Vishwasa Navada K. <a href="../sitemap.xml">Sitemap</a> | <a href="feed.xml">RSS</a>.</footer><!----><!--]--><!--]--> <!--[-1--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_15q1xi7 = {
+						base: ""
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("../_app/immutable/entry/start.BoriRtth.js"),
+						import("../_app/immutable/entry/app.DPIiKyJu.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 5],
+							data: [null,{type:"data",data:{post:{title:"Different Ways to Build and Deploy Serverless Applications",slug:"different-ways-to-build-and-deploy-serverless-applications",html:"\u003Cp>Building Serverless Applications that use various cloud resources can be tricky. Depending on the cloud provider, various tools can be used to develop, test and deploy serverless applications. This post focuses on some of the \u003Ca href=\"https://www.antstack.com/serverless-tools/\" target=\"_blank\" rel=\"nofollow\">serverless tools\u003C/a> that are out there and how they can solve individual problems.\u003C/p>\n\u003Cp>We will be discussing features of SAM (Serverless Application Model), Serverless Framework, CDK, and Serverless Stack and see how each of them helps to develop \u003Ca href=\"https://www.antstack.com/application-development/\" target=\"_blank\" rel=\"nofollow\">serverless applications\u003C/a> in different ways.\u003C/p>\n\u003Ch2>Serverless Application Model (SAM)\u003C/h2>\n\u003Cp>Even though you can deploy most of the resources on AWS with CloudFormation, for things specific to Serverless, it can be tedious. Serverless Application Model or in short SAM is an abstraction on top of CloudFormation to simplify serverless deployments. SAM CLI makes local development, testing, and debugging easy. With the introduction of \u003Ca href=\"https://aws.amazon.com/about-aws/whats-new/2021/10/aws-sam-accelerate-test-code-changes-cloud/\" target=\"_blank\" rel=\"nofollow\">SAM Accelerate\u003C/a> (On public preview as of Nov 2021), it now allows to faster local development with instant synchronization of infrastructure changes from the local environment.\u003C/p>\n\u003Cp>For CI/CD, SAM Pipeline integrates with AWS CodePipeline or Third Party Tools like GitHub Actions to automate the deployment process. You can read more about it on our blog post CI/CD deployment with AWS \u003Ca href=\"https://www.antstack.com/blog/sam-pipeline-github-actions/\" target=\"_blank\" rel=\"nofollow\">SAM Pipeline\u003C/a> Using \u003Ca href=\"https://www.antstack.com/blog/serverless-deployment-with-serverless-framework-and-github-actions/\" target=\"_blank\" rel=\"nofollow\">GitHub Actions\u003C/a> \u003C/p>\n\u003Ch2>Serverless Framework (SLS)\u003C/h2>\n\u003Cp>If you are looking for an open-source and cloud agnostic-ish version of SAM, Serverless Framework is the tool for you. For AWS, it works similar to SAM and translates its syntax to CloudFormation. This would be a better choice when you are working with multiple cloud providers like AWS, GCP, or Azure since the learning and syntax remain almost the same across them. But keep in mind that, you would still be required to have some cloud-specific configurations to switch between cloud providers.\u003C/p>\n\u003Cp>Another advantage of Serverless Framework is that it has a plugin ecosystem that helps to accelerate the development process with reusable patterns and extensions. In the case of AWS, it can also be extended with plain CloudFormation to deploy non-serverless resources on the same configuration file.\u003C/p>\n\u003Cp>You can also check out \u003Ca href=\"https://www.antstack.io/blog/serverless-deployment-with-serverless-framework-and-github-actions/\" target=\"_blank\" rel=\"nofollow\">Easy Serverless Deployment using Serverless Framework & Github Actions\u003C/a>, \u003Ca href=\"https://www.antstack.io/blog/automate-serverless-app-rollbacks-with-codedeploy-and-sls/\" target=\"_blank\" rel=\"nofollow\">Automate Rollback of Serverless app with AWS [CodeDeploy](https://www.antstack.com/blog/automate-serverless-app-rollbacks-with-codedeploy-and-sls/) and Serverless Framework\u003C/a> for more content related to Serverless Framework.\u003C/p>\n\u003Ch3>But.\u003C/h3>\n\u003Cp>\u003Cimg src=\"/img/posts/tech/yaml_iac_101f1c5e15.jpg\" alt=\"yaml-iac.jpg\" loading=\"lazy\" decoding=\"async\" />\u003C/p>\n\u003Cp>Serverless is all about empowering developers with capabilities to deploy cloud resources. If they have to learn a new configuration language to deploy resources, then that purpose is not met. If we can deploy cloud resources with the same language as your business logic, then it makes it developers easy to adapt to serverless.\u003C/p>\n\u003Ch2>Cloud Development Kit (CDK)\u003C/h2>\n\u003Cp>CDK allows to create and deploy AWS resources using the most used programming languages like JavaScript, TypeScript, Python, Java, and C#. This enables us to use the benefits of code reusability to create AWS Resources and has test cases for them. If we were to use CDK with TypeScript, then all of the Frontend, Backend teams would be using one language to develop the whole application. CDK like every other AWS Deployment Mechanism translates to CloudFormation. So, if there is any configuration/service that doesn&#39;t support by \u003Ca href=\"https://www.antstack.io/blog/serverless-kyc-using-aws/\" target=\"_blank\" rel=\"nofollow\">CDK\u003C/a>, it can still be configured with the help of CloudFormation.\u003C/p>\n\u003Cp>The main advantage of using CDK is constructs. Constructs AKA Patterns on CDK helps developers define a common set of use cases, the connection between resources, and use them across projects. These can be defined at the organization level so that any developer can use them in their projects, which allows enforcing best practices, code reusability, and less turnaround time. There are also open source constructs available to use. You could find them on \u003Ca href=\"https://constructs.dev/search?q=&cdk=aws-cdk&sort=newest&offset=0\" target=\"_blank\" rel=\"nofollow\">Constructs Hub\u003C/a>.\u003C/p>\n\u003Cp>One of the problems with CDK is local development. Any changes you do for resources or business logic have to be deployed from your machine to see them in effect/debug. There are ways to make the local development work with SAM CLI / Docker, but the steps involved are not straightforward.\u003C/p>\n\u003Cp>For setting up automatic deployment pipelines, CDK has come up with a new feature called \u003Ca href=\"https://www.antstack.com/blog/cdk-pipelines-with-github-source-and-codestar-connection/\" target=\"_blank\" rel=\"nofollow\">CDK Pipelines\u003C/a>, which enables us to create a self-mutating pipeline along with our resources.\u003C/p>\n\u003Ch2>Serverless Stack (SST)\u003C/h2>\n\u003Cp>Serverless Stack is an open source framework to solve the problems with tools like CDK, help in local development and debugging as well as support reusable patterns specific to serverless. With similar syntax like CDK, it tries to bring in more readability and has predefined patterns like REST API, GraphQL API, React Deployment, and Authentication.\u003C/p>\n\u003Cp>SST has Live Lambda Development, which enables the developers to save the lambda code on their code editor and test the API endpoints almost immediately. If you are using VS Code, then SST could also be extended to use breakpoints for debugging. SST comes with mocking capabilities for writing unit tests for infrastructure deployment.\u003C/p>\n\u003Ch2>Conclusion\u003C/h2>\n\u003Cp>With more and more companies trying to adopt Serverless, more and more companies, cloud providers are coming up with tools to simplify serverless development and deployment. Since most of the tools are under active development, so there is scope for a lot of new features coming our way for serverless development. It is important to consider the resources you are going to deploy, the cloud provider, integration with CI/CD services you are using, and what is the main problem with your current deployment process before deciding on what tool to use.\u003C/p>\n\u003Cp>\u003Cem>This post was originally published on \u003Ca href=\"https://www.antstack.com/blog/different-ways-to-build-and-deploy-serverless-applications/\" target=\"_blank\" rel=\"nofollow\">AntStack's Blog\u003C/a>.\u003C/em>\u003C/p>\n",date:new Date(1636618088000),excerpt:"A comparison of serverless deployment tools including SAM, Serverless Framework, CDK, and SST, covering their strengths, trade-offs, and ideal use cases.",metakeywords:"serverless, AWS SAM, Serverless Framework, CDK, SST, CloudFormation, deployment, infrastructure as code, Lambda, CI/CD",headerImg:"/img/posts/tech/serverless_deployments_9bcfaf22ca.png",printDate:"November 11, 2021",printReadingTime:"5 min read",wordCount:895,tech:true,canonicalUrl:"https://www.antstack.com/blog/different-ways-to-build-and-deploy-serverless-applications/",previous:{title:"Getting Away from Notification Hell",slug:"notification-hell"},next:{title:"Renewing Old Hobbies, Trying New Things and Self Reflection",slug:"hobbies-and-self-discovery"},relatedPosts:[{title:"Easy Serverless Deployment using Serverless Framework & Github Actions",slug:"serverless-deployment-using-serverless-framework-github-actions",excerpt:"Setting up CI/CD pipeline for deploying AWS lambda using serverless framework & Github Actions"},{title:"Building Context-Aware Code Review Agents with MCP and Cloudflare Workers",slug:"building-context-aware-code-review-agents-with-mcp-and-cloudflare-workers",excerpt:"Learn how to build and deploy a custom MCP server on Cloudflare Workers that validates code against organizational standards using AutoRAG and integrates with GitHub Copilot."},{title:"Building an LLM-Driven Intelligent Email Responder with AWS",slug:"building-an-llm-driven-intelligent-email-responder-with-aws",excerpt:"A guide to building an automated email responder using Amazon Bedrock, SES, Lambda, and prompt engineering to classify and draft context-aware replies to customer emails."}]}},uses:{params:["slug"]}}],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+
+<!-- Mirrored from vishwas.tech/blog/different-ways-to-build-and-deploy-serverless-applications by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Jun 2026 13:55:20 GMT -->
+</html>

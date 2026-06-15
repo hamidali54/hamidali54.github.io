@@ -1,0 +1,1 @@
+import{_ as i}from"./BlTxHScW.js";let t=null;async function e(){if(!t)try{const{createWebHaptics:a}=await i(async()=>{const{createWebHaptics:c}=await import("./BD2xy2Xa.js");return{createWebHaptics:c}},[]);t=a()}catch{}}function n(a="nudge"){try{t?.trigger(a)}catch{}}function s(){try{t?.destroy()}catch{}t=null}export{s as d,n as h,e as i};

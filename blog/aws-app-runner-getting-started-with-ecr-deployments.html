@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+	
+<!-- Mirrored from vishwas.tech/blog/aws-app-runner-getting-started-with-ecr-deployments by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Jun 2026 13:55:20 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<meta name="theme-color" content="#15181a" />
+		<meta name="google-site-verification" content="YHl3VakTk4zpdZb6zip6rHj28WurraIVQvQ02dnmnik" />
+		<style>
+			@font-face {
+				font-family: 'Exo 2';
+				font-style: normal;
+				font-weight: 100 900;
+				font-display: swap;
+				src: url('../fonts/exo2-latin.woff2') format('woff2');
+				unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+			}
+			@font-face {
+				font-family: 'Exo 2';
+				font-style: italic;
+				font-weight: 100 900;
+				font-display: swap;
+				src: url('../fonts/exo2-italic-latin.woff2') format('woff2');
+				unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+			}
+			@font-face {
+				font-family: 'Zain';
+				font-style: normal;
+				font-weight: 700;
+				font-display: swap;
+				src: url('../fonts/zain-700-latin.woff2') format('woff2');
+				unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+			}
+			@font-face {
+				font-family: 'Exo 2 Fallback';
+				src: local('Arial'), local('Helvetica Neue'), local('Helvetica');
+				ascent-override: 105%;
+				descent-override: 35%;
+				line-gap-override: 0%;
+				size-adjust: 108.3%;
+			}
+		</style>
+		<link rel="preload" href="../fonts/exo2-latin.woff2" as="font" type="font/woff2" crossorigin />
+		<link rel="preload" href="../img/bg-mobile.webp" as="image" type="image/webp" media="(max-width: 700px)" fetchpriority="high" />
+		<link rel="preload" href="../img/bg.webp" as="image" type="image/webp" media="(min-width: 701px)" fetchpriority="high" />
+
+		<script>
+			(function() {
+				var stored = localStorage.getItem('theme');
+				if (stored === 'light' || (!stored && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+					document.documentElement.classList.add('light');
+				}
+				// WebP detection
+				var webp = new Image();
+				webp.onload = function() { document.documentElement.classList.add('webp'); };
+				webp.src = 'data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwA0JaQAA3AA/vuUAAA=';
+			})();
+		</script>
+		<style>
+			:root {
+				--font-primary: #dfe3e8;
+				--font-secondary: #8a9198;
+				--font-link: #a8c8e0;
+				--background: #15181a;
+				--background-nav: #1c2023;
+				--background-ternary: rgba(148, 158, 168, 0.12);
+				--accent-warm: #8a9eb5;
+				--card-hover-glow: 0 4px 20px rgba(138, 158, 181, 0.12);
+				--border-soft: 1px solid rgba(148, 158, 168, 0.18);
+				--base-font: 15px;
+			}
+			html.light {
+				--font-primary: #2e3338;
+				--font-secondary: #6b7580;
+				--font-link: #3d6b7a;
+				--background: #f0f2f5;
+				--background-nav: #e6e9ed;
+				--background-ternary: rgba(46, 51, 56, 0.07);
+				--accent-warm: #5a7085;
+				--card-hover-glow: 0 4px 20px rgba(90, 112, 133, 0.1);
+				--border-soft: 1px solid rgba(46, 51, 56, 0.12);
+			}
+			html { margin: 0; padding: 0; border: 0; font-size: var(--base-font); scroll-behavior: smooth; }
+			body { margin: 0 auto; color: var(--font-primary); background: var(--background); font-family: 'Exo 2', 'Exo 2 Fallback', sans-serif; padding-top: 60px; line-height: 1.7; letter-spacing: 0.01em; }
+			.landing-section { background-image: url('../img/bg.jpg'); background-size: cover; background-position: center; background-attachment: fixed; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+			html.webp .landing-section { background-image: url('../img/bg.webp'); }
+			@media (max-width: 700px) { .landing-section { background-image: url('../img/bg-mobile.jpg'); background-attachment: scroll; } html.webp .landing-section { background-image: url('../img/bg-mobile.webp'); } }
+		</style>
+		<link rel="preload" href="../global.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+		<noscript><link rel="stylesheet" href="../global.css" /></noscript>
+		<link rel="manifest" href="../manifest.json" crossorigin="use-credentials" />
+		<link rel="icon" type="image/png" href="../favicon.png" />
+		<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
+		<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png" />
+		<link rel="apple-touch-icon" type="image/png" sizes="144x144" href="../favicon.144x144.png" />
+		<link href="../_app/immutable/entry/start.BoriRtth.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/LnuLDbCg.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/B9ds3UUs.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/mSPF7eII.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/Cb-YqvCW.js" rel="modulepreload">
+		<link href="../_app/immutable/entry/app.DPIiKyJu.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BlTxHScW.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CXA9MCwI.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DybFMULp.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DqZPzvnA.js" rel="modulepreload">
+		<link href="../_app/immutable/nodes/0.Dlhhf57m.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BTeyTLMJ.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BPshCss8.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/0RAUqcd1.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/D4BmXReN.js" rel="modulepreload">
+		<link href="../_app/immutable/nodes/5.DHwiR-Zc.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CeftOgyM.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DDf9H4An.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DVqmYH9N.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CbdOCbmG.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/BH_fmw8v.js" rel="modulepreload">
+		<!--12qhfyh--><script async="" src="../../scripts.simpleanalyticscdn.com/latest.js"></script> <noscript><img src="../../queue.simpleanalyticscdn.com/noscript.gif" alt="" referrerpolicy="no-referrer-when-downgrade"/></noscript><!----><!--1teoznn--><link rel="stylesheet" href="../highlight.css"/><!----><!--ojxrft--><meta name="title" content="AWS App Runner: Getting Started with ECR Deployments - Vishwasa Navada K"/> <link rel="canonical" href="../../www.antstack.com/blog/aws-app-runner-getting-started-with-ecr-deployments/index.html"/> <meta name="description" itemprop="description" content="A step-by-step guide to deploying containerized applications on AWS App Runner using Amazon ECR, covering image building, tagging, pushing, and CloudFormation setup."/> <meta name="keywords" itemprop="keywords" content="AWS App Runner, ECR, Docker, containerized deployment, AWS, CloudFormation, serverless containers, AWS CLI, Fargate"/> <meta name="author" content="Vishwasa Navada K"/> <meta property="og:type" content="website"/> <meta property="og:url" content="https://vishwas.tech/blog/aws-app-runner-getting-started-with-ecr-deployments"/> <meta property="og:title" content="AWS App Runner: Getting Started with ECR Deployments - Vishwasa Navada K"/> <meta property="og:description" content="A step-by-step guide to deploying containerized applications on AWS App Runner using Amazon ECR, covering image building, tagging, pushing, and CloudFormation setup."/> <meta property="og:image" content="https://vishwas.tech/img/posts/tech/aws_app_runner_85693f2eec.png"/> <meta property="og:site_name" content="AWS App Runner: Getting Started with ECR Deployments - Vishwasa Navada K"/> <!--[0--><meta name="publish_date" property="og:publish_date" content="July 10, 2021"/><!--]--> <meta property="twitter:card" content="summary_large_image"/> <meta property="twitter:url" content="https://vishwas.tech/blog/aws-app-runner-getting-started-with-ecr-deployments"/> <meta property="twitter:site" content="@vishwasnavadak"/> <meta property="twitter:creator" content="@vishwasnavadak"/> <meta property="twitter:title" content="AWS App Runner: Getting Started with ECR Deployments - Vishwasa Navada K"/> <meta property="twitter:description" content="A step-by-step guide to deploying containerized applications on AWS App Runner using Amazon ECR, covering image building, tagging, pushing, and CloudFormation setup."/> <meta property="twitter:image" content="https://vishwas.tech/img/posts/tech/aws_app_runner_85693f2eec.png"/> <meta property="twitter:image:alt" content="Cover Image for AWS App Runner: Getting Started with ECR Deployments - Vishwasa Navada K"/> <meta name="twitter:label1" content="Written by"/> <meta name="twitter:data1" content="Vishwasa Navada K"/> <!--[0--><meta name="twitter:label2" content="Est. reading time"/> <meta name="twitter:data2" content="3 min read"/><!--]--> <!----><script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "BlogPosting",
+                  "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": "https://vishwas.tech/blog/aws-app-runner-getting-started-with-ecr-deployments/"
+                  },
+                  "author": {
+                    "@type": "Person",
+                    "name": "Vishwasa Navada K",
+                    "url": "https://vishwas.tech"
+                  },
+                  "publisher": {
+                    "@type": "Organization",
+                    "name": "Vishwasa Navada K",
+                    "logo": {
+                      "@type": "ImageObject",
+                      "url": "https://vishwas.tech/img/vishwasnavadak_photo.jpg"
+                    }
+                  },
+                  "headline": "AWS App Runner: Getting Started with ECR Deployments - Vishwasa Navada K",
+                  "description": "A step-by-step guide to deploying containerized applications on AWS App Runner using Amazon ECR, covering image building, tagging, pushing, and CloudFormation setup.",
+                  "image": "https://vishwas.tech/img/posts/tech/aws_app_runner_85693f2eec.png",
+                  "url": "https://vishwas.tech/blog/aws-app-runner-getting-started-with-ecr-deployments",
+                  "datePublished": "July 10, 2021",
+                  "dateModified": "July 10, 2021",
+                  "wordCount": 565,
+                  "keywords": "AWS App Runner, ECR, Docker, containerized deployment, AWS, CloudFormation, serverless containers, AWS CLI, Fargate"
+                }
+                </script><!----><!----><title>AWS App Runner: Getting Started with ECR Deployments - Vishwasa Navada K</title>
+		<link href="../_app/immutable/assets/IconBase.dTiADBZb.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/0.BRzMDpr-.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/5.C47E8P8r.css" rel="stylesheet">
+	</head>
+	<body id="body" data-sveltekit-preload-data="hover">
+		<div style="display: contents"><!--[--><!--[0--><!--[--><a href="#main-content" class="skip-link svelte-12qhfyh">Skip to main content</a> <nav class="navbar svelte-1h32yp1"><input class="menu-btn svelte-1h32yp1" type="checkbox" id="menu-btn"/> <div class="navbar-header svelte-1h32yp1"><button type="button" class="menu-icon svelte-1h32yp1" aria-label="Toggle navigation menu" aria-expanded="false"><span class="navicon svelte-1h32yp1" aria-hidden="true"></span></button> <a href=".html" class="nav-logo svelte-1h32yp1" aria-label="Home"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 144" width="32" height="32" aria-hidden="true" class="logo svelte-1l8nvlt"><path class="body svelte-1l8nvlt" d="M93,8.7 c0.1,5.7 3.5,9.2 7.1,7.2 c2.1,-1.1 2,-1.2 -1.7,-5 c-4.2,-4.3 -5.4,-4.8 -5.4,-2.2 z M124,12 c-4.7,2.4 -6.3,2.8 -11,2.3 c-4.6,-0.4 -6.3,0 -10.4,2.1 c-4.8,2.4 -5,2.5 -7.5,0.7 c-4.3,-3 -9.1,-5.2 -10.1,-4.6 c-0.9,0.6 2.6,11.8 5.4,17.2 c1.2,2.5 1.5,4.9 1,11 c-0.9,12.2 -1.5,13.4 -14.3,26.7 c-19.5,20.4 -26.1,33.1 -26.1,50.1 c0,4 -0.4,5.6 -1.6,6.3 c-1.5,0.9 -1.5,1.2 0.1,4 c1,1.7 2.8,3.5 3.9,4 c11.3,5.4 10.1,5.2 30.9,5.2 c17.1,0 19.7,-0.2 19.7,-1.5 c0,-0.9 -1.1,-2.7 -2.5,-4 c-1.9,-2 -3.4,-2.5 -7.2,-2.5 l-4.7,0 l3.2,-3.3 c9,-9.3 4.4,-23.6 -7.6,-23.8 c-4.4,-0.1 -4.5,-0.1 -1.9,-1.1 c1.5,-0.5 4.3,-0.7 6.2,-0.4 c3.6,0.7 9.5,5.8 9.5,8.2 c0,2 1,1.7 4.2,-1.3 c1.5,-1.4 3,-2.5 3.2,-2.2 c0.2,0.2 1.5,7.4 2.8,15.9 l2.3,15.5 l6.4,0.3 c3.5,0.2 6.7,-0.1 7.1,-0.5 c1.3,-1.4 -0.8,-5.3 -3.6,-6.5 l-2.7,-1.3 l0.6,-17.7 c0.5,-16.6 0.7,-18 3.1,-22 c6,-10.2 6.6,-19.9 2.5,-37.6 c-3.1,-13.4 -2.7,-15.7 3.1,-22.5 c2.8,-3.2 5.3,-6.9 5.6,-8.3 c0.7,-2.6 -1.6,-10.6 -3.1,-11 c-0.5,-0.2 -3.5,1 -6.5,2.6 z"></path><path class="tail svelte-1l8nvlt" d="M54.7,98.2 c-2.5,6.5 -3.6,12.7 -3.7,19.1 l0,5.8 l-5.7,2.7 c-4.9,2.3 -7.2,2.7 -14.3,2.7 c-7.2,0 -9.4,-0.4 -14.4,-2.8 c-3.2,-1.5 -6.2,-2.7 -6.7,-2.7 c-1.8,0 1.5,6.2 4.7,8.6 c7.3,5.6 22.8,7.1 35.7,3.5 c6.6,-1.8 6.8,-1.8 10.4,0 c2.1,1.1 4.9,1.9 6.3,1.8 c2.2,0 2,-0.3 -1.5,-1.8 c-8.1,-3.7 -11.5,-10.1 -11.5,-21.3 c0,-4 0.7,-10 1.4,-13.3 c0.8,-3.3 1.3,-6.1 1.2,-6.3 c-0.2,-0.1 -1,1.7 -1.9,4 z"></path></svg><!----></a></div> <ul class="menu svelte-1h32yp1"><li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../index.html#about"><!--[-1-->About<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1 selected" aria-current="page" href="../blog.html"><!--[-1-->Blog<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../talks.html"><!--[-1-->Talks<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../photography.html"><!--[-1-->Photography<!--]--></a></li> <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="../uses.html"><!--[-1-->Gear<!--]--></a></li></ul> <div class="theme-toggle-wrapper svelte-1h32yp1"><button class="theme-toggle svelte-1cmi4dh" aria-label="Switch to light mode" title="Switch to light mode"><span class="icon svelte-1cmi4dh"><!--[0--><img src="../img/cat-white.svg" alt="White cat - switch to light mode"/><!--]--></span></button><!----></div></nav><!----> <main id="main-content"><!--[--><!--[--><!----> <div class="reading-progress svelte-18rcjdz" style="width: 0%"></div><!----> <header class="post-header svelte-1teoznn"><!--[0--><img class="post-header-img svelte-1teoznn" src="../img/posts/tech/aws_app_runner_85693f2eec.png" alt="AWS App Runner: Getting Started with ECR Deployments" fetchpriority="high"/><!--]--> <div class="post-header-overlay svelte-1teoznn"><h1 class="post-title svelte-1teoznn">AWS App Runner: Getting Started with ECR Deployments</h1> <div class="post-meta svelte-1teoznn"><div class="icon svelte-1teoznn" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svelte-1n3xayn"><!--[-1--><!--]--><!--[--><path d="M436 160H12c-6.627 0-12-5.373-12-12v-36c0-26.51 21.49-48 48-48h48V12c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v52h128V12c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v52h48c26.51 0 48 21.49 48 48v36c0 6.627-5.373 12-12 12zM12 192h424c6.627 0 12 5.373 12 12v260c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V204c0-6.627 5.373-12 12-12zm333.296 95.947l-28.169-28.398c-4.667-4.705-12.265-4.736-16.97-.068L194.12 364.665l-45.98-46.352c-4.667-4.705-12.266-4.736-16.971-.068l-28.397 28.17c-4.705 4.667-4.736 12.265-.068 16.97l82.601 83.269c4.667 4.705 12.265 4.736 16.97.068l142.953-141.805c4.705-4.667 4.736-12.265.068-16.97z"></path><!--]--></svg><!----></div> July 10, 2021 <div class="icon svelte-1teoznn" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="svelte-1n3xayn"><!--[-1--><!--]--><!--[--><path d="M496 224c-79.6 0-144 64.4-144 144s64.4 144 144 144 144-64.4 144-144-64.4-144-144-144zm64 150.3c0 5.3-4.4 9.7-9.7 9.7h-60.6c-5.3 0-9.7-4.4-9.7-9.7v-76.6c0-5.3 4.4-9.7 9.7-9.7h12.6c5.3 0 9.7 4.4 9.7 9.7V352h38.3c5.3 0 9.7 4.4 9.7 9.7v12.6zM320 368c0-27.8 6.7-54.1 18.2-77.5-8-1.5-16.2-2.5-24.6-2.5h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h347.1c-45.3-31.9-75.1-84.5-75.1-144zm-96-112c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128z"></path><!--]--></svg><!----></div> 3 min read</div></div></header> <section class="post svelte-1teoznn"><article class="content svelte-1teoznn"><!----><p>AWS App Runner is a fully managed service that makes it easy for developers to quickly deploy containerized web applications and APIs, at scale and with no prior infrastructure experience required.</p>
+<p>One can deploy their application as a service from GitHub or deploy from ECR if the app is already containerized. Creating the App Runner Service from GitHub can easily be done by connecting the GitHub Repository to the App Service from the AWS Console. For ECR, there are a couple of steps to be done to get our containerized app into ECR before we can create App Runner Service from it.</p>
+<h2>Create ECR Repository</h2>
+<p>To store and maintain the containerized application within AWS, we would need to create a repository in AWS ECR. We can use <code>aws cli</code> to create a repository or it can be created on AWS Console.</p>
+<pre class="language-sh"><code class="language-sh">aws ecr create-repository --repository-name app-runner-example --image-scanning-configuration scanOnPush=true --profile <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>AWS_PROFILE</span><span class="token punctuation">></span></span> --region <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>region</span><span class="token punctuation">></span></span></code></pre><h2>Build Docker Image</h2>
+<p>Assuming you have a docker config or <code>Dockerfile</code> at the root directory of the project, you can run the below command to build the image.</p>
+<pre class="language-sh"><code class="language-sh">docker build -t app-runner:1 .</code></pre><p>PS: If you are on Apple&#39;s M1 Chip and trying to build the docker image, then the service might not run properly, since the M1 chip is ARM and Fargate/App Runner will run on x86/64 Architecture. You can find more details on that in <a href="https://stackoverflow.com/questions/67361936/exec-user-process-caused-exec-format-error-in-aws-fargate-service" target="_blank" rel="nofollow">this StackOverflow thread</a></p>
+<h2>Tag Docker Image</h2>
+<p>Tag the built image with the ECR URL. Here you would also need to specify the tag that would be saved in the ECR Repository.</p>
+<pre class="language-sh"><code class="language-sh">docker tag app-runner:1 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>AWS-ACCOUNT-ID</span><span class="token punctuation">></span></span>.dkr.ecr.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>region</span><span class="token punctuation">></span></span>.amazonaws.com/app-runner-example:latest
+</code></pre><h2>Authorizing Docker to push the Container Image to ECR</h2>
+<p>We will have to authorize the docker cli to push the image into the ECR repository. To do that, we need to use the below <code>aws cli</code> command to get the authentication token and pass it to the <code>docker login</code> command.</p>
+<pre class="language-sh"><code class="language-sh">aws ecr get-login-password --region <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>region</span><span class="token punctuation">></span></span> | docker login --username AWS --password-stdin <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>AWS-ACCOUNT-ID</span><span class="token punctuation">></span></span>.dkr.ecr.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>region</span><span class="token punctuation">></span></span>.amazonaws.com
+</code></pre><h2>Push to ECR</h2>
+<p>Once the login is successful. You can use <code>docker push</code> to push the local image into ECR. Since we are tagging the image as the latest, the previous images would be untagged in ECR, and pushed image would be tagged as latest.</p>
+<pre class="language-sh"><code class="language-sh">docker push <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>AWS-ACCOUNT-ID</span><span class="token punctuation">></span></span>.dkr.ecr.<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>region</span><span class="token punctuation">></span></span>.amazonaws.com/app-runner-example:latest
+</code></pre><h2>Create App Runner from ECR</h2>
+<p>Now that we have our container image in ECR, we can go to App Runner Console to create a service.</p>
+<p><img src="../img/posts/tech/aws_app_runner_ecr_1_f280278d1b.png" alt="Select ECR from the Menu" loading="lazy" decoding="async" /></p>
+<p>You would need to create/assign a role to App Runner which will give necessary access to ECR for pulling the container image.</p>
+<p><img src="../img/posts/tech/aws_app_runner_ecr_2_7d5b7bcddf.png" alt="Create a new role for App Runner to access ECR" loading="lazy" decoding="async" /></p>
+<p>Finally, you have to specify the name, CPU/Memory required for your app, and port. Optionally, if you have no mentioned the start command on the <code>Dockerfile</code> you can provide it here.
+<img src="../img/posts/tech/aws_app_runner_ecr_3_d6606931cd.png" alt="Provide Service Name, Port and Start Command" loading="lazy" decoding="async" /></p>
+<h2>Create App Runner through CloudFormation</h2>
+<p>Currently, App Runner Service can only be created through AWS Console, Cli, or CloudFormation. We have included a one-click deployment button below that would deploy the App Runner Service for a given ECR URL.</p>
+<p align="center">
+  <a href="https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/template?stackName=AppRunnerExample&templateURL=https://antstack-opensource.s3.amazonaws.com/aws-apprunner/create-apprunner.yml" target="_blank" rel="noopener noreferrer">
+    <img border="0" alt="Click to Deploy to Cloudformation" src="../img/posts/tech/cloudformation_launch_stack_455c1c47ec.png">
+  </a>
+</p>
+
+<h2>Reference</h2>
+<ol>
+<li><a href="https://docs.aws.amazon.com/AmazonECR/latest/userguide/getting-started-cli.html" target="_blank" rel="nofollow">Using Amazon ECR with the AWS CLI</a></li>
+</ol>
+<p><em>This post was originally published on <a href="../../www.antstack.com/blog/aws-app-runner-getting-started-with-ecr-deployments/index.html" target="_blank" rel="nofollow">AntStack's Blog</a>.</em></p>
+<!----></article> <section class="post-footer"><nav class="post-nav svelte-1teoznn"><!--[0--><a rel="prev" href="using-dns-filters-for-blocking-ads-and-tracking.html" class="post-nav-link post-nav-prev svelte-1teoznn"><span class="post-nav-label svelte-1teoznn"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1rem" width="1rem" xmlns="http://www.w3.org/2000/svg"><polyline points="15 18 9 12 15 6"></polyline></svg> Previous</span> <span class="post-nav-title svelte-1teoznn">Using DNS Filters for Blocking Ads and Tracking</span></a><!--]--> <!--[0--><a rel="next" href="notification-hell.html" class="post-nav-link post-nav-next svelte-1teoznn"><span class="post-nav-label svelte-1teoznn">Next <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1rem" width="1rem" xmlns="http://www.w3.org/2000/svg"><polyline points="9 18 15 12 9 6"></polyline></svg></span> <span class="post-nav-title svelte-1teoznn">Getting Away from Notification Hell</span></a><!--]--></nav> <!--[0--><section class="related-posts svelte-1teoznn"><h3 class="svelte-1teoznn">Related Posts</h3> <div class="related-posts-grid svelte-1teoznn"><!--[--><a href="the-honest-math-of-coding-with-ai-agents-in-production.html" class="related-post-card svelte-1teoznn"><h4 class="related-post-title svelte-1teoznn">The Honest Math of Coding with AI Agents in Production</h4> <p class="related-post-excerpt svelte-1teoznn">A real-world breakdown of using AI coding agents (Claude Code, Gemini) to ship an AI chatbot to production on AWS over two months, covering what worked, what did not, and actual productivity numbers.</p></a><a href="building-an-llm-driven-intelligent-email-responder-with-aws.html" class="related-post-card svelte-1teoznn"><h4 class="related-post-title svelte-1teoznn">Building an LLM-Driven Intelligent Email Responder with AWS</h4> <p class="related-post-excerpt svelte-1teoznn">A guide to building an automated email responder using Amazon Bedrock, SES, Lambda, and prompt engineering to classify and draft context-aware replies to customer emails.</p></a><a href="protecting-serverless-applications-with-aws-waf.html" class="related-post-card svelte-1teoznn"><h4 class="related-post-title svelte-1teoznn">Protecting Serverless Applications with AWS WAF</h4> <p class="related-post-excerpt svelte-1teoznn">Learn how to use AWS WAF to protect serverless applications from DDoS attacks, SQL injection, and unauthorized access with managed rules, IP restrictions, and bot control.</p></a><!--]--></div></section><!--]--> <div class="subscribe-section svelte-1teoznn"><div id="mc_embed_signup" class="subscribe svelte-w0ifsg"><form action="https://webception.us14.list-manage.com/subscribe/post?u=c0245295f15b4c910e1a8e7f5&amp;id=09333129c8" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" rel="noreferrer noopener" novalidate=""><div id="mc_embed_signup_scroll"><h4 class="svelte-w0ifsg">Like this post? Let me send the next one to your inbox.</h4> <div class="subscribe-form svelte-w0ifsg"><label for="mce-EMAIL" class="sr-only">Email Address for subscription</label> <input type="email" value="" name="EMAIL" class="required email svelte-w0ifsg" id="mce-EMAIL" placeholder="you@domain.com" required=""/> <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_c0245295f15b4c910e1a8e7f5_09333129c8" tabindex="-1" value=""/></div> <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="btn-subscribe svelte-w0ifsg"/></div></div></form></div><!----></div></section></section><!--]--><!--]--></main> <footer class="svelte-jz8lnl">© 2017 - 2026 Vishwasa Navada K. <a href="../sitemap.xml">Sitemap</a> | <a href="feed.xml">RSS</a>.</footer><!----><!--]--><!--]--> <!--[-1--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_15q1xi7 = {
+						base: ""
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("../_app/immutable/entry/start.BoriRtth.js"),
+						import("../_app/immutable/entry/app.DPIiKyJu.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 5],
+							data: [null,{type:"data",data:{post:{title:"AWS App Runner: Getting Started with ECR Deployments",slug:"aws-app-runner-getting-started-with-ecr-deployments",html:"\u003Cp>AWS App Runner is a fully managed service that makes it easy for developers to quickly deploy containerized web applications and APIs, at scale and with no prior infrastructure experience required.\u003C/p>\n\u003Cp>One can deploy their application as a service from GitHub or deploy from ECR if the app is already containerized. Creating the App Runner Service from GitHub can easily be done by connecting the GitHub Repository to the App Service from the AWS Console. For ECR, there are a couple of steps to be done to get our containerized app into ECR before we can create App Runner Service from it.\u003C/p>\n\u003Ch2>Create ECR Repository\u003C/h2>\n\u003Cp>To store and maintain the containerized application within AWS, we would need to create a repository in AWS ECR. We can use \u003Ccode>aws cli\u003C/code> to create a repository or it can be created on AWS Console.\u003C/p>\n\u003Cpre class=\"language-sh\">\u003Ccode class=\"language-sh\">aws ecr create-repository --repository-name app-runner-example --image-scanning-configuration scanOnPush=true --profile \u003Cspan class=\"token tag\">\u003Cspan class=\"token tag\">\u003Cspan class=\"token punctuation\">&lt;\u003C/span>AWS_PROFILE\u003C/span>\u003Cspan class=\"token punctuation\">>\u003C/span>\u003C/span> --region \u003Cspan class=\"token tag\">\u003Cspan class=\"token tag\">\u003Cspan class=\"token punctuation\">&lt;\u003C/span>region\u003C/span>\u003Cspan class=\"token punctuation\">>\u003C/span>\u003C/span>\u003C/code>\u003C/pre>\u003Ch2>Build Docker Image\u003C/h2>\n\u003Cp>Assuming you have a docker config or \u003Ccode>Dockerfile\u003C/code> at the root directory of the project, you can run the below command to build the image.\u003C/p>\n\u003Cpre class=\"language-sh\">\u003Ccode class=\"language-sh\">docker build -t app-runner:1 .\u003C/code>\u003C/pre>\u003Cp>PS: If you are on Apple&#39;s M1 Chip and trying to build the docker image, then the service might not run properly, since the M1 chip is ARM and Fargate/App Runner will run on x86/64 Architecture. You can find more details on that in \u003Ca href=\"https://stackoverflow.com/questions/67361936/exec-user-process-caused-exec-format-error-in-aws-fargate-service\" target=\"_blank\" rel=\"nofollow\">this StackOverflow thread\u003C/a>\u003C/p>\n\u003Ch2>Tag Docker Image\u003C/h2>\n\u003Cp>Tag the built image with the ECR URL. Here you would also need to specify the tag that would be saved in the ECR Repository.\u003C/p>\n\u003Cpre class=\"language-sh\">\u003Ccode class=\"language-sh\">docker tag app-runner:1 \u003Cspan class=\"token tag\">\u003Cspan class=\"token tag\">\u003Cspan class=\"token punctuation\">&lt;\u003C/span>AWS-ACCOUNT-ID\u003C/span>\u003Cspan class=\"token punctuation\">>\u003C/span>\u003C/span>.dkr.ecr.\u003Cspan class=\"token tag\">\u003Cspan class=\"token tag\">\u003Cspan class=\"token punctuation\">&lt;\u003C/span>region\u003C/span>\u003Cspan class=\"token punctuation\">>\u003C/span>\u003C/span>.amazonaws.com/app-runner-example:latest\n\u003C/code>\u003C/pre>\u003Ch2>Authorizing Docker to push the Container Image to ECR\u003C/h2>\n\u003Cp>We will have to authorize the docker cli to push the image into the ECR repository. To do that, we need to use the below \u003Ccode>aws cli\u003C/code> command to get the authentication token and pass it to the \u003Ccode>docker login\u003C/code> command.\u003C/p>\n\u003Cpre class=\"language-sh\">\u003Ccode class=\"language-sh\">aws ecr get-login-password --region \u003Cspan class=\"token tag\">\u003Cspan class=\"token tag\">\u003Cspan class=\"token punctuation\">&lt;\u003C/span>region\u003C/span>\u003Cspan class=\"token punctuation\">>\u003C/span>\u003C/span> | docker login --username AWS --password-stdin \u003Cspan class=\"token tag\">\u003Cspan class=\"token tag\">\u003Cspan class=\"token punctuation\">&lt;\u003C/span>AWS-ACCOUNT-ID\u003C/span>\u003Cspan class=\"token punctuation\">>\u003C/span>\u003C/span>.dkr.ecr.\u003Cspan class=\"token tag\">\u003Cspan class=\"token tag\">\u003Cspan class=\"token punctuation\">&lt;\u003C/span>region\u003C/span>\u003Cspan class=\"token punctuation\">>\u003C/span>\u003C/span>.amazonaws.com\n\u003C/code>\u003C/pre>\u003Ch2>Push to ECR\u003C/h2>\n\u003Cp>Once the login is successful. You can use \u003Ccode>docker push\u003C/code> to push the local image into ECR. Since we are tagging the image as the latest, the previous images would be untagged in ECR, and pushed image would be tagged as latest.\u003C/p>\n\u003Cpre class=\"language-sh\">\u003Ccode class=\"language-sh\">docker push \u003Cspan class=\"token tag\">\u003Cspan class=\"token tag\">\u003Cspan class=\"token punctuation\">&lt;\u003C/span>AWS-ACCOUNT-ID\u003C/span>\u003Cspan class=\"token punctuation\">>\u003C/span>\u003C/span>.dkr.ecr.\u003Cspan class=\"token tag\">\u003Cspan class=\"token tag\">\u003Cspan class=\"token punctuation\">&lt;\u003C/span>region\u003C/span>\u003Cspan class=\"token punctuation\">>\u003C/span>\u003C/span>.amazonaws.com/app-runner-example:latest\n\u003C/code>\u003C/pre>\u003Ch2>Create App Runner from ECR\u003C/h2>\n\u003Cp>Now that we have our container image in ECR, we can go to App Runner Console to create a service.\u003C/p>\n\u003Cp>\u003Cimg src=\"/img/posts/tech/aws_app_runner_ecr_1_f280278d1b.png\" alt=\"Select ECR from the Menu\" loading=\"lazy\" decoding=\"async\" />\u003C/p>\n\u003Cp>You would need to create/assign a role to App Runner which will give necessary access to ECR for pulling the container image.\u003C/p>\n\u003Cp>\u003Cimg src=\"/img/posts/tech/aws_app_runner_ecr_2_7d5b7bcddf.png\" alt=\"Create a new role for App Runner to access ECR\" loading=\"lazy\" decoding=\"async\" />\u003C/p>\n\u003Cp>Finally, you have to specify the name, CPU/Memory required for your app, and port. Optionally, if you have no mentioned the start command on the \u003Ccode>Dockerfile\u003C/code> you can provide it here.\n\u003Cimg src=\"/img/posts/tech/aws_app_runner_ecr_3_d6606931cd.png\" alt=\"Provide Service Name, Port and Start Command\" loading=\"lazy\" decoding=\"async\" />\u003C/p>\n\u003Ch2>Create App Runner through CloudFormation\u003C/h2>\n\u003Cp>Currently, App Runner Service can only be created through AWS Console, Cli, or CloudFormation. We have included a one-click deployment button below that would deploy the App Runner Service for a given ECR URL.\u003C/p>\n\u003Cp align=\"center\">\n  \u003Ca href=\"https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/create/template?stackName=AppRunnerExample&templateURL=https://antstack-opensource.s3.amazonaws.com/aws-apprunner/create-apprunner.yml\" target=\"_blank\" rel=\"noopener noreferrer\">\n    \u003Cimg border=\"0\" alt=\"Click to Deploy to Cloudformation\" src=\"/img/posts/tech/cloudformation_launch_stack_455c1c47ec.png\">\n  \u003C/a>\n\u003C/p>\n\n\u003Ch2>Reference\u003C/h2>\n\u003Col>\n\u003Cli>\u003Ca href=\"https://docs.aws.amazon.com/AmazonECR/latest/userguide/getting-started-cli.html\" target=\"_blank\" rel=\"nofollow\">Using Amazon ECR with the AWS CLI\u003C/a>\u003C/li>\n\u003C/ol>\n\u003Cp>\u003Cem>This post was originally published on \u003Ca href=\"https://www.antstack.com/blog/aws-app-runner-getting-started-with-ecr-deployments/\" target=\"_blank\" rel=\"nofollow\">AntStack's Blog\u003C/a>.\u003C/em>\u003C/p>\n",date:new Date(1625904488000),excerpt:"A step-by-step guide to deploying containerized applications on AWS App Runner using Amazon ECR, covering image building, tagging, pushing, and CloudFormation setup.",metakeywords:"AWS App Runner, ECR, Docker, containerized deployment, AWS, CloudFormation, serverless containers, AWS CLI, Fargate",headerImg:"/img/posts/tech/aws_app_runner_85693f2eec.png",printDate:"July 10, 2021",printReadingTime:"3 min read",wordCount:565,tech:true,canonicalUrl:"https://www.antstack.com/blog/aws-app-runner-getting-started-with-ecr-deployments/",previous:{title:"Using DNS Filters for Blocking Ads and Tracking",slug:"using-dns-filters-for-blocking-ads-and-tracking"},next:{title:"Getting Away from Notification Hell",slug:"notification-hell"},relatedPosts:[{title:"The Honest Math of Coding with AI Agents in Production",slug:"the-honest-math-of-coding-with-ai-agents-in-production",excerpt:"A real-world breakdown of using AI coding agents (Claude Code, Gemini) to ship an AI chatbot to production on AWS over two months, covering what worked, what did not, and actual productivity numbers."},{title:"Building an LLM-Driven Intelligent Email Responder with AWS",slug:"building-an-llm-driven-intelligent-email-responder-with-aws",excerpt:"A guide to building an automated email responder using Amazon Bedrock, SES, Lambda, and prompt engineering to classify and draft context-aware replies to customer emails."},{title:"Protecting Serverless Applications with AWS WAF",slug:"protecting-serverless-applications-with-aws-waf",excerpt:"Learn how to use AWS WAF to protect serverless applications from DDoS attacks, SQL injection, and unauthorized access with managed rules, IP restrictions, and bot control."}]}},uses:{params:["slug"]}}],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+
+<!-- Mirrored from vishwas.tech/blog/aws-app-runner-getting-started-with-ecr-deployments by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 15 Jun 2026 13:55:31 GMT -->
+</html>
