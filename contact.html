@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta name="theme-color" content="#15181a" />
+    <title>Contact | Hamid Ali</title>
+    <meta name="title" content="Contact | Hamid Ali" />
+    <meta name="description" content="Contact Hamid Ali for collaborations, internships, or questions about Linux and web development." />
+    <meta name="keywords" content="hamid ali, contact, email, linkedin, github, portfolio, connect" />
+    <meta name="author" content="Hamid Ali Khoso" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://hamidali.dev/contact.html" />
+    <meta property="og:title" content="Contact | Hamid Ali" />
+    <meta property="og:description" content="Get in touch with Hamid Ali for projects, mentorship, or open source collaborations." />
+    <meta property="og:image" content="https://hamidali.dev/img/bg.jpg" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://hamidali.dev/contact.html" />
+    <meta property="twitter:title" content="Contact | Hamid Ali" />
+    <meta property="twitter:description" content="Get in touch with Hamid Ali for projects, mentorship, or open source collaborations." />
+    <meta property="twitter:image" content="https://hamidali.dev/img/bg.jpg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="img/linuxTuxlogo.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="img/linuxTuxlogo.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="img/linuxTuxlogo.png" />
+    <style>
+        /* ===== Fonts ===== */
+        /* These rules load the fonts used on this page. */
+        @font-face {
+            font-family: 'Exo 2';
+            font-style: normal;
+            font-weight: 100 900;
+            font-display: swap;
+            src: url('fonts/exo2-latin.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Exo 2';
+            font-style: italic;
+            font-weight: 100 900;
+            font-display: swap;
+            src: url('fonts/exo2-italic-latin.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Zain';
+            font-style: normal;
+            font-weight: 700;
+            font-display: swap;
+            src: url('fonts/zain-700-latin.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Exo 2 Fallback';
+            src: local('Arial'), local('Helvetica Neue'), local('Helvetica');
+            ascent-override: 105%;
+            descent-override: 35%;
+            line-gap-override: 0%;
+            size-adjust: 108.3%;
+        }
+        :root {
+            --font-primary: #dfe3e8;
+            --font-secondary: #8a9198;
+            --font-link: #a8c8e0;
+            --background: #15181a;
+            --background-nav: #1c2023;
+            --background-ternary: rgba(148, 158, 168, 0.12);
+            --accent-warm: #8a9eb5;
+            --card-hover-glow: 0 4px 20px rgba(138, 158, 181, 0.12);
+            --border-soft: 1px solid rgba(148, 158, 168, 0.18);
+            --base-font: 15px;
+        }
+        html.light {
+            --font-primary: #2e3338;
+            --font-secondary: #6b7580;
+            --font-link: #3d6b7a;
+            --background: #f0f2f5;
+            --background-nav: #e6e9ed;
+            --background-ternary: rgba(46, 51, 56, 0.07);
+            --accent-warm: #5a7085;
+            --card-hover-glow: 0 4px 20px rgba(90, 112, 133, 0.1);
+            --border-soft: 1px solid rgba(46, 51, 56, 0.12);
+        }
+        html { margin:0; padding:0; font-size:var(--base-font); scroll-behavior:smooth; min-height:100%; }
+        body {
+            margin:0;
+            min-height:100vh;
+            display:flex;
+            flex-direction:column;
+            color:var(--font-primary);
+            background:var(--background);
+            font-family:'Exo 2', 'Exo 2 Fallback', sans-serif;
+            padding-top:60px;
+            line-height:1.75;
+            letter-spacing:.01em;
+        }
+        *, *::before, *::after { box-sizing:border-box; }
+        img { max-width:100%; display:block; }
+        a { color:var(--font-link); text-decoration:none; transition:color .25s ease; }
+        a:hover, a:focus { color:var(--font-primary); }
+        button, input, textarea { font:inherit; }
+        .navbar { top:0; left:0; position:fixed; width:100%; z-index:1000; background-color:var(--background-nav); box-shadow:0 1px 2px rgba(0,0,0,.12); }
+        .navbar ul { margin:0; padding:0; list-style:none; overflow:hidden; }
+        .navbar li a { display:block; padding:16px 18px; text-transform:uppercase; letter-spacing:.08em; font-weight:300; font-size:.9rem; text-align:center; }
+        .navbar .menu { clear:both; max-height:0; transition:max-height .2s ease-out; }
+        .navbar .menu-icon { cursor:pointer; display:inline-block; padding:24px 16px; position:relative; user-select:none; background:none; border:none; color:inherit; }
+        .navbar .menu-icon .navicon { background-color:var(--font-primary); display:block; height:2px; position:relative; transition:background .2s ease-out; width:18px; }
+        .navbar .menu-icon .navicon:before, .navbar .menu-icon .navicon:after { background-color:var(--font-primary); content:""; display:block; height:100%; position:absolute; transition:all .2s ease-out; width:100%; }
+        .navbar .menu-icon .navicon:before { top:5px; }
+        .navbar .menu-icon .navicon:after { top:-5px; }
+        .navbar .menu-btn { display:none; }
+        .navbar .menu-btn:checked ~ .menu { max-height:500px; }
+        .navbar .menu-btn:checked ~ .navbar-header .menu-icon .navicon { background:transparent; }
+        .navbar .menu-btn:checked ~ .navbar-header .menu-icon .navicon:before { transform:rotate(-45deg); }
+        .navbar .menu-btn:checked ~ .navbar-header .menu-icon .navicon:after { transform:rotate(45deg); }
+        .navbar-header { display:flex; align-items:center; }
+        .nav-logo { display:flex; align-items:center; padding:15px 10px; flex-shrink:0; }
+        .nav-logo img { width:40px; height:40px; object-fit:contain; }
+        /* Keep the theme button fixed so it remains visible when menus open or pages change */
+        .theme-toggle-wrapper { position:fixed; top:12px; right:12px; display:flex; align-items:center; height:auto; padding:6px; z-index:1101; }
+        .theme-toggle { background:none; border:none; cursor:pointer; padding:15px; display:flex; align-items:center; justify-content:center; color:var(--font-primary); transition:color .3s ease, background .3s ease; border-radius:999px; }
+        .theme-toggle:hover { color:var(--accent-warm); background:rgba(255,255,255,.06); }
+        .theme-toggle img { width:20px; height:20px; display:block; }
+        html.light .theme-toggle { background:rgba(0,0,0,.08); }
+        html.light .theme-toggle:hover { background:rgba(0,0,0,.12); }
+        .icon { width:25px; height:25px; }
+        /* This keeps the theme button visible and styled in the top right. */
+        @media(min-width:768px) {
+            .navbar { display:flex; align-items:center; }
+            .navbar-header { margin-right:auto; }
+            .navbar li { float:left; }
+            .navbar li a { text-align:left; }
+            .navbar .menu { display:flex; clear:none; float:none; max-height:none; }
+            .navbar .menu-icon { display:none; }
+            /* On larger screens keep the button in the header flow (no fixed position) */
+            .theme-toggle-wrapper { position:static; height:auto; padding:0; }
+        }
+        main { width:100%; max-width:1200px; margin:0 auto; padding:14px 16px 16px; flex:1; display:flex; flex-direction:column; justify-content:flex-start; min-height:auto; }
+        .page-heading { max-width:760px; margin:0 auto 14px; text-align:center; }
+        .page-heading h1 { font-size:2.4rem; margin-bottom:10px; letter-spacing:.15rem; }
+        .page-heading p { color:var(--font-secondary); font-size:.98rem; }
+        .contact-grid { display:grid; gap:14px; grid-template-columns:1fr; }
+        .contact-card { background:var(--background-nav); border:var(--border-soft); border-radius:16px; padding:18px; box-shadow:var(--card-hover-glow); }
+        .contact-card h2 { font-size:1.6rem; margin-bottom:14px; }
+        .contact-card p { color:var(--font-secondary); margin-bottom:14px; }
+        .contact-meta { display:grid; gap:10px; }
+        .contact-item { display:flex; gap:10px; align-items:flex-start; }
+        .contact-icon { width:38px; min-width:38px; height:38px; display:flex; align-items:center; justify-content:center; background:rgba(138, 158, 181, 0.14); border-radius:14px; color:var(--font-primary); }
+        .contact-item div:last-child { flex:1; }
+        .contact-item strong { display:block; margin-bottom:3px; }
+        .social-links { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+        .social-button { display:inline-flex; align-items:center; gap:8px; padding:9px 12px; border-radius:14px; border:1px solid rgba(148,158,168,.12); background:rgba(255,255,255,.03); color:var(--font-primary); transition:transform .2s ease, background .2s ease; }
+        .social-button:hover { transform:translateY(-1px); background:rgba(138,158,181,.12); }
+        .social-button svg { width:16px; height:16px; }
+        form { display:grid; gap:14px; }
+        .form-field { display:grid; gap:7px; }
+        .form-field label { font-size:.92rem; color:var(--font-secondary); }
+        .form-field input,
+        .form-field textarea { width:100%; border:1px solid rgba(148,158,168,.18); border-radius:14px; padding:10px 12px; background:rgba(255,255,255,.04); color:var(--font-primary); transition:border .2s ease, box-shadow .2s ease; }
+        .form-field input:focus,
+        .form-field textarea:focus { outline:none; border-color:var(--accent-warm); box-shadow:0 0 0 3px rgba(138,158,181,.08); }
+        .form-field textarea { min-height:100px; resize:vertical; }
+        .form-note { font-size:.92rem; color:var(--font-secondary); }
+        .submit-btn { width:max-content; padding:10px 20px; border:none; border-radius:14px; background:linear-gradient(135deg,#8a9eb5,#3f5879); color:#fff; cursor:pointer; transition:transform .2s ease, opacity .2s ease; }
+        .submit-btn:hover { transform:translateY(-1px); opacity:.95; }
+        .accent-chip { display:inline-flex; align-items:center; gap:8px; margin-top:10px; padding:8px 12px; border-radius:999px; background:rgba(138,158,181,.12); color:var(--font-primary); font-size:.92rem; }
+        @media(min-width:900px) {
+            .contact-grid { grid-template-columns:420px minmax(420px,1fr); }
+        }
+        footer { color:var(--font-secondary); text-align:center; padding:14px 0; margin-top:auto; }
+    </style>
+    <script>
+        (function () {
+            var stored = localStorage.getItem('theme');
+            if (stored === 'light' || (!stored && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+                document.documentElement.classList.add('light');
+            }
+            var webp = new Image();
+            webp.onload = function () { document.documentElement.classList.add('webp'); };
+            webp.src = 'data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoBAAEAAwA0JaQAA3AA/vuUAAA=';
+        })();
+    </script>
+</head>
+<body>
+    <!-- Top navigation bar with page links and the theme button -->
+    <nav class="navbar">
+        <!-- hidden checkbox for mobile menu open/close -->
+        <input class="menu-btn" type="checkbox" id="menu-btn" />
+        <div class="navbar-header">
+            <label class="menu-icon" for="menu-btn" aria-label="Toggle navigation menu">
+                <span class="navicon" aria-hidden="true"></span>
+            </label>
+            <a href="./" class="nav-logo" aria-label="Home">
+                <img src="img/linuxTuxlogo.png" alt="Hamid Ali" width="40" height="40" class="logo" />
+            </a>
+        </div>
+        <ul class="menu">
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="theme-toggle-wrapper">
+            <button class="theme-toggle" id="theme-btn" aria-label="Switch to light mode" title="Switch to light mode">
+                <span class="icon">
+                    <img src="img/cat-white.svg" alt="Theme Switch" />
+                </span>
+            </button>
+        </div>
+    </nav>
+    <main id="main-content">
+        <!-- Main page content. First, the heading text. -->
+        <section class="page-heading">
+            <h1>Contact</h1>
+            <p>Reach out for collaborations, mentorship, or help with Linux, self-hosting, and web development. Use the form or the quick contact cards below.</p>
+        </section>
+        <div class="contact-grid">
+            <section class="contact-card" aria-labelledby="contact-info-heading">
+                <h2 id="contact-info-heading">Contact info</h2>
+                <!-- <p>My best contact channel is email. I also keep GitHub, LinkedIn, and my website updated for project work and open source chats.</p> -->
+                <div class="contact-meta">
+                    <div class="contact-item">
+                        <span class="contact-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4.5-8 5-8-5V6l8 5 8-5v2.5Z"/></svg>
+                        </span>
+                        <div>
+                            <strong>Email</strong>
+                            <a href="mailto:hello@hamidali.dev">hello@hamidali.dev</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        </span>
+                        <div>
+                            <strong>Important</strong>
+                            <span>Open for tech collaborations, internship offers, and project discussions. I reply faster to email and messages from the form.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="social-links">
+                    <a class="social-button" href="https://github.com/hamidali54" target="_blank" rel="noreferrer noopener" title="GitHub">
+                        <svg viewBox="0 0 496 512" fill="currentColor"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+                        GitHub
+                    </a>
+                    <a class="social-button" href="https://linkedin.com/in/hamid-ali-khoso" target="_blank" rel="noreferrer noopener" title="LinkedIn">
+                        <svg viewBox="0 0 448 512" fill="currentColor"><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/></svg>
+                        LinkedIn
+                    </a>
+                    <a class="social-button" href="https://www.reddit.com/user/sudohamid/" target="_blank" rel="noreferrer noopener" title="Reddit">
+                        <svg viewBox="0 0 512 512" fill="currentColor"><path d="M440.7 203.7c-17.5 0-31.7 14.2-31.7 31.7 0 9.6 4 18.2 10.5 24-39.2 29.7-98.1 46.8-165.5 46.8s-126.3-17.1-165.5-46.8c6.5-5.8 10.5-14.4 10.5-24 0-17.5-14.2-31.7-31.7-31.7S36 221.2 36 238.7c0 13 8 24.4 20 29.3-4.1 11.6-6.4 23.9-6.4 37.1 0 77.4 99.2 140.1 224 140.1s224-62.7 224-140.1c0-13.2-2.3-25.5-6.4-37.1 12-4.9 20-16.3 20-29.3 0-17.5-14.2-31.7-31.7-31.7zM274.3 352.3c-16.6 0-30-9.8-36.6-24.6 6.6-14.8 20-24.6 36.6-24.6s30 9.8 36.6 24.6c-6.6 14.8-20 24.6-36.6 24.6zM173.8 282.2c17.3 0 31.4-14 31.4-31.4s-14.1-31.4-31.4-31.4-31.4 14-31.4 31.4 14.1 31.4 31.4 31.4zM338.2 282.2c17.3 0 31.4-14 31.4-31.4s-14.1-31.4-31.4-31.4-31.4 14-31.4 31.4 14.1 31.4 31.4 31.4z"/></svg>
+                        Reddit
+                    </a>
+                </div>
+            </section>
+            <section class="contact-card" aria-labelledby="contact-form-heading">
+                <h2 id="contact-form-heading">Get in touch</h2>
+                <!-- <p>Send a message using the form below. This uses a third-party form service placeholder so you can replace it later with your own form endpoint.</p> -->
+                <form action="https://formspree.io/f/xvznnqgy" method="POST">
+                    <div class="form-field">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Your name" required />
+                    </div>
+                    <div class="form-field">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="you@example.com" required />
+                    </div>
+                    <div class="form-field">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" placeholder="Write your message here" required></textarea>
+                    </div>
+                    <button class="submit-btn" type="submit">Send message</button>
+                    <!-- <p class="form-note">This is a placeholder form action. Replace the URL with your FormsFreek or Formspree endpoint when you’re ready.</p> -->
+                </form>
+                <!-- <div class="accent-chip">Email is usually best for urgent contact.</div> -->
+            </section>
+        </div>
+    </main>
+    <footer>© 2026 Hamid Ali.</footer>
+    <script>
+        /* Make the theme toggle work safely.
+           If the button is missing, we do not run this part and no error appears. */
+        var themeButton = document.getElementById('theme-btn');
+        if (themeButton) {
+            themeButton.addEventListener('click', function() {
+                var html = document.documentElement;
+                html.classList.toggle('light');
+                if (html.classList.contains('light')) {
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

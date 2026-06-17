@@ -124,10 +124,14 @@
         .navbar-header { display:flex;align-items:center }
         .nav-logo { display:flex;align-items:center;padding:15px 10px;flex-shrink:0 }
         .nav-logo img{width:40px;height:40px;display:block;object-fit:contain}
-        .theme-toggle-wrapper { position:absolute;top:0;right:0;display:flex;align-items:center;height:64px;padding:0 }
+        /* Keep theme button fixed so it remains visible when menus open or pages change */
+        .theme-toggle-wrapper { position:fixed;top:12px;right:12px;display:flex;align-items:center;height:auto;padding:6px;z-index:1101 }
         
-        .theme-toggle { background:none;border:none;cursor:pointer;padding:15px;display:flex;align-items:center;justify-content:center;color:var(--font-primary);transition:color .3s ease }
-        .theme-toggle:hover { color:var(--accent-warm) }
+        .theme-toggle { background:none;border:none;cursor:pointer;padding:15px;display:flex;align-items:center;justify-content:center;color:var(--font-primary);transition:color .3s ease, background .3s ease; border-radius:999px; }
+        .theme-toggle:hover { color:var(--accent-warm); background:rgba(255,255,255,.06); }
+        .theme-toggle img { width:20px; height:20px; display:block; }
+        html.light .theme-toggle { background:rgba(0,0,0,.08); }
+        html.light .theme-toggle:hover { background:rgba(0,0,0,.12); }
         .icon { width:25px;height:25px;padding:0;margin:0 }
         
         .logo { display:block;color:#5ab4f0 }
@@ -403,6 +407,7 @@
         <ul class="menu">
             <li><a href="index.html#about">About</a></li>
             <li><a href="projects.html">Projects</a></li>
+            <li><a href="contact.html">Contact</a></li>
         </ul>
         <div class="theme-toggle-wrapper">
             <button class="theme-toggle" id="theme-btn" aria-label="Switch to light mode">
@@ -691,20 +696,25 @@
     </dialog>
 
     <footer>
-        © 2026 Hamid Ali Khoso.
+        © 2026 Hamid Ali.
     </footer>
 
     <script>
-        document.getElementById('theme-btn').addEventListener('click', function() {
-            var html = document.documentElement;
-            html.classList.toggle('light');
-            if (html.classList.contains('light')) {
-                localStorage.setItem('theme', 'light');
-            } else {
-                localStorage.setItem('theme', 'dark');
-            }
-        });
-        
+        // Safe theme toggle: only attach listener if the button exists
+        (function(){
+            var themeButton = document.getElementById('theme-btn');
+            if (!themeButton) return;
+            themeButton.addEventListener('click', function() {
+                var html = document.documentElement;
+                html.classList.toggle('light');
+                if (html.classList.contains('light')) {
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        })();
+
         // Close modals when clicking outside
         const modals = document.querySelectorAll('.project-modal');
         modals.forEach(modal => {

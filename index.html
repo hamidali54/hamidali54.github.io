@@ -169,10 +169,14 @@
         .navbar-header.svelte-1h32yp1{display:flex;align-items:center}
         .nav-logo.svelte-1h32yp1{display:flex;align-items:center;padding:15px 10px;flex-shrink:0}
         .nav-logo.svelte-1h32yp1 img{width:40px;height:40px;display:block;object-fit:contain}
-        .theme-toggle-wrapper.svelte-1h32yp1{position:absolute;top:0;right:0;display:flex;align-items:center;height:64px;padding:0}
+        /* Keep theme button fixed so it remains visible when menus open or pages change */
+        .theme-toggle-wrapper.svelte-1h32yp1{position:fixed;top:12px;right:12px;display:flex;align-items:center;height:auto;padding:6px;z-index:1101}
         
-        .theme-toggle.svelte-1cmi4dh{background:none;border:none;cursor:pointer;padding:15px;display:flex;align-items:center;justify-content:center;color:var(--font-primary);transition:color .3s ease}
-        .theme-toggle.svelte-1cmi4dh:hover{color:var(--accent-warm)}
+        .theme-toggle.svelte-1cmi4dh{background:none;border:none;cursor:pointer;padding:15px;display:flex;align-items:center;justify-content:center;color:var(--font-primary);transition:color .3s ease, background .3s ease;border-radius:999px}
+        .theme-toggle.svelte-1cmi4dh:hover{color:var(--accent-warm);background:rgba(255,255,255,.06)}
+        .theme-toggle.svelte-1cmi4dh img{width:20px;height:20px;display:block}
+        html.light .theme-toggle.svelte-1cmi4dh{background:rgba(0,0,0,.08)}
+        html.light .theme-toggle.svelte-1cmi4dh:hover{background:rgba(0,0,0,.12)}
         .icon.svelte-1cmi4dh{width:25px;height:25px;padding:0;margin:0}
         
         .logo.svelte-1l8nvlt{display:block;color:#5ab4f0}
@@ -373,6 +377,7 @@
         <ul class="menu svelte-1h32yp1">
             <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="index.html#about">About</a></li>
             <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="projects.html">Projects</a></li>
+            <li class="svelte-1h32yp1"><a class="nav-link svelte-1h32yp1" href="contact.html">Contact</a></li>
         </ul>
         
         <!-- Theme Toggle Button -->
@@ -508,17 +513,20 @@
       ===============================================================
     -->
     <script>
-        document.getElementById('theme-btn').addEventListener('click', function() {
-            var html = document.documentElement;
-            html.classList.toggle('light');
-            
-            // Save preference to localStorage so it remembers for next time
-            if (html.classList.contains('light')) {
-                localStorage.setItem('theme', 'light');
-            } else {
-                localStorage.setItem('theme', 'dark');
-            }
-        });
+        // Safe theme toggle: only attach listener if the button exists
+        (function(){
+            var themeButton = document.getElementById('theme-btn');
+            if (!themeButton) return;
+            themeButton.addEventListener('click', function() {
+                var html = document.documentElement;
+                html.classList.toggle('light');
+                if (html.classList.contains('light')) {
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        })();
     </script>
 </body>
 </html>
