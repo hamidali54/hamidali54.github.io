@@ -117,8 +117,8 @@
         .theme-toggle { background:none; border:none; cursor:pointer; padding:15px; display:flex; align-items:center; justify-content:center; color:var(--font-primary); transition:color .3s ease, background .3s ease; border-radius:999px; }
         .theme-toggle:hover { color:var(--accent-warm); background:rgba(255,255,255,.06); }
         .theme-toggle img { width:20px; height:20px; display:block; }
-        html.light .theme-toggle { background:rgba(0,0,0,.08); }
-        html.light .theme-toggle:hover { background:rgba(0,0,0,.12); }
+        html.light .theme-toggle { background:none; }
+        html.light .theme-toggle:hover { background:rgba(255,255,255,.06); }
         .icon { width:25px; height:25px; }
         /* This keeps the theme button visible and styled in the top right. */
         @media(min-width:768px) {
@@ -191,6 +191,7 @@
             </a>
         </div>
         <ul class="menu">
+            <li><a href="index.html">Home</a></li>
             <li><a href="index.html#about">About</a></li>
             <li><a href="projects.html">Projects</a></li>
             <li><a href="contact.html">Contact</a></li>
